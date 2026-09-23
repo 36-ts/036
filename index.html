@@ -193,7 +193,7 @@ th{background:var(--paper);font-weight:700}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .segbtn{appearance:none;border:0;background:var(--surface);padding:.35em .9em;min-height:38px;font-weight:700;cursor:pointer}
 .segbtn[aria-pressed="true"]{background:var(--ubox);color:#fff}
-.tally{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.tally{font-weight:700;font-variant-numeric:tabular-nums}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .chipbtn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.3em .85em;font-size:.82rem;cursor:pointer;min-height:36px}
 .chipbtn.calc{border-style:dashed}
@@ -201,6 +201,30 @@ th{background:var(--paper);font-weight:700}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 16px;margin-top:16px}
 .dr-res{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .dr-res.pass b{color:var(--ok)} .dr-res.fail b{color:var(--ng)}
+/* ---------- study ---------- */
+.sub-h{margin-top:18px;margin-bottom:8px}
+.study{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:10px 12px;text-align:left;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:space-between;gap:2px;min-height:68px}
+.tile:hover{border-color:var(--u)}
+.tile .tl{font-size:.78rem;color:var(--muted);font-weight:700;line-height:1.3}
+.tile b{font-size:1.35rem;line-height:1.2;font-variant-numeric:tabular-nums}
+.tile b small{font-size:.72rem;font-weight:400;color:var(--muted);margin-left:2px}
+.tile b.wk{font-size:1rem}
+.star{margin-left:auto;appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.1em .8em;min-height:34px;
+  font-size:.82rem;font-weight:700;cursor:pointer;display:inline-flex;gap:.35em;align-items:center;color:var(--muted);white-space:nowrap}
+.star.on{color:var(--warn);border-color:var(--warn);background:var(--flagbg)}
+.rv-tools{display:flex;justify-content:flex-end;margin-bottom:10px}
+.rv.mark .mk{color:var(--warn)}
+.note-box{margin-top:16px;padding:12px 14px;border-radius:4px;background:var(--paper);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:.92rem}
+.dr-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.dr-title{font-size:1.35rem;letter-spacing:.04em}
+.dr-sub{margin-top:2px}
+.dr-top .seg{margin-left:auto}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;color:var(--surface);background:var(--ng);padding:0 .45em;border-radius:3px;margin-left:.5em;vertical-align:1px}
+.bd-v small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+.pn{display:inline-block;color:var(--muted);margin-right:.5em;font-size:.78rem}
+.review .rv:first-child{margin-top:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -1399,6 +1423,52 @@ const store = {
   get() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } },
   set(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
 };
+const SKEY = "sonpoMock.study.v1";
+function sGet() { try { return JSON.parse(localStorage.getItem(SKEY) || "{}") || {}; } catch (e) { return {}; } }
+function sSet(d) { try { localStorage.setItem(SKEY, JSON.stringify(d)); } catch (e) {} }
+function sUnit(d, u) { return d[u] || (d[u] = { wrong: [], marks: [], stats: {} }); }
+function qid(q) {
+  const str = q.q + "|" + (q.stmts ? q.stmts.map(s => s.t).join("|") : q.choices.join("|")) + "|" + q.ans;
+  let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36);
+}
+const tkey = q => q.p + "|" + q.t;
+function recordMany(u, list) {
+  const d = sGet(), su = sUnit(d, u), now = Date.now();
+  for (const { q, ok } of list) {
+    if (q.p !== "c") { const k = tkey(q), st = su.stats[k] || (su.stats[k] = { a: 0, c: 0 }); st.a++; if (ok) st.c++; st.at = now; }
+    if (!ok) { const id = qid(q); su.wrong = su.wrong.filter(w => w.id !== id); su.wrong.push({ id, q, at: now }); }
+  }
+  if (su.wrong.length > 300) su.wrong = su.wrong.slice(-300);
+  sSet(d);
+}
+function clearWrong(u, id) { const d = sGet(), su = sUnit(d, u); su.wrong = su.wrong.filter(w => w.id !== id); sSet(d); }
+function isMarked(u, q) { const id = qid(q); return sUnit(sGet(), u).marks.some(m => m.id === id); }
+function toggleMark(u, q) {
+  const d = sGet(), su = sUnit(d, u), id = qid(q), i = su.marks.findIndex(m => m.id === id);
+  if (i >= 0) su.marks.splice(i, 1); else su.marks.push({ id, q, at: Date.now() });
+  if (su.marks.length > 500) su.marks.shift();
+  sSet(d);
+}
+function removeMark(u, id) { const d = sGet(), su = sUnit(d, u); su.marks = su.marks.filter(m => m.id !== id); sSet(d); }
+function analysis(u) {
+  const U = UNITS[u], su = sUnit(sGet(), u), pool = U.pool().filter(x => x.s);
+  const topics = pool.map(it => { const st = su.stats[it.p + "|" + it.t] || { a: 0, c: 0 }; return { p: String(it.p), t: it.t, a: st.a, c: st.c, acc: (st.c + 1) / (st.a + 2), item: it }; });
+  const parts = Object.keys(U.parts).map(p => {
+    const ts = topics.filter(x => x.p === p), a = ts.reduce((s, x) => s + x.a, 0), c = ts.reduce((s, x) => s + x.c, 0);
+    return { p, a, c, rate: a ? c / a : null };
+  });
+  const a = parts.reduce((s, x) => s + x.a, 0), c = parts.reduce((s, x) => s + x.c, 0);
+  const rated = parts.filter(x => x.a >= 3).sort((x, y) => x.rate - y.rate);
+  const avg = a ? c / a : 0;
+  const weak = rated.filter(x => x.rate < avg).slice(0, 2).map(x => x.p);
+  return { topics, parts, a, c, avg, weak, weakest: rated.length ? rated[0].p : null };
+}
+const shortPart = (U, p) => p === "c" ? "計算" : (U.parts[p].startsWith("第") ? U.parts[p].split(" ")[0] : "募集コンプラ");
+const fmtDate = t => { const d = new Date(t); return (d.getMonth() + 1) + "/" + d.getDate(); };
+function star(on, src, i) {
+  return `<button class="star${on ? " on" : ""}" data-act="mark" data-src="${src}"${i != null ? ` data-i="${i}"` : ""} aria-pressed="${on}"><span aria-hidden="true">${on ? "★" : "☆"}</span>${on ? "保存済み" : "ブックマーク"}</button>`;
+}
 const $app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let S = { view: "home" };
@@ -1461,6 +1531,14 @@ function home() {
   </footer>
 </div>`;
 }
+function studyTiles(u) {
+  const U = UNITS[u], su = sUnit(sGet(), u), an = analysis(u);
+  return `<div class="study">
+    <button class="tile" data-act="review" data-unit="${u}"><span class="tl">間違えた問題</span><b>${su.wrong.length}<small>問</small></b></button>
+    <button class="tile" data-act="marks" data-unit="${u}"><span class="tl">ブックマーク</span><b>${su.marks.length}<small>問</small></b></button>
+    <button class="tile" data-act="weak" data-unit="${u}"><span class="tl">${an.weakest ? "いちばん苦手" : "苦手分析"}</span><b class="wk">${an.weakest ? esc(shortPart(U, an.weakest)) : "—"}</b></button>
+  </div>`;
+}
 function unitBlock(u, hu) {
   const U = UNITS[u];
   const cells = Array.from({ length: SETS }, (_, i) => {
@@ -1483,6 +1561,8 @@ function unitBlock(u, hu) {
         <button class="btn" data-act="drill" data-unit="${u}">分野別ドリルで練習</button>
       </div>
       ${hu.r ? `<p class="small">ランダム受験：最高${hu.r.best}点(${hu.r.n}回)</p>` : ""}
+      <p class="ph sub-h">復習と分析</p>
+      ${studyTiles(u)}
     </div>
   </section>`;
 }
@@ -1513,7 +1593,7 @@ function exam() {
     <button class="btn sm" data-act="sheet" data-s="list"><span class="w">問題</span>一覧</button>
   </div>
   <main class="sheet" id="sheet">
-    <div class="qhead"><span class="qno">問題${ex.cur + 1}</span><span class="qpart">${esc(U.parts[q.p])}</span></div>
+    <div class="qhead"><span class="qno">問題${ex.cur + 1}</span><span class="qpart">${esc(U.parts[q.p])}</span>${star(isMarked(ex.u, q), "exam")}</div>
     ${qBody(q, ex.a[ex.cur], {})}
   </main>
   <nav class="foot" aria-label="問題の移動">
@@ -1554,7 +1634,8 @@ function finish(timeout) {
   const rec = h[ex.u][ex.set] || { best: 0, n: 0 };
   rec.best = Math.max(rec.best, score); rec.last = score; rec.n++; rec.at = Date.now();
   h[ex.u][ex.set] = rec; store.set(h);
-  S = { view: "result", rs: { u: ex.u, set: ex.set, qs: ex.qs, a: ex.a, res, correct, score, used, timeout: !!timeout, onlyWrong: false } };
+  recordMany(ex.u, ex.qs.map((q, i) => ({ q, ok: res[i] })));
+  S = { view: "result", rs: { u: ex.u, set: ex.set, qs: ex.qs, a: ex.a, res, correct, score, used, timeout: !!timeout, onlyWrong: false, nWrong: res.filter(x => !x).length } };
   render(true);
 }
 
@@ -1576,50 +1657,132 @@ function result() {
       <button class="btn primary" data-act="start" data-unit="${R.u}" data-set="${R.set}">${R.set === "r" ? "新しい組み合わせで受験" : "この回をもう一度受験"}</button>
       <button class="btn" data-act="home">回の一覧へ戻る</button>
     </div>
+    ${R.nWrong ? `<div class="note-box"><p>間違えた問題(未解答を含む)${R.nWrong}問を、復習リストに追加しました。</p><button class="btn sm" data-act="review" data-unit="${R.u}">今すぐ復習する</button></div>` : ""}
   </section>
   <section class="breakdown"><h2>分野別の正答数</h2>
     ${parts.map(x => `<div class="bd"><span class="bd-n">${esc(U.parts[x.p])}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.t ? x.c / x.t * 100 : 0}%"></i></span><span class="bd-v">${x.c}／${x.t}</span></div>`).join("")}
   </section>
   <section class="review">
     <div class="rv-head"><h2>問題と解説</h2><label class="tog"><input type="checkbox" id="onlywrong"${R.onlyWrong ? " checked" : ""}> 間違えた問題だけ表示</label></div>
-    ${items.map(({ q, i }) => `<details class="rv ${R.res[i] ? "ok" : "ng"}"><summary><span class="mk" aria-label="${R.res[i] ? "正解" : "不正解"}">${R.res[i] ? "◯" : "✕"}</span><span class="rv-no">問題${i + 1}</span><span class="rv-t">${esc(q.t)}</span><span class="rv-a">あなたの解答 ${R.a[i] == null ? "未解答" : q.labels[R.a[i]]}　正解 ${q.labels[q.ans]}</span></summary><div class="rv-body">${qBody(q, R.a[i], { reveal: true, lock: true, id: "r" + i })}</div></details>`).join("")}
+    ${items.map(({ q, i }) => `<details class="rv ${R.res[i] ? "ok" : "ng"}" data-k="r${i}"><summary><span class="mk" aria-label="${R.res[i] ? "正解" : "不正解"}">${R.res[i] ? "◯" : "✕"}</span><span class="rv-no">問題${i + 1}</span><span class="rv-t">${esc(q.t)}</span><span class="rv-a">あなたの解答 ${R.a[i] == null ? "未解答" : q.labels[R.a[i]]}　正解 ${q.labels[q.ans]}</span></summary><div class="rv-body"><div class="rv-tools">${star(isMarked(R.u, q), "rs", i)}</div>${qBody(q, R.a[i], { reveal: true, lock: true, id: "r" + i })}</div></details>`).join("")}
     ${items.length ? "" : `<p class="small">間違えた問題はありません。</p>`}
   </section>
 </div>`;
 }
 
 // ---------- 分野別ドリル ----------
-function startDrill(u) {
-  S = { view: "drill", dr: { u, parts: Object.keys(UNITS[u].parts), q: null, sel: null, done: false, c: 0, n: 0, last: null } };
+function startDrill(u, mode) {
+  mode = mode || "drill";
+  S = { view: "drill", dr: { u, mode, parts: Object.keys(UNITS[u].parts), q: null, sel: null, done: false, c: 0, n: 0, last: null, queue: [], lastId: null, cleared: 0 } };
   nextDrill(); render(true);
 }
+function wpick(items, ws) {
+  const tot = ws.reduce((a, b) => a + b, 0); let x = Math.random() * tot;
+  for (let i = 0; i < items.length; i++) { x -= ws[i]; if (x <= 0) return items[i]; }
+  return items[items.length - 1];
+}
 function nextDrill() {
-  const d = S.dr, pool = UNITS[d.u].pool().filter(x => d.parts.includes(String(x.p)));
-  if (!pool.length) { d.q = null; return; }
-  let it, guard = 0;
-  do { it = pool[Math.floor(Math.random() * pool.length)]; guard++; } while (pool.length > 1 && it === d.last && guard < 10);
-  d.last = it; d.q = buildQuestion(it, rngFrom(Math.floor(Math.random() * 2147483647)), d.u); d.sel = null; d.done = false;
+  const d = S.dr, U = UNITS[d.u];
+  d.sel = null; d.done = false;
+  const seed = () => rngFrom(Math.floor(Math.random() * 2147483647));
+  if (d.mode === "review" || d.mode === "marks") {
+    const su = sUnit(sGet(), d.u), list = d.mode === "review" ? su.wrong : su.marks;
+    if (!list.length) { d.q = null; return; }
+    d.queue = d.queue.filter(id => list.some(x => x.id === id));
+    if (!d.queue.length) d.queue = shuffle(seed(), list.map(x => x.id));
+    let id = d.queue.shift();
+    if (id === d.lastId && d.queue.length) { d.queue.push(id); id = d.queue.shift(); }
+    d.lastId = id; d.q = list.find(x => x.id === id).q;
+    return;
+  }
+  let it;
+  if (d.mode === "focus") {
+    const an = analysis(d.u), cands = an.topics.filter(x => x.item !== d.last);
+    it = wpick(cands, cands.map(x => Math.max(0.02, Math.pow(1 - x.acc, 2)))).item;
+  } else {
+    const pool = U.pool().filter(x => d.parts.includes(String(x.p)));
+    if (!pool.length) { d.q = null; return; }
+    let guard = 0;
+    do { it = pool[Math.floor(Math.random() * pool.length)]; guard++; } while (pool.length > 1 && it === d.last && guard < 10);
+  }
+  d.last = it; d.q = buildQuestion(it, seed(), d.u);
+}
+const DRILL_TITLE = { drill: "分野別ドリル", focus: "苦手分野の重点練習", review: "間違えた問題の復習", marks: "ブックマークの問題" };
+function topBar(u, act) {
+  return `<div class="dr-top">
+    <button class="btn sm" data-act="home">ホームへ</button>
+    <div class="seg" role="group" aria-label="単位">${["law", "tax"].map(x => `<button class="segbtn" data-act="${act}" data-unit="${x}" aria-pressed="${x === u}">${UNITS[x].name}</button>`).join("")}</div>
+  </div>`;
 }
 function drill() {
-  const d = S.dr, U = UNITS[d.u];
+  const d = S.dr, U = UNITS[d.u], su = sUnit(sGet(), d.u);
+  let sub = "";
+  if (d.mode === "review") sub = `残り${su.wrong.length}問${d.cleared ? `　今回克服した問題 ${d.cleared}問` : ""}`;
+  if (d.mode === "marks") sub = `ブックマーク ${su.marks.length}問`;
+  if (d.mode === "focus") sub = "正答率の低いテーマほど多く出題します";
+  const empty = d.mode === "review" ? "復習する問題はありません。模擬試験やドリルで間違えた問題が、ここに自動で入ります。"
+    : d.mode === "marks" ? "ブックマークした問題はありません。問題の右上にある「☆ ブックマーク」を押すと追加できます。"
+    : "出題する分野を1つ以上選んでください。";
+  const ok = d.done && d.sel === d.q.ans;
+  const extra = d.mode === "review" && d.done ? (ok ? "　復習リストから外しました" : "　復習リストに残します") : "";
   return `<div class="drill u-${d.u}">
-  <div class="dr-top">
-    <button class="btn sm" data-act="home">ホームへ</button>
-    <div class="seg" role="group" aria-label="単位">${["law", "tax"].map(u => `<button class="segbtn" data-act="dunit" data-unit="${u}" aria-pressed="${u === d.u}">${UNITS[u].name}</button>`).join("")}</div>
-    <span class="tally">正答 ${d.c}／${d.n}問</span>
-  </div>
-  <div class="chips" role="group" aria-label="出題する分野">${[...Object.keys(U.parts), "c"].map(p => `<button class="chipbtn${p === "c" ? " calc" : ""}" data-act="dpart" data-p="${p}" aria-pressed="${d.parts.includes(p)}">${esc(partName(U, p))}</button>`).join("")}</div>
+  ${topBar(d.u, "dunit")}
+  <div class="dr-head"><h1 class="dr-title">${DRILL_TITLE[d.mode]}</h1><span class="tally">正答 ${d.c}／${d.n}問</span></div>
+  ${sub ? `<p class="small dr-sub">${esc(sub)}</p>` : ""}
+  ${d.mode === "drill" ? `<div class="chips" role="group" aria-label="出題する分野">${[...Object.keys(U.parts), "c"].map(p => `<button class="chipbtn${p === "c" ? " calc" : ""}" data-act="dpart" data-p="${p}" aria-pressed="${d.parts.includes(p)}">${esc(partName(U, p))}</button>`).join("")}</div>` : ""}
   ${d.q ? `<article class="card">
-    <div class="qhead"><span class="qno">練習</span><span class="qpart">${esc(partName(U, d.q.p))}</span></div>
+    <div class="qhead"><span class="qno">${d.mode === "review" ? "復習" : "練習"}</span><span class="qpart">${esc(partName(U, d.q.p))}</span>${star(isMarked(d.u, d.q), "drill")}</div>
     ${qBody(d.q, d.sel, { reveal: d.done, lock: d.done, act: "dpick", id: "d" })}
-    ${d.done ? `<div class="dr-res ${d.sel === d.q.ans ? "pass" : "fail"}"><b>${d.sel === d.q.ans ? "◯ 正解" : `✕ 不正解　正解は${d.q.labels[d.q.ans]}`}</b><button class="btn primary" data-act="dnext">次の問題</button></div>` : `<p class="small">解答欄を選ぶと、すぐに正誤と解説が表示されます。</p>`}
-  </article>` : `<p class="card">出題する分野を1つ以上選んでください。</p>`}
+    ${d.done ? `<div class="dr-res ${ok ? "pass" : "fail"}"><b>${ok ? "◯ 正解" : `✕ 不正解　正解は${d.q.labels[d.q.ans]}`}<span class="small">${extra}</span></b><button class="btn primary" data-act="dnext">次の問題</button></div>` : `<p class="small">解答欄を選ぶと、すぐに正誤と解説が表示されます。</p>`}
+  </article>` : `<p class="card">${empty}</p>${d.mode === "review" && d.cleared ? `<div class="row"><button class="btn" data-act="weak" data-unit="${d.u}">苦手分析を見る</button></div>` : ""}`}
+</div>`;
+}
+
+// ---------- ブックマーク一覧 ----------
+function marks() {
+  const u = S.mk.u, U = UNITS[u], list = sUnit(sGet(), u).marks.slice().reverse();
+  return `<div class="drill u-${u}">
+  ${topBar(u, "vunit")}
+  <div class="dr-head"><h1 class="dr-title">ブックマーク</h1><span class="tally">${list.length}問</span></div>
+  ${list.length ? `<div class="row"><button class="btn primary" data-act="mpractice" data-unit="${u}">ブックマークした問題を解く</button></div>
+  <div class="review">${list.map(m => `<details class="rv mark" data-k="m${m.id}"><summary><span class="mk" aria-hidden="true">★</span><span class="rv-no">${esc(shortPart(U, m.q.p))}</span><span class="rv-t">${esc(m.q.t)}</span><span class="rv-a">${fmtDate(m.at)}に保存</span></summary><div class="rv-body">${qBody(m.q, null, { reveal: true, lock: true, id: "m" + m.id })}<div class="row"><button class="btn sm" data-act="unmark" data-id="${m.id}">ブックマークを外す</button></div></div></details>`).join("")}</div>`
+  : `<p class="card">ブックマークした問題はありません。模擬試験・ドリル・結果画面で、問題の右上にある「☆ ブックマーク」を押すと、ここに保存されます。</p>`}
+</div>`;
+}
+
+// ---------- 苦手分析 ----------
+function weak() {
+  const u = S.wk.u, U = UNITS[u], an = analysis(u);
+  const pct = x => Math.round(x * 100);
+  const topics = an.topics.filter(x => x.a >= 2).sort((x, y) => x.acc - y.acc).slice(0, 8);
+  return `<div class="drill u-${u}">
+  ${topBar(u, "vunit")}
+  <div class="dr-head"><h1 class="dr-title">苦手分野の分析</h1></div>
+  ${an.a ? `<section class="score-card">
+    <p class="rs-title">これまでの正答率(${U.name})</p>
+    <p class="score"><b>${pct(an.avg)}</b><span>%</span></p>
+    <p class="meta">解いた問題 ${an.a}問(模擬試験・ドリル・復習の合計)</p>
+    <div class="row"><button class="btn primary" data-act="focus" data-unit="${u}">苦手分野を重点練習</button></div>
+  </section>
+  <section class="breakdown"><h2>分野別の正答率</h2>
+    ${an.parts.map(x => `<div class="bd"><span class="bd-n">${esc(U.parts[x.p])}${an.weak.includes(x.p) ? `<span class="tag">苦手</span>` : ""}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.a ? x.c / x.a * 100 : 0}%"></i></span><span class="bd-v">${x.a ? pct(x.c / x.a) + "%" : "—"}<small>${x.a ? `${x.c}/${x.a}` : "未解答"}</small></span></div>`).join("")}
+  </section>
+  <section class="breakdown"><h2>特に苦手なテーマ</h2>
+    ${topics.length ? topics.map(x => `<div class="bd"><span class="bd-n"><small class="pn">${esc(shortPart(U, x.p))}</small>${esc(x.t)}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.c / x.a * 100}%"></i></span><span class="bd-v">${pct(x.c / x.a)}%<small>${x.c}/${x.a}</small></span></div>`).join("") : `<p class="small">2回以上解いたテーマがまだありません。もう少し解くと表示されます。</p>`}
+  </section>
+  <p class="small">苦手の判定は、解いた数が少ないテーマほど控えめに評価しています。重点練習では、ここで正答率の低いテーマや、まだ解いていないテーマが多めに出ます。</p>
+  <div class="row"><button class="btn ghost" data-act="wreset">${S.wk.arm ? "もう一度押すと分析の記録をリセットします" : "分析の記録をリセット"}</button></div>`
+  : `<p class="card">まだデータがありません。模擬試験やドリルを解くと、ここに分野別の正答率と苦手なテーマが表示されます。</p>
+  <div class="row"><button class="btn primary" data-act="focus" data-unit="${u}">重点練習を始める</button></div>`}
 </div>`;
 }
 
 // ---------- 描画とイベント ----------
 function render(top) {
-  $app.innerHTML = S.view === "exam" ? exam() : S.view === "result" ? result() : S.view === "drill" ? drill() : home();
+  const open = top ? [] : [...document.querySelectorAll("details[data-k][open]")].map(x => x.dataset.k);
+  $app.innerHTML = S.view === "exam" ? exam() : S.view === "result" ? result() : S.view === "drill" ? drill()
+    : S.view === "marks" ? marks() : S.view === "weak" ? weak() : home();
+  open.forEach(k => { const el = $app.querySelector(`details[data-k="${k}"]`); if (el) el.open = true; });
   if (top) window.scrollTo(0, 0);
 }
 $app.addEventListener("click", e => {
@@ -1630,7 +1793,21 @@ $app.addEventListener("click", e => {
   const ex = S.ex;
   switch (act) {
     case "start": startExam(b.dataset.unit, b.dataset.set); break;
-    case "drill": startDrill(b.dataset.unit); break;
+    case "drill": startDrill(b.dataset.unit, "drill"); break;
+    case "review": startDrill(b.dataset.unit, "review"); break;
+    case "focus": startDrill(b.dataset.unit, "focus"); break;
+    case "mpractice": startDrill(b.dataset.unit, "marks"); break;
+    case "marks": clearInterval(tick); S = { view: "marks", mk: { u: b.dataset.unit } }; render(true); break;
+    case "weak": clearInterval(tick); S = { view: "weak", wk: { u: b.dataset.unit, arm: false } }; render(true); break;
+    case "vunit": if (S.view === "marks") S.mk.u = b.dataset.unit; else { S.wk.u = b.dataset.unit; S.wk.arm = false; } render(); break;
+    case "wreset": if (S.wk.arm) { const d = sGet(); sUnit(d, S.wk.u).stats = {}; sSet(d); S.wk.arm = false; } else S.wk.arm = true; render(); break;
+    case "mark": {
+      const src = b.dataset.src;
+      const u = src === "exam" ? S.ex.u : src === "rs" ? S.rs.u : S.dr.u;
+      const q = src === "exam" ? S.ex.qs[S.ex.cur] : src === "rs" ? S.rs.qs[+b.dataset.i] : S.dr.q;
+      toggleMark(u, q); render(); break;
+    }
+    case "unmark": removeMark(S.mk.u, b.dataset.id); render(); break;
     case "home": clearInterval(tick); S = { view: "home" }; render(true); break;
     case "pick": ex.a[ex.cur] = +b.dataset.i; render(); break;
     case "prev": if (ex.cur > 0) { ex.cur--; render(true); } break;
@@ -1641,9 +1818,16 @@ $app.addEventListener("click", e => {
     case "jump": ex.cur = +b.dataset.i; ex.sheet = null; render(true); break;
     case "finish": finish(false); break;
     case "quit": if (ex.quitArm) { clearInterval(tick); S = { view: "home" }; render(true); } else { ex.quitArm = true; render(); } break;
-    case "dpick": { const d = S.dr; if (d.done) break; d.sel = +b.dataset.i; d.done = true; d.n++; if (d.sel === d.q.ans) d.c++; render(); break; }
+    case "dpick": {
+      const d = S.dr; if (d.done) break;
+      d.sel = +b.dataset.i; d.done = true; d.n++;
+      const ok = d.sel === d.q.ans; if (ok) d.c++;
+      recordMany(d.u, [{ q: d.q, ok }]);
+      if (d.mode === "review" && ok) { clearWrong(d.u, qid(d.q)); d.cleared++; }
+      render(); break;
+    }
     case "dnext": nextDrill(); render(true); break;
-    case "dunit": if (b.dataset.unit !== S.dr.u) startDrill(b.dataset.unit); break;
+    case "dunit": if (b.dataset.unit !== S.dr.u) startDrill(b.dataset.unit, S.dr.mode); break;
     case "dpart": { const d = S.dr, p = b.dataset.p; d.parts = d.parts.includes(p) ? d.parts.filter(x => x !== p) : [...d.parts, p]; nextDrill(); render(); break; }
   }
 });
