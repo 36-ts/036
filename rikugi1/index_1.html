@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>第一級陸上無線技術士 模擬試験</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#ECEFF2;--surface:#FFFFFF;--ink:#17202A;--muted:#566170;--line:#CDD4DC;--grid:#D9E0E8;--trace:#127A64;
+  --kiso:#2A5B89;--hoki:#8A4A28;--a:#594A8D;--b:#2D6D5B;
+  --ok:#1A6788;--ng:#B3261E;--warn:#9C5300;--flagbg:#FFF1D2;--u:var(--trace);--ubox:var(--trace)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10151A;--surface:#192027;--ink:#E3E8ED;--muted:#9AA6B2;--line:#2D3742;--grid:#232E39;--trace:#5FC7A9;
+  --kiso:#3A6A98;--hoki:#93583A;--a:#66589A;--b:#3A7766;--ok:#86C6E2;--ng:#F2A39A;--warn:#E9B46A;--flagbg:#3A2E17}}
+:root[data-theme="dark"]{--paper:#10151A;--surface:#192027;--ink:#E3E8ED;--muted:#9AA6B2;--line:#2D3742;--grid:#232E39;--trace:#5FC7A9;
+  --kiso:#3A6A98;--hoki:#93583A;--a:#66589A;--b:#3A7766;--ok:#86C6E2;--ng:#F2A39A;--warn:#E9B46A;--flagbg:#3A2E17}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:"BIZ UDPGothic","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Yu Gothic","Meiryo",system-ui,sans-serif;font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%;overflow-wrap:anywhere}
+.s-kiso{--u:var(--kiso);--ubox:var(--kiso)} .s-hoki{--u:var(--hoki);--ubox:var(--hoki)} .s-a{--u:var(--a);--ubox:var(--a)} .s-b{--u:var(--b);--ubox:var(--b)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .s-kiso{--u:#8DB6DE} :root:not([data-theme="light"]) .s-hoki{--u:#E0A27F} :root:not([data-theme="light"]) .s-a{--u:#B1A3E0} :root:not([data-theme="light"]) .s-b{--u:#86C9B2}}
+:root[data-theme="dark"] .s-kiso{--u:#8DB6DE} :root[data-theme="dark"] .s-hoki{--u:#E0A27F}
+h1,h2,p{margin:0} button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--u);outline-offset:2px}
+.small{font-size:.85rem;color:var(--muted);margin-top:10px}
+.btn{appearance:none;font-weight:700;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:4px;padding:.55em 1.1em;min-height:44px;cursor:pointer;line-height:1.4}
+.btn:hover{border-color:var(--u)} .btn.primary{background:var(--ubox);border-color:var(--ubox);color:#fff} .btn.ghost{background:transparent;color:var(--muted)}
+.btn:disabled{opacity:.4;cursor:default} .btn.sm{min-height:38px;padding:.3em .85em;font-size:.9rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+/* wave */
+.wave{position:absolute;inset:0;width:100%;height:100%}
+.wave .grid line{stroke:var(--grid);stroke-width:1;vector-effect:non-scaling-stroke}
+.wave path{fill:none;stroke:var(--u);stroke-width:2;vector-effect:non-scaling-stroke;opacity:.55}
+/* home */
+.home,.page{max-width:1040px;margin:0 auto;padding:28px 18px 56px}
+.mast{position:relative;padding:22px 20px 24px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.mast>*:not(svg){position:relative}
+.mast .course{font-weight:700;color:var(--muted);letter-spacing:.08em;font-size:.9rem}
+.mast h1{font-size:clamp(1.6rem,5.2vw,2.5rem);line-height:1.25;letter-spacing:.04em;margin:.15em 0 .5em}
+.mast h1 span{display:block;font-size:.62em;color:var(--trace);letter-spacing:.2em}
+.lead{max-width:40em;color:var(--muted);background:color-mix(in srgb,var(--surface) 82%,transparent);padding:2px 0}
+.subjects{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px}
+@media (min-width:700px){.subjects{grid-template-columns:1fr 1fr}}
+.scard{appearance:none;text-align:left;display:grid;gap:2px;padding:16px 18px 16px 22px;background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--ubox);border-radius:6px;cursor:pointer;min-height:120px}
+.scard:hover{border-color:var(--u);border-left-color:var(--ubox)}
+.scard.soon{cursor:default;opacity:.62}
+.sc-day{font-size:.8rem;color:var(--muted);font-weight:700;letter-spacing:.06em}
+.sc-name{font-size:1.35rem;font-weight:700;letter-spacing:.04em}
+.sc-spec{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.sc-stat{font-size:.9rem;font-weight:700;color:var(--u);margin-top:4px}
+.note{margin-top:30px;font-size:.85rem;color:var(--muted);max-width:46em;display:grid;gap:6px}
+/* subject page */
+.dr-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dr-top .seg{margin-left:auto}
+.shead{position:relative;margin-top:14px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--ubox);border-radius:6px;overflow:hidden}
+.shead>*:not(svg){position:relative}
+.shead h1{font-size:1.7rem;letter-spacing:.06em;margin-bottom:10px}
+.spec{margin:0;display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line);width:fit-content}
+.spec div{background:var(--surface);padding:6px 12px}
+.spec dt{font-size:.75rem;color:var(--muted);line-height:1.3} .spec dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.panel{margin-top:14px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.ph{font-weight:700;margin-bottom:10px} .sub-h{margin-top:20px}
+.sets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+@media (min-width:520px){.sets{grid-template-columns:repeat(10,1fr)}}
+.set{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:4px;min-height:54px;padding:4px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-variant-numeric:tabular-nums}
+.set:hover{border-color:var(--u)} .set .n{font-weight:700;font-size:1.05rem;line-height:1.15} .set .b{font-size:.7rem;color:var(--muted);min-height:1.2em;line-height:1.2}
+.set.tried{border:2px solid var(--u)} .set.pass{background:var(--ubox);border-color:var(--ubox);color:#fff} .set.pass .b{color:#fff}
+.legend{font-size:.8rem;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lg{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid var(--line);vertical-align:-2px}
+.lg.tried{border:2px solid var(--u)} .lg.pass,.lg.done{background:var(--ubox);border-color:var(--ubox)} .lg.part{background:repeating-linear-gradient(45deg,var(--ubox) 0 3px,transparent 3px 6px);border-color:var(--ubox)}
+.lg.fl{border-radius:50%;width:10px;height:10px;background:var(--warn);border:0}
+.study{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:10px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:2px;min-height:68px}
+.tile:hover{border-color:var(--u)} .tile .tl{font-size:.78rem;color:var(--muted);font-weight:700;line-height:1.3}
+.tile b{font-size:1.35rem;line-height:1.2;font-variant-numeric:tabular-nums} .tile b small{font-size:.72rem;font-weight:400;color:var(--muted);margin-left:2px} .tile b.wk{font-size:.95rem}
+/* exam */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:8px 12px}
+.chip{background:var(--ubox);color:#fff;font-weight:700;padding:.1em .6em;border-radius:3px;font-size:.88rem;white-space:nowrap}
+.prog{font-weight:700;font-variant-numeric:tabular-nums} .prog small{font-size:.85rem;color:var(--muted);font-weight:400}
+.timer{margin-left:auto;font-weight:700;font-size:1.2rem;font-variant-numeric:tabular-nums;letter-spacing:.05em} .timer.low{color:var(--warn)}
+@media (max-width:430px){.bar .w{display:none}.chip{font-size:.8rem}.timer{font-size:1.1rem}}
+.sheet{max-width:46rem;margin:0 auto;padding:20px 16px 120px}
+.qhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.qno{border:1.5px solid var(--ink);padding:0 .55em;font-weight:700;border-radius:3px;font-size:.95rem;font-variant-numeric:tabular-nums}
+.qpart{color:var(--muted);font-size:.85rem}
+.prompt{font-weight:700;font-size:1.02rem;margin:.2em 0 1em}
+.body{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ubox);border-radius:4px;padding:12px 14px;margin-bottom:12px;line-height:2}
+.blank{display:inline-block;min-width:2.2em;text-align:center;border:1.5px solid var(--ink);border-radius:3px;padding:0 .35em;margin:0 .15em;font-weight:700;line-height:1.5;background:var(--surface)}
+.stmts,.tf,.choices,.opts10{list-style:none;margin:0 0 1.2em;padding:0}
+.stmts,.tf{border-top:1px solid var(--line)}
+.stmts li,.tf li{display:grid;grid-template-columns:2.2em 1fr;padding:12px 0;border-bottom:1px solid var(--line)}
+.stmts .k,.tf .k,.choices .k,.opts10 .k{font-weight:700}
+.choices li{display:grid;grid-template-columns:2em 1fr;padding:4px 0;font-variant-numeric:tabular-nums}
+.choices li.is-ans,.opts10 li.is-ans{color:var(--ok);font-weight:700}
+.opts10{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;font-size:.92rem}
+.opts10 li{display:grid;grid-template-columns:1.9em 1fr}
+@media (max-width:430px){.opts10{grid-template-columns:1fr}}
+.tbl{overflow-x:auto;margin:0 0 1.1em}
+table.combo{border-collapse:collapse;font-size:.92rem;min-width:100%}
+table.combo th,table.combo td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+table.combo thead th{background:var(--paper);text-align:center} table.combo tbody th{background:var(--paper);text-align:center;width:2.6em}
+table.combo tr.is-ans td,table.combo tr.is-ans th{color:var(--ok);font-weight:700;background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+.ex{font-size:.9rem;color:var(--muted);margin-top:6px} .ex b{margin-right:.6em;white-space:nowrap}
+.is-ok .ex b{color:var(--ok)} .is-ng .ex b{color:var(--ng)}
+.ex.calc{background:var(--paper);padding:12px 14px;border-radius:4px;margin-top:14px;color:var(--ink)} .ex.calc b{display:block;margin-bottom:2px} .ex.calc p+p{margin-top:6px}
+.cap{font-weight:700;margin-bottom:6px}
+.bubbles{display:flex;gap:8px;flex-wrap:wrap}
+.bub{appearance:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;width:58px;padding:6px 0 10px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.bub:hover:not(:disabled){border-color:var(--u)} .bub .lb{font-weight:700}
+.bub .dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:block}
+.bub.on{border-color:var(--u);border-width:2px} .bub.on .dot{background:var(--ink);box-shadow:inset 0 0 0 4px var(--surface)}
+.bub:disabled{cursor:default} .bub.right{border-color:var(--ok);border-width:2px} .bub.right .dot{border-color:var(--ok)} .bub.right.on .dot{background:var(--ok)}
+.bub.miss{border-color:var(--ng)} .bub.miss .dot{border-color:var(--ng);background:var(--ng)}
+.tfbtns{display:flex;gap:8px;margin-top:8px}
+.tfb,.nb{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:4px;cursor:pointer;font-weight:700;font-variant-numeric:tabular-nums}
+.tfb{min-height:40px;padding:0 1em}
+.tfb.on,.nb.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.tfb.right,.nb.right{outline:2px solid var(--ok);outline-offset:1px} .tfb.right.on,.nb.right.on{background:var(--ok);border-color:var(--ok)}
+.tfb.miss,.nb.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.tfb:disabled,.nb:disabled{cursor:default}
+.frow{display:grid;grid-template-columns:2em 1fr;align-items:start;gap:6px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.fk{font-weight:700;padding-top:6px}
+.n10{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+@media (max-width:430px){.n10{grid-template-columns:repeat(5,1fr)}}
+.nb{min-height:36px;font-size:.9rem}
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);display:flex;gap:10px;justify-content:center;padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.foot .btn{flex:1;max-width:13rem} .btn.flag.on{background:var(--flagbg);border-color:var(--warn);color:var(--warn)}
+.star{margin-left:auto;appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.1em .8em;min-height:34px;font-size:.82rem;font-weight:700;cursor:pointer;display:inline-flex;gap:.35em;align-items:center;color:var(--muted);white-space:nowrap}
+.star.on{color:var(--warn);border-color:var(--warn);background:var(--flagbg)}
+.overlay{position:fixed;inset:0;z-index:20;background:rgba(14,18,22,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheetbox{background:var(--surface);width:100%;max-width:40rem;border-radius:10px 10px 0 0;padding:18px 16px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));max-height:85%;overflow:auto;display:grid;gap:10px}
+@media (min-width:700px){.overlay{align-items:center}.sheetbox{border-radius:8px}}
+.sheetbox h2{font-size:1.1rem} .sb-head{display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+@media (min-width:520px){.grid{grid-template-columns:repeat(10,1fr)}}
+.cell{appearance:none;position:relative;border:1px solid var(--line);background:var(--surface);border-radius:4px;min-height:44px;font-weight:700;cursor:pointer;font-size:.8rem;font-variant-numeric:tabular-nums}
+.cell.done{background:var(--ubox);border-color:var(--ubox);color:#fff} .cell.part{background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--ubox) 35%,transparent) 0 4px,transparent 4px 8px);border-color:var(--ubox)}
+.cell.cur{outline:2px solid var(--ink);outline-offset:1px} .cell.fl::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--warn)}
+/* result & drill */
+.result,.drill{max-width:46rem;margin:0 auto;padding:24px 16px 56px}
+.score-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px 20px;border-top:6px solid var(--ubox)}
+.rs-title{font-weight:700;color:var(--muted)} .score{margin:.2em 0} .score b{font-size:4rem;line-height:1;font-variant-numeric:tabular-nums} .score span{color:var(--muted);font-size:1.1rem;margin-left:.2em}
+.verdict{font-weight:700;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap} .verdict span{font-weight:400;font-size:.85rem;color:var(--muted)}
+.verdict.pass{color:var(--ok)} .verdict.fail{color:var(--ng)} .meta{color:var(--muted);margin-top:8px;font-size:.92rem}
+.note-box{margin-top:16px;padding:12px 14px;border-radius:4px;background:var(--paper);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:.92rem}
+.breakdown,.review{margin-top:28px} .breakdown h2,.review h2{font-size:1.05rem;margin-bottom:10px}
+.bd{display:grid;grid-template-columns:1fr 110px 4em;gap:6px 12px;align-items:center;padding:6px 0;font-size:.9rem;border-bottom:1px solid var(--line)}
+.bd-bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden} .bd-bar i{display:block;height:100%;background:var(--u)}
+.bd-v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums} .bd-v small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+@media (max-width:520px){.bd{grid-template-columns:1fr 4em}.bd-bar{grid-column:1/-1;grid-row:2}}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;color:var(--surface);background:var(--ng);padding:0 .45em;border-radius:3px;margin-left:.5em;vertical-align:1px}
+.pn{display:block;color:var(--muted);font-size:.75rem}
+.rv-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.tog{font-size:.9rem;display:flex;align-items:center;gap:6px;cursor:pointer} .tog input{width:18px;height:18px;accent-color:var(--ubox)}
+.rv{background:var(--surface);border:1px solid var(--line);border-radius:6px;margin:8px 0}
+.rv summary{display:grid;grid-template-columns:1.8em auto 1fr;gap:2px 8px;padding:10px 12px;cursor:pointer;list-style:none}
+.rv summary::-webkit-details-marker{display:none} .rv[open] summary{border-bottom:1px solid var(--line)}
+.mk{font-weight:700} .rv.ok .mk{color:var(--ok)} .rv.ng .mk{color:var(--ng)} .rv.pt .mk{color:var(--warn)} .rv.mark .mk{color:var(--warn)}
+.rv-no{font-weight:700;font-variant-numeric:tabular-nums} .rv-a{grid-column:2/-1;color:var(--muted);font-size:.85rem}
+.rv-body{padding:14px 12px 16px} .rv-tools{display:flex;justify-content:flex-end;margin-bottom:10px}
+.dr-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.dr-title{font-size:1.35rem;letter-spacing:.04em} .dr-sub{margin-top:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.segbtn{appearance:none;border:0;background:var(--surface);padding:.35em .9em;min-height:38px;font-weight:700;cursor:pointer}
+.segbtn[aria-pressed="true"]{background:var(--ubox);color:#fff}
+.tally{font-weight:700;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chipbtn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.3em .85em;font-size:.82rem;cursor:pointer;min-height:36px}
+.chipbtn[aria-pressed="true"]{background:var(--ubox);border-color:var(--ubox);color:#fff}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 16px;margin-top:16px}
+.dr-res{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.dr-res.pass b{color:var(--ok)} .dr-res.fail b{color:var(--ng)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const KISO = [
+// ---------- 計算(A問題) ----------
+{k:"calc",a:1,t:"点電荷の電界・電位",g:"pointE"},
+{k:"calc",a:1,t:"クーロンの法則",g:"coulomb"},
+{k:"calc",a:1,t:"平行平板コンデンサ",g:"plateC"},
+{k:"calc",a:1,t:"コンデンサの直列接続",g:"capDivide"},
+{k:"calc",a:1,t:"静電・電磁エネルギー",g:"energy"},
+{k:"calc",a:2,t:"直線電流による磁界",g:"wireH"},
+{k:"calc",a:2,t:"円形コイルの磁界",g:"loopH"},
+{k:"calc",a:2,t:"環状鉄心の磁束密度",g:"toroidB"},
+{k:"calc",a:2,t:"磁気回路",g:"magCircuit"},
+{k:"calc",a:2,t:"運動する導体の起電力",g:"emf"},
+{k:"calc",a:2,t:"相互インダクタンス",g:"mutualM"},
+{k:"calc",a:2,t:"磁界中の電子の運動",g:"electronR"},
+{k:"calc",a:3,t:"直列共振回路",g:"resonance"},
+{k:"calc",a:3,t:"RLC直列回路",g:"rlcI"},
+{k:"calc",a:3,t:"最大電力の供給",g:"maxPower"},
+{k:"calc",a:3,t:"テブナンの定理",g:"thevenin"},
+{k:"calc",a:3,t:"抵抗の温度係数",g:"tempCoef"},
+{k:"calc",a:3,t:"RC回路の過渡現象",g:"rcTau"},
+{k:"calc",a:3,t:"ひずみ波の実効値と電力",g:"waveRMS"},
+{k:"calc",a:4,t:"トランジスタの熱抵抗",g:"heat"},
+{k:"calc",a:5,t:"演算増幅器",g:"opamp"},
+{k:"calc",a:5,t:"エミッタ接地増幅回路",g:"trAmp"},
+{k:"calc",a:5,t:"発振回路の発振周波数",g:"osc"},
+{k:"calc",a:5,t:"D-A変換器",g:"daConv"},
+{k:"calc",a:6,t:"整流形計器の指示値",g:"rectMeter"},
+{k:"calc",a:6,t:"分流器と倍率器",g:"shunt"},
+{k:"calc",a:6,t:"抵抗測定の誤差率",g:"errMeasure"},
+{k:"calc",a:6,t:"3電圧計法",g:"threeVolt"},
+{k:"calc",a:6,t:"ホイートストンブリッジ",g:"bridge"},
+
+// ---------- 正誤(A問題・B正誤) ----------
+{k:"stmt",a:1,t:"静電界と電磁気の基本法則",s:[
+["真空中の2つの点電荷間に働く静電力は、両電荷の積に比例し、距離の2乗に反比例する。",1,"正しい(クーロンの法則)。"],
+["静電界中に置かれた導体の内部の電界は0であり、電荷は導体の表面にのみ分布する。",1,"正しい。"],
+["電気力線は負電荷から出て正電荷に入り、電気力線どうしは交差することがある。",0,"誤り。電気力線は正電荷から出て負電荷に入り、互いに交差しない。"],
+["磁界中で電流が流れる導体が受ける力の向きは、フレミングの左手の法則で求められる。",1,"正しい。"],
+["誘導起電力は、その起電力による電流が作る磁束がもとの磁束の変化を妨げる向きに生じる。",1,"正しい(レンツの法則)。"],
+["導体に高周波電流を流すと、周波数が高いほど電流が導体の中心部に集中する。",0,"誤り。電流は導体の表面近くに集中する(表皮効果)。"],
+["うず電流損は、周波数の2乗及び磁束密度の最大値の2乗に比例する。",1,"正しい。積層鉄心などで低減する。"],
+["ヒステリシス損は、周波数に反比例する。",0,"誤り。ヒステリシス損は周波数に比例する。"]
+]},
+{k:"stmt",a:4,t:"半導体素子",s:[
+["シリコンに5価のリンなどを加えたN形半導体の多数キャリアは電子である。",1,"正しい。"],
+["シリコンに3価のホウ素などを加えたP形半導体の多数キャリアは電子である。",0,"誤り。P形半導体の多数キャリアは正孔である。"],
+["真性半導体の抵抗率は、温度が上昇すると小さくなる。",1,"正しい。金属は温度上昇で抵抗率が大きくなる。"],
+["ツェナーダイオードは、逆方向電圧を加えたときの降伏現象を利用して定電圧を得る素子である。",1,"正しい。"],
+["可変容量ダイオードは、加える逆方向電圧を大きくすると接合容量が大きくなる。",0,"誤り。逆方向電圧を大きくすると空乏層が広がり、接合容量は小さくなる。"],
+["フォトダイオードは、通常、逆方向電圧を加えて使用し、光の強さに応じた電流が流れる。",1,"正しい。"],
+["発光ダイオード(LED)は、順方向電流を流したときに発光する。",1,"正しい。"],
+["サイリスタは、いったんターンオンすると、ゲート電流を0にしてもオンの状態を保つ。",1,"正しい。オフにするには主電流を保持電流以下にする必要がある。"]
+]},
+{k:"stmt",a:4,t:"マイクロ波用の素子・電子管",s:[
+["ガンダイオードは、GaAs などのバルク結晶に生じる負性抵抗を利用したマイクロ波の発振素子である。",1,"正しい(ガン効果)。"],
+["インパットダイオードは、なだれ降伏とキャリアの走行時間効果を利用した発振素子である。",1,"正しい。"],
+["進行波管は、らせん形などの遅波回路を用いて電子流と電磁波を相互作用させる広帯域の増幅管である。",1,"正しい。"],
+["マグネトロンは、直交する電界と磁界の中での電子の運動を利用する発振管で、レーダーの送信管などに用いられる。",1,"正しい。"],
+["クライストロンは、電子流を密度変調して増幅・発振する電子管で、速度変調は用いない。",0,"誤り。クライストロンは電子流を速度変調し、それにより生じる密度変調(集群)を利用する。"],
+["PINダイオードは、順方向電流により高周波抵抗が変化する性質を利用して、マイクロ波のスイッチや可変減衰器に用いられる。",1,"正しい。"],
+["トンネルダイオードは、逆方向特性に負性抵抗領域を持つ。",0,"誤り。トンネルダイオードは順方向特性に負性抵抗領域を持つ。"]
+]},
+{k:"stmt",a:5,t:"トランジスタ増幅回路の接地方式",s:[
+["エミッタ接地増幅回路は、入力と出力の位相が逆相である。",1,"正しい。"],
+["ベース接地増幅回路の電流増幅率はほぼ1(1より小さい)である。",1,"正しい。"],
+["コレクタ接地増幅回路(エミッタホロワ)の電圧増幅度はほぼ1で、入力インピーダンスが高く出力インピーダンスが低い。",1,"正しい。インピーダンス変換(バッファ)に用いられる。"],
+["コレクタ接地増幅回路は、入力インピーダンスが低く、出力インピーダンスが高い。",0,"誤り。入力インピーダンスが高く、出力インピーダンスが低い。"],
+["FETは入力(ゲート)インピーダンスが高く、電圧で出力電流を制御する素子である。",1,"正しい。"],
+["接合形FETでは、通常、ゲートとチャネル間のPN接合に順方向電圧を加えて使用する。",0,"誤り。逆方向電圧を加えて使用する。"],
+["ミラー効果により、エミッタ接地増幅回路のコレクタ・ベース間の容量は、入力側からは約(1+電圧増幅度)倍に見え、高域特性が劣化する。",1,"正しい。カスコード接続などで低減できる。"]
+]},
+{k:"stmt",a:5,t:"負帰還と電力増幅",s:[
+["負帰還をかけると、増幅度は低下するが、周波数帯域は広くなる。",1,"正しい。"],
+["負帰還をかけると、非直線ひずみや雑音(増幅器内部で発生するもの)が減少する。",1,"正しい。"],
+["負帰還をかけると、増幅度の安定度が低下する。",0,"誤り。素子のばらつきや電源変動に対する増幅度の安定度は向上する。"],
+["A級電力増幅器の電力効率の理論上の最大値は50%である。",1,"正しい(変成器結合などの場合)。"],
+["B級プッシュプル電力増幅器の電力効率の理論上の最大値は約78.5%である。",1,"正しい(π/4)。"],
+["B級プッシュプル電力増幅器では、入力信号の小さな部分でクロスオーバひずみが生じやすい。",1,"正しい。"],
+["C級電力増幅器は、効率は低いがひずみが少ないため、低周波の電力増幅に多く用いられる。",0,"誤り。C級は効率が高いがひずみが大きく、高周波の電力増幅(同調負荷)に用いられる。"]
+]},
+{k:"stmt",a:5,t:"演算増幅器",s:[
+["理想的な演算増幅器は、入力インピーダンスが無限大、出力インピーダンスが0、電圧増幅度が無限大である。",1,"正しい。"],
+["負帰還をかけた理想的な演算増幅器では、2つの入力端子間の電圧はほぼ0とみなせる(仮想短絡)。",1,"正しい。"],
+["反転増幅回路の電圧増幅度は、入力抵抗を R₁、帰還抵抗を R₂ として −R₂/R₁ である。",1,"正しい。"],
+["非反転増幅回路の電圧増幅度は、R₂/R₁ である。",0,"誤り。非反転増幅回路の電圧増幅度は 1 + R₂/R₁ である。"],
+["ボルテージホロワは電圧増幅度が1で、インピーダンス変換に用いられる。",1,"正しい。"],
+["帰還路にコンデンサ、入力に抵抗を接続した反転形の回路は、微分回路として動作する。",0,"誤り。帰還路にコンデンサを接続したものは積分回路である。"]
+]},
+{k:"stmt",a:5,t:"発振回路",s:[
+["帰還形発振回路が発振を持続する条件は、ループ利得(Aβ)の大きさが1以上で、位相が同相(0°)であることである。",1,"正しい(バルクハウゼンの条件)。"],
+["コルピッツ発振回路は、共振回路の帰還にコンデンサの分割を用いる。",1,"正しい。"],
+["ハートレー発振回路は、共振回路の帰還にコンデンサの分割を用いる。",0,"誤り。ハートレー発振回路はコイル(インダクタンス)の分割を用いる。"],
+["水晶発振回路は、水晶振動子の Q が非常に高いため、周波数安定度が高い。",1,"正しい。"],
+["ウィーンブリッジ形CR発振回路の発振周波数は 1/(2πCR) で、増幅器には3倍以上の増幅度が必要である。",1,"正しい。"],
+["3段のCR回路を用いる移相形発振回路では、増幅器の増幅度は3倍以上あれば発振する。",0,"誤り。29倍以上の増幅度が必要である。"]
+]},
+{k:"stmt",a:5,t:"論理回路",s:[
+["NAND回路だけを組み合わせて、すべての論理回路を構成することができる。",1,"正しい。NORも同様。"],
+["ド・モルガンの定理により、A·B の否定は Ā + B̄ に等しい。",1,"正しい。"],
+["論理式 A + A·B は A に等しい。",1,"正しい(吸収則)。"],
+["排他的論理和(XOR)は、2つの入力が等しいときに出力が1となる。",0,"誤り。入力が異なるときに出力が1となる。"],
+["JKフリップフロップで J = K = 1 のとき、クロックが入るたびに出力が反転する。",1,"正しい(トグル動作)。"],
+["2進数 1011 を10進数で表すと 13 である。",0,"誤り。1011₂ = 8 + 2 + 1 = 11 である。"]
+]},
+{k:"stmt",a:6,t:"指示電気計器",s:[
+["可動コイル形計器は直流専用で、指示は電流の平均値に比例し、目盛は平等目盛である。",1,"正しい。"],
+["可動鉄片形計器は交直両用で、実効値を指示し、目盛は2乗目盛に近い。",1,"正しい。"],
+["整流形計器は交流の平均値に応答するが、正弦波の実効値で目盛られているため、ひずみ波では誤差を生じる。",1,"正しい。"],
+["熱電対形計器は、高周波電流の実効値の測定に適している。",1,"正しい。"],
+["電流力計形計器は、交流専用で、直流の電力は測定できない。",0,"誤り。電流力計形計器は交直両用で、電力計として用いられる。"],
+["静電形計器は、高電圧の測定に適し、直流・交流の両方に使用できる。",1,"正しい。"],
+["誘導形計器は直流専用で、電力量計には使用されない。",0,"誤り。誘導形計器は交流専用で、電力量計に用いられる。"]
+]},
+{k:"stmt",a:6,t:"測定器と測定法",s:[
+["オシロスコープの10:1プローブは、方形波を観測しながら位相補正用のトリマコンデンサを調整する。",1,"正しい。"],
+["リサジュー図形では、図形と水平線・垂直線の交点の数の比から、2つの信号の周波数比を求めることができる。",1,"正しい。"],
+["シェーリングブリッジは、コンデンサの静電容量と損失角(誘電正接)の測定に用いられる。",1,"正しい。"],
+["ケルビンダブルブリッジは、高抵抗の測定に適している。",0,"誤り。ケルビンダブルブリッジは低抵抗の測定に適している。"],
+["Qメータは、共振回路の共振時にコンデンサに生じる電圧と加えた電圧の比からQを求める。",1,"正しい。"],
+["スペクトラムアナライザは、信号の周波数成分(スペクトル)を表示する測定器である。",1,"正しい。"],
+["電圧計の内部抵抗は小さいほど、測定回路への影響が小さい。",0,"誤り。電圧計の内部抵抗は大きいほど影響が小さい。電流計は小さいほどよい。"]
+]},
+{k:"stmt",a:6,t:"国際単位系(SI)",s:[
+["SIの基本単位は、メートル、キログラム、秒、アンペア、ケルビン、モル、カンデラの7つである。",1,"正しい。"],
+["磁束の単位ウェーバ[Wb]は、[V·s]で表すことができる。",1,"正しい。"],
+["磁束密度の単位テスラ[T]は、[Wb/m²]で表すことができる。",1,"正しい。"],
+["インダクタンスの単位ヘンリー[H]は、[Wb/A]で表すことができる。",1,"正しい。"],
+["誘電率の単位は[H/m]、透磁率の単位は[F/m]である。",0,"誤り。誘電率は[F/m]、透磁率は[H/m]である。"],
+["ボルト[V]はSIの基本単位の一つである。",0,"誤り。ボルトは組立単位である(電流の基本単位はアンペア)。"]
+]},
+
+// ---------- 字句の組合せ(A問題) ----------
+{k:"combo",a:3,t:"RLC直列回路の共振",q:"抵抗R、自己インダクタンスL、静電容量Cの直列回路に加える交流電圧の周波数を変化させると、共振時に回路のインピーダンスは［A］となり、回路に流れる電流は［B］となる。このときの共振周波数は［C］で表される。",slots:[["最小(Rに等しい)","最大"],["最大","最小"],["1/(2π√(LC))","2π√(LC)"]],e:"直列共振では XL = XC となりリアクタンスが打ち消し合うため、インピーダンスは R だけ(最小)で、電流は最大になる。"},
+{k:"combo",a:3,t:"LC並列共振回路",q:"損失の小さいコイルとコンデンサの並列共振回路では、共振時に回路のインピーダンスは［A］となり、電源から流れ込む電流は［B］となる。共振回路のQが大きいほど、周波数選択度は［C］なる。",slots:[["最大","最小"],["最小","最大"],["高く","低く"]],e:"並列共振では、L と C を循環する電流に比べ電源からの電流が最小になり、インピーダンスは最大となる。"},
+{k:"combo",a:5,t:"エミッタホロワ",q:"コレクタ接地増幅回路(エミッタホロワ)は、電圧増幅度が［A］で、入力インピーダンスが［B］、出力インピーダンスが［C］ため、インピーダンス変換回路として用いられる。",slots:[["ほぼ1","非常に大きい"],["高く","低く"],["低い","高い"]],e:"エミッタホロワは電圧利得ほぼ1、入力インピーダンス高、出力インピーダンス低。"},
+{k:"combo",a:5,t:"負帰還増幅回路",q:"増幅回路に負帰還をかけると、増幅度は［A］が、周波数帯域は［B］なり、非直線ひずみは［C］する。",slots:[["低下する","増加する"],["広く","狭く"],["減少","増加"]],e:"負帰還は利得と引き換えに、帯域・ひずみ・安定度を改善する。"},
+{k:"combo",a:4,t:"半導体",q:"N形半導体は、真性半導体に［A］の不純物を加えたもので、多数キャリアは［B］である。PN接合に［C］の電圧を加えると電流が流れやすい。",slots:[["5価","3価"],["電子","正孔"],["順方向","逆方向"]],e:"5価(リン・ヒ素など)→N形・多数キャリアは電子。3価(ホウ素など)→P形・多数キャリアは正孔。"},
+{k:"combo",a:2,t:"電磁誘導",q:"コイルを貫く磁束が変化すると、その変化を［A］向きに誘導起電力が生じる。これを［B］の法則という。また、誘導起電力の大きさは磁束の時間的変化の割合に［C］する。",slots:[["妨げる","助ける"],["レンツ","アンペア"],["比例","反比例"]],e:"向きはレンツの法則、大きさはファラデーの電磁誘導の法則(e = −N dΦ/dt)。"},
+{k:"combo",a:6,t:"指示電気計器",q:"可動コイル形計器は［A］の測定に用いられ、指示は電流の［B］に比例する。熱電対形計器は［C］電流の実効値の測定に適している。",slots:[["直流","交流"],["平均値","最大値"],["高周波","直流"]],e:"可動コイル形は直流・平均値・平等目盛。熱電対形は高周波でも実効値を指示できる。"},
+
+// ---------- 穴埋め(B問題) ----------
+{k:"fill",a:3,t:"RLC直列共振回路の性質",q:"RLC直列回路の共振角周波数 ω₀ は（ア）で表され、このとき回路のインピーダンスは（イ）に等しい。尖鋭度 Q は Q =（ウ）で表され、共振時にコイルの両端に現れる電圧の大きさは電源電圧の（エ）倍となる。また、共振曲線の半値幅 B は、共振周波数 f₀ を用いて B =（オ）で表される。",ans:["1/√(LC)","R","ω₀L/R","Q","f₀/Q"],dis:["√(LC)","0","R/(ω₀L)","1/Q","Q·f₀","ω₀CR","2π√(LC)"],e:"共振時は ωL = 1/(ωC)。Q = ω₀L/R = 1/(ω₀CR)。L・C の電圧は電源電圧の Q 倍。半値幅 = f₀/Q。"},
+{k:"fill",a:6,t:"指示電気計器",q:"可動コイル形計器は（ア）の測定に用い、目盛は（イ）である。整流形計器は交流の平均値に応答するが、正弦波の平均値に（ウ）を乗じた値で目盛られているため、ひずみ波を測定すると誤差を生じる。熱電対形計器は（エ）の電流の測定に適し、（オ）を指示する。",ans:["直流","平等目盛","1.11（波形率）","高周波","実効値"],dis:["交流","2乗目盛","1.41（波高率）","平均値","低周波","対数目盛","最大値"],e:"整流形は平均値応答・正弦波実効値目盛(平均値×1.11)。"},
+{k:"fill",a:5,t:"負帰還増幅器",q:"帰還をかけない増幅度を A、帰還率を β として負帰還をかけた増幅器の増幅度 Af は Af =（ア）となる。|Aβ| ≫ 1 のときは Af ≒（イ）となり、増幅度は増幅素子のばらつきの影響を（ウ）。また、負帰還により周波数帯域は（エ）、非直線ひずみは（オ）。",ans:["A/(1+Aβ)","1/β","受けにくくなる","広くなる","減少する"],dis:["A/(1−Aβ)","β","受けやすくなる","狭くなる","増加する","Aβ","1+Aβ"],e:"Af = A/(1+Aβ)。|Aβ|≫1 なら帰還回路だけで増幅度が決まる。"},
+{k:"fill",a:5,t:"発振回路",q:"増幅器の増幅度を A、帰還回路の帰還率を β とすると、発振が持続する条件は |Aβ| が（ア）で、Aβ の位相が（イ）であることである。コルピッツ発振回路は帰還に（ウ）の分割を、ハートレー発振回路は（エ）の分割を用いる。周波数安定度が特に高いのは（オ）発振回路である。",ans:["1以上","同相（0°）","コンデンサ","コイル","水晶"],dis:["1未満","逆相（180°）","抵抗","変成器","RC移相形","ウィーンブリッジ"],e:"バルクハウゼンの発振条件。コルピッツ=C分割、ハートレー=L分割。水晶は Q が非常に高い。"},
+{k:"fill",a:4,t:"PN接合と半導体素子",q:"真性半導体に（ア）価の不純物を加えるとN形半導体となり、多数キャリアは（イ）である。PN接合に順方向電圧を加えると電流が（ウ）。逆方向電圧を大きくすると降伏現象が起こり、これを利用して定電圧を得る素子を（エ）という。逆方向電圧によって接合容量が変化する性質を利用した素子を（オ）という。",ans:["5","電子","流れやすい","ツェナーダイオード","可変容量ダイオード"],dis:["3","正孔","流れにくい","トンネルダイオード","フォトダイオード","ガンダイオード","4"],e:"5価→N形(電子)、3価→P形(正孔)。"},
+{k:"fill",a:2,t:"電流と磁界",q:"無限長の直線導体に電流 I を流すと、導体から距離 r の点の磁界の強さは H =（ア）である。半径 a の1巻きの円形コイルに電流 I を流したときの中心の磁界の強さは H =（イ）である。透磁率を μ とすると、磁束密度 B と磁界の強さ H の関係は B =（ウ）である。磁界中の電流が受ける力の向きは（エ）の法則で、磁界中を動く導体に生じる起電力の向きは（オ）の法則で求められる。",ans:["I/(2πr)","I/(2a)","μH","フレミングの左手","フレミングの右手"],dis:["I/(πr)","I/(4πa)","H/μ","アンペアの右ねじ","ファラデー","μ/H","I/(2πa²)"],e:"直線電流は I/(2πr)、円形コイル中心は I/(2a)。左手=電動機(力)、右手=発電機(起電力)。"}
+];
+
+const HOKI = [
+// ===== 1 総則・無線局の免許 =====
+{k:"stmt",a:1,t:"電波法の目的と定義",s:[
+["電波法は、電波の公平かつ能率的な利用を確保することによって、公共の福祉を増進することを目的とする。",1,"電波法第1条のとおり。"],
+["「電波」とは、300万メガヘルツ以下の周波数の電磁波をいう。",1,"電波法第2条のとおり。"],
+["「電波」とは、3,000万メガヘルツ以下の周波数の電磁波をいう。",0,"300万メガヘルツ以下である。"],
+["「無線設備」とは、無線電信、無線電話その他電波を送り、又は受けるための電気的設備をいう。",1,"電波法第2条のとおり。"],
+["「無線局」とは、無線設備及び無線設備の操作を行う者の総体をいう。ただし、受信のみを目的とするものを含まない。",1,"電波法第2条のとおり。"],
+["「無線局」には、受信のみを目的とするものも含まれる。",0,"受信のみを目的とするものは含まない。"],
+["「無線従事者」とは、無線設備の操作又はその監督を行う者であって、総務大臣の免許を受けたものをいう。",1,"電波法第2条のとおり。"]
+]},
+{k:"stmt",a:1,t:"無線局の開設と免許の欠格事由",s:[
+["無線局を開設しようとする者は、原則として総務大臣の免許を受けなければならない。",1,"電波法第4条のとおり。"],
+["発射する電波が著しく微弱な無線局で総務省令で定めるものは、無線局の免許を要しない。",1,"電波法第4条のとおり。"],
+["電波法又は放送法に規定する罪を犯し罰金以上の刑に処せられ、その執行を終わり、又はその執行を受けることがなくなった日から2年を経過しない者には、無線局の免許を与えないことができる。",1,"電波法第5条第3項のとおり。"],
+["無線局の免許の取消しを受け、その取消しの日から2年を経過しない者には、無線局の免許を与えないことができる。",1,"電波法第5条第3項のとおり。"],
+["無線局の免許の取消しを受けた者は、その取消しの日から5年を経過しなければ無線局の免許を受けることができない。",0,"2年を経過しない者には免許を与えないことが「できる」とされている。"],
+["日本の国籍を有しない人には、いかなる無線局の免許も与えられない。",0,"実験等無線局やアマチュア無線局など、例外として免許を受けられる無線局がある。"]
+]},
+{k:"stmt",a:1,t:"免許の申請の審査と予備免許",s:[
+["総務大臣は、免許の申請書を受理したときは、遅滞なく、工事設計が技術基準に適合すること、周波数の割当てが可能であること、その他開設の根本的基準に合致することを審査しなければならない。",1,"電波法第7条のとおり。"],
+["予備免許の際に指定される事項は、工事落成の期限、電波の型式及び周波数、識別信号、空中線電力及び運用許容時間である。",1,"電波法第8条のとおり。"],
+["予備免許の際に指定される事項には、無線設備の設置場所が含まれる。",0,"設置場所は指定事項ではない(申請事項)。"],
+["総務大臣は、予備免許を受けた者から申請があった場合、相当と認めるときは、工事落成の期限を延長することができる。",1,"電波法第8条第2項のとおり。"],
+["予備免許を受けた者は、工事設計を変更しようとするときは、あらかじめ総務大臣の許可を受けなければならない(総務省令で定める軽微な事項を除く)。",1,"電波法第9条のとおり。"],
+["予備免許を受けた者の工事設計の変更は、周波数、電波の型式又は空中線電力に変更を来すものであっても差し支えない。",0,"周波数、電波の型式又は空中線電力に変更を来すものであってはならない。"]
+]},
+{k:"stmt",a:1,t:"落成後の検査と免許の付与",s:[
+["予備免許を受けた者は、工事が落成したときは、その旨を総務大臣に届け出て、無線設備等について検査を受けなければならない。",1,"電波法第10条のとおり。"],
+["工事落成の届出に、登録検査等事業者等が行った点検の結果を記載した書類を添えた場合は、検査の一部を省略されることがある。",1,"電波法第10条第2項のとおり。"],
+["総務大臣は、工事落成の期限経過後2週間以内に工事落成の届出がないときは、その無線局の免許を拒否しなければならない。",1,"電波法第11条のとおり。"],
+["工事落成の期限経過後1箇月以内に工事落成の届出がないときは、免許を拒否しなければならない。",0,"2週間以内である。"],
+["検査の結果、無線設備が工事設計に合致し、無線従事者の資格及び員数、時計及び書類が規定に違反しないと認めるときは、遅滞なく免許を与えなければならない。",1,"電波法第12条のとおり。"],
+["落成後の検査に合格する前であっても、予備免許を受けた者は無線局を自由に運用することができる。",0,"免許を受ける前に運用することはできない(試験電波の発射など法令で認められたものを除く)。"]
+]},
+{k:"stmt",a:1,t:"免許の有効期間と再免許",s:[
+["免許の有効期間は、免許の日から起算して5年を超えない範囲内において総務省令で定める。ただし、再免許を妨げない。",1,"電波法第13条のとおり。"],
+["固定局の免許の有効期間は5年である。",1,"電波法施行規則第7条のとおり。"],
+["固定局の再免許の申請は、原則として免許の有効期間満了前3箇月以上6箇月を超えない期間において行わなければならない。",1,"無線局免許手続規則第18条のとおり。"],
+["免許の有効期間は、免許の日から起算して10年を超えない範囲内で定められる。",0,"5年を超えない範囲内である。"],
+["固定局の再免許の申請は、免許の有効期間満了前1箇月以上1年を超えない期間に行えばよい。",0,"固定局は満了前3箇月以上6箇月を超えない期間である。"]
+]},
+{k:"stmt",a:1,t:"免許後の変更と変更検査",s:[
+["免許人は、無線局の目的、通信の相手方、通信事項若しくは無線設備の設置場所を変更し、又は無線設備の変更の工事をしようとするときは、あらかじめ総務大臣の許可を受けなければならない。",1,"電波法第17条のとおり。"],
+["無線設備の変更の工事は、周波数、電波の型式又は空中線電力に変更を来すものであってはならず、かつ、技術基準に合致するものでなければならない。",1,"電波法第17条第3項・第9条第4項のとおり。"],
+["無線設備の設置場所の変更又は変更の工事の許可を受けた免許人は、総務大臣の検査を受け、その変更が許可の内容に適合すると認められた後でなければ、許可に係る無線設備を運用してはならない(総務省令で定める場合を除く)。",1,"電波法第18条のとおり。"],
+["無線設備の変更の工事を行った場合は、変更検査を受ける前でも、許可に係る無線設備を自由に運用することができる。",0,"原則として、検査で適合すると認められた後でなければ運用できない。"],
+["総務大臣は、免許人が識別信号、電波の型式、周波数、空中線電力又は運用許容時間の指定の変更を申請した場合において、混信の除去その他特に必要があると認めるときは、その指定を変更することができる。",1,"電波法第19条のとおり。"],
+["免許人は、運用許容時間の指定の変更を、届出だけで自由に行うことができる。",0,"指定の変更は申請により総務大臣が行う。"]
+]},
+{k:"stmt",a:1,t:"無線局の廃止と免許の失効",s:[
+["免許人は、その無線局を廃止するときは、その旨を総務大臣に届け出なければならない。",1,"電波法第22条のとおり。"],
+["免許人が無線局を廃止したときは、免許は、その効力を失う。",1,"電波法第23条のとおり。"],
+["免許がその効力を失ったときは、免許人であった者は、1箇月以内にその免許状を返納しなければならない。",1,"電波法第24条のとおり。"],
+["免許がその効力を失ったときは、免許人であった者は、遅滞なく空中線の撤去その他の総務省令で定める電波の発射を防止するために必要な措置を講じなければならない。",1,"電波法第78条のとおり。"],
+["免許がその効力を失ったときは、免許状は3箇月以内に返納すればよい。",0,"1箇月以内である。"],
+["総務大臣は、免許人が正当な理由がないのに無線局の運用を引き続き6箇月以上休止したときは、その免許を取り消すことができる。",1,"電波法第76条第4項のとおり。"]
+]},
+
+// ===== 2 無線設備 =====
+{k:"stmt",a:2,t:"周波数の許容偏差・占有周波数帯幅・スプリアス発射等の定義",s:[
+["「周波数の許容偏差」とは、発射によって占有する周波数帯の中央の周波数の割当周波数からの許容することができる最大の偏差又は発射の特性周波数の基準周波数からの許容することができる最大の偏差をいい、百万分率又はヘルツで表す。",1,"電波法施行規則第2条のとおり。"],
+["「占有周波数帯幅」とは、その上限の周波数を超えて輻射され、及びその下限の周波数未満において輻射される平均電力がそれぞれ与えられた発射によって輻射される全平均電力の0.5パーセントに等しい上限及び下限の周波数帯幅をいう。",1,"電波法施行規則第2条のとおり。"],
+["占有周波数帯幅の定義において、上限の周波数を超えて及び下限の周波数未満において輻射される平均電力は、それぞれ全平均電力の5パーセントに等しいとされる。",0,"それぞれ0.5パーセントである。"],
+["「スプリアス発射」とは、必要周波数帯外における一又は二以上の周波数の電波の発射であって、そのレベルを情報の伝送に影響を与えないで低減することができるものをいい、高調波発射、低調波発射、寄生発射及び相互変調積を含み、帯域外発射を含まない。",1,"電波法施行規則第2条のとおり。"],
+["「スプリアス発射」には、帯域外発射が含まれる。",0,"スプリアス発射は帯域外発射を含まない。"],
+["「帯域外発射」とは、必要周波数帯に近接する周波数の電波の発射で情報の伝送のための変調の過程において生ずるものをいう。",1,"電波法施行規則第2条のとおり。"],
+["「不要発射」とは、スプリアス発射及び帯域外発射をいう。",1,"電波法施行規則第2条のとおり。"]
+]},
+{k:"stmt",a:2,t:"空中線電力と空中線の利得の定義",s:[
+["「尖頭電力」とは、通常の動作状態において、変調包絡線の最高尖頭における無線周波数1サイクルの間に送信機から空中線系の給電線に供給される平均の電力をいう。",1,"電波法施行規則第2条のとおり。"],
+["「平均電力」とは、通常の動作中の送信機から空中線系の給電線に供給される電力であって、変調において用いられる最低周波数の周期に比較してじゅうぶん長い時間にわたって平均されたものをいう。",1,"電波法施行規則第2条のとおり。"],
+["「搬送波電力」とは、変調のない状態における無線周波数1サイクルの間に送信機から空中線系の給電線に供給される平均の電力をいう(パルス変調の発射には適用しない)。",1,"電波法施行規則第2条のとおり。"],
+["「空中線の絶対利得」とは、基準空中線が空間に孤立している等方性空中線であるときの与えられた方向における空中線の利得をいう。",1,"電波法施行規則第2条のとおり。"],
+["「空中線の相対利得」とは、基準空中線が空間に孤立している等方性空中線であるときの利得をいう。",0,"相対利得の基準空中線は、空間に孤立していて、その垂直二等分面が与えられた方向を含む半波無損失ダイポールである。"],
+["「実効輻射電力」とは、空中線に供給される電力に、与えられた方向における空中線の相対利得を乗じたものをいう。",1,"電波法施行規則第2条のとおり。"],
+["「等価等方輻射電力」とは、空中線に供給される電力に、与えられた方向における空中線の相対利得を乗じたものをいう。",0,"等価等方輻射電力は絶対利得を乗じたものである。"]
+]},
+{k:"stmt",a:2,t:"電波の型式の表示",s:[
+["F3E は、周波数変調で、アナログ信号である単一チャネルのものの電話の電波の型式である。",1,"F:周波数変調、3:アナログ単一チャネル、E:電話。"],
+["J3E は、振幅変調で抑圧搬送波による単側波帯の、アナログ信号である単一チャネルのものの電話の電波の型式である。",1,"J:単側波帯・抑圧搬送波。"],
+["A3E は、振幅変調で両側波帯の、アナログ信号である単一チャネルのものの電話の電波の型式である。",1,"A:両側波帯の振幅変調。"],
+["G7W は、角度変調で位相変調の、デジタル信号である2以上のチャネルのものの、組合せの情報を送る電波の型式である。",1,"G:位相変調、7:デジタル2以上のチャネル、W:組合せ。"],
+["F3E の第2文字「3」は、デジタル信号である単一チャネルのものを表す。",0,"3はアナログ信号である単一チャネル。デジタル単一チャネル(副搬送波なし)は1。"],
+["電波の型式の第3文字(伝送情報の型式)の「E」は、テレビジョン(映像に限る)を表す。",0,"Eは電話(音響の放送を含む)。テレビジョンはF。"],
+["P0N は、無変調パルスで、主搬送波を変調する変調信号がなく、情報を送るためのものでない電波の型式である。",1,"P:無変調パルス、0:変調信号なし、N:無情報。"]
+]},
+{k:"stmt",a:2,t:"送信設備の条件(周波数の安定・送信空中線)",s:[
+["周波数をその許容偏差内に維持するため、送信装置は、できる限り電源電圧又は負荷の変化によって発振周波数に影響を与えないものでなければならない。",1,"無線設備規則第15条のとおり。"],
+["周波数をその許容偏差内に維持するため、発振回路の方式は、できる限り外囲の温度若しくは湿度の変化によって影響を受けないものでなければならない。",1,"無線設備規則第15条のとおり。"],
+["移動局の送信装置は、実際上起り得る振動又は衝撃によっても周波数をその許容偏差内に維持するものでなければならない。",1,"無線設備規則第15条のとおり。"],
+["送信空中線の型式及び構成は、空中線の利得及び能率がなるべく大であること、整合が十分であること、満足な指向特性が得られることに適合するものでなければならない。",1,"無線設備規則第20条のとおり。"],
+["送信空中線の型式及び構成は、発射可能な電波の周波数帯域がなるべく広いものでなければならない。",0,"このような規定はない。"],
+["空中線の指向特性は、主輻射方向及び副輻射方向、水平面の主輻射の角度の幅、空中線を設置する位置の近傍にあるものであって電波を散乱するものの有無、給電線よりの輻射によって定める。",1,"無線設備規則第22条のとおり。"]
+]},
+{k:"stmt",a:2,t:"無線設備の安全施設",s:[
+["無線設備は、破損、発火、発煙等により人体に危害を及ぼし、又は物件に損傷を与えることがあってはならない。",1,"電波法施行規則第21条の2のとおり。"],
+["高圧電気(高周波若しくは交流の電圧300ボルト又は直流の電圧750ボルトを超える電気)を使用する機器は、外部より容易に触れることができないように、絶縁しゃへい体又は接地された金属しゃへい体の内に収容しなければならない(取扱者のほか出入りできない場所に設置する場合を除く)。",1,"無線設備規則第9条のとおり。"],
+["高圧電気とは、高周波若しくは交流の電圧100ボルト又は直流の電圧300ボルトを超える電気をいう。",0,"交流300ボルト、直流750ボルトを超える電気である。"],
+["高圧電気を通ずる送信設備の空中線、給電線又はカウンターポイズは、原則として、その高さが人の歩行その他起居する平面から2.5メートル以上のものでなければならない。",1,"無線設備規則第11条のとおり。"],
+["無線設備の空中線系には避雷器又は接地装置を、カウンターポイズには接地装置を設けなければならない。ただし、26.175MHzを超える周波数を使用する無線局の無線設備などの空中線については、この限りでない。",1,"無線設備規則第25条のとおり。"],
+["人が通常出入りする場所で、電波の強度が総務省令で定める値を超える場所には、取扱者以外の者が容易に出入りできないように施設をしなければならない(一定の無線局を除く)。",1,"電波法施行規則第21条の3のとおり。"],
+["電波の強度に対する安全施設の規定は、平均電力が20ミリワット以下の無線局にも例外なく適用される。",0,"平均電力20ミリワット以下の無線局などは適用が除外されている。"]
+]},
+{k:"stmt",a:2,t:"周波数測定装置と受信設備",s:[
+["総務省令で定める送信設備には、その誤差が使用周波数の許容偏差の2分の1以下である周波数測定装置を備え付けなければならない。",1,"電波法第31条のとおり。"],
+["周波数測定装置の誤差は、使用周波数の許容偏差の10分の1以下でなければならない。",0,"許容偏差の2分の1以下である。"],
+["26.175MHzを超える周波数の電波を利用する送信設備には、周波数測定装置の備付けを要しない。",1,"電波法施行規則第11条の3のとおり。"],
+["空中線電力10ワット以下の送信設備には、周波数測定装置の備付けを要しない。",1,"電波法施行規則第11条の3のとおり。"],
+["無線設備の受信設備は、その副次的に発する電波又は高周波電流が、総務省令で定める限度を超えて他の無線設備の機能に支障を与えるものであってはならない。",1,"電波法第29条のとおり。"],
+["受信設備は電波を発射しないため、副次的に発する電波に関する規制はない。",0,"副次的に発する電波等の限度が定められている(電波法第29条)。"]
+]},
+
+// ===== 3 無線従事者 =====
+{k:"stmt",a:3,t:"主任無線従事者",s:[
+["主任無線従事者は、無線局の無線設備の操作の監督を行う者として選任された者であって、無線従事者でなければならない。",1,"電波法第39条のとおり。"],
+["免許人は、主任無線従事者を選任又は解任したときは、遅滞なく、その旨を総務大臣に届け出なければならない。",1,"電波法第39条第4項のとおり。"],
+["選任の届出がされた主任無線従事者は、選任の日から6箇月以内に無線設備の操作の監督に関し総務大臣の行う講習を受けなければならない。",1,"電波法施行規則第34条の7のとおり。"],
+["主任無線従事者は、講習を受けた日から5年以内に講習を受けなければならず、その後も同様である。",1,"電波法施行規則第34条の7のとおり。"],
+["主任無線従事者の講習は、選任の日から1年以内に受ければよい。",0,"選任の日から6箇月以内である。"],
+["主任無線従事者の職務には、その監督を受けて無線設備の操作を行う者に対する訓練(実習を含む)の計画を立案し、実施することが含まれる。",1,"電波法施行規則第34条の5のとおり。"],
+["主任無線従事者の職務には、無線業務日誌その他の書類を作成し、又はその作成を監督することが含まれる。",1,"電波法施行規則第34条の5のとおり。"]
+]},
+{k:"stmt",a:3,t:"無線従事者の免許と免許証",s:[
+["総務大臣は、電波法又は放送法に規定する罪を犯し罰金以上の刑に処せられ、その執行を終わり、又はその執行を受けることがなくなった日から2年を経過しない者には、無線従事者の免許を与えないことができる。",1,"電波法第42条のとおり。"],
+["総務大臣は、無線従事者の免許を取り消され、取消しの日から2年を経過しない者には、無線従事者の免許を与えないことができる。",1,"電波法第42条のとおり。"],
+["無線従事者は、その業務に従事しているときは、免許証を携帯していなければならない。",1,"電波法施行規則第38条第10項のとおり。"],
+["無線従事者は、免許の取消しの処分を受けたときは、その処分を受けた日から10日以内にその免許証を返納しなければならない。",1,"無線従事者規則第51条のとおり。"],
+["免許証の再交付を受けた後、失った免許証を発見したときは、発見した日から10日以内に、発見した免許証を返納しなければならない。",1,"無線従事者規則第51条のとおり。"],
+["無線従事者は、免許の取消しの処分を受けたときは、1箇月以内に免許証を返納すればよい。",0,"処分を受けた日から10日以内である。"],
+["無線従事者が氏名に変更を生じたときは、免許証の再交付を申請することができる。",1,"無線従事者規則第50条のとおり。"]
+]},
+
+// ===== 4 無線局の運用 =====
+{k:"stmt",a:4,t:"免許状記載事項の遵守と空中線電力",s:[
+["無線局は、免許状に記載された目的又は通信の相手方若しくは通信事項の範囲を超えて運用してはならない。ただし、遭難通信、緊急通信、安全通信、非常通信などについては、この限りでない。",1,"電波法第52条のとおり。"],
+["無線局を運用する場合においては、無線設備の設置場所、識別信号、電波の型式及び周波数は、免許状等に記載されたところによらなければならない。ただし、遭難通信については、この限りでない。",1,"電波法第53条のとおり。"],
+["無線局を運用する場合においては、空中線電力は、免許状等に記載されたものの範囲内であり、かつ、通信を行うため必要最小のものでなければならない(遭難通信を除く)。",1,"電波法第54条のとおり。"],
+["無線局を運用する場合の空中線電力は、通信を確実に行うため、免許状に記載されたものを超えてもよい。",0,"免許状に記載された範囲内で、かつ必要最小のものでなければならない。"],
+["無線局は、免許状に記載された運用許容時間内でなければ、運用してはならない(遭難通信等を除く)。",1,"電波法第55条のとおり。"],
+["非常通信は、免許状に記載された目的の範囲を超えて行うことはできない。",0,"非常通信は目的外使用の禁止の例外とされている。"]
+]},
+{k:"stmt",a:4,t:"混信等の防止・擬似空中線回路・秘密の保護",s:[
+["無線局は、他の無線局又は電波天文業務の用に供する受信設備その他の総務省令で定める受信設備で総務大臣が指定するものの運用を阻害するような混信その他の妨害を与えないように運用しなければならない(遭難通信等を除く)。",1,"電波法第56条のとおり。"],
+["無線局は、無線設備の機器の試験又は調整を行うために運用するときは、なるべく擬似空中線回路を使用しなければならない。",1,"電波法第57条のとおり。"],
+["擬似空中線回路は、無線設備の機器の試験又は調整を行う場合であっても使用する必要はない。",0,"なるべく擬似空中線回路を使用しなければならない。"],
+["何人も法律に別段の定めがある場合を除くほか、特定の相手方に対して行われる無線通信を傍受してその存在若しくは内容を漏らし、又はこれを窃用してはならない。",1,"電波法第59条のとおり。"],
+["秘密の保護の規定は無線従事者にのみ適用され、一般の人には適用されない。",0,"「何人も」とされており、すべての人に適用される。"],
+["混信等の防止の規定は、遭難通信、緊急通信、安全通信及び非常通信については適用されない。",1,"電波法第56条のとおり。"]
+]},
+{k:"stmt",a:4,t:"無線通信の原則と試験電波の発射",s:[
+["必要のない無線通信は、これを行ってはならない。",1,"無線局運用規則第10条のとおり。"],
+["無線通信に使用する用語は、できる限り簡潔でなければならない。",1,"無線局運用規則第10条のとおり。"],
+["無線通信を行うときは、自局の識別信号を付して、その出所を明らかにしなければならない。",1,"無線局運用規則第10条のとおり。"],
+["無線通信は、正確に行うものとし、通信上の誤りを知ったときは、直ちに訂正しなければならない。",1,"無線局運用規則第10条のとおり。"],
+["無線通信上の誤りは、通信が終了した後にまとめて訂正すればよい。",0,"誤りを知ったときは直ちに訂正しなければならない。"],
+["無線電話で試験電波を発射するときは、「本日は晴天なり」の連続を送信し、その時間は原則として10秒間を超えてはならない。",1,"無線局運用規則第39条のとおり。"],
+["試験電波の発射中に他の無線局から停止の請求があっても、試験が終わるまでは発射を継続してよい。",0,"停止の請求があったときは、直ちに発射を中止しなければならない。"]
+]},
+{k:"stmt",a:4,t:"非常通信と非常の場合の無線通信",s:[
+["非常通信とは、地震、台風、洪水、津波、雪害、火災、暴動その他非常の事態が発生し、又は発生するおそれがある場合において、有線通信を利用することができないか又はこれを利用することが著しく困難であるときに、人命の救助、災害の救援、交通通信の確保又は秩序の維持のために行われる無線通信をいう。",1,"電波法第52条第4号のとおり。"],
+["非常通信は、有線通信が支障なく利用できる場合であっても行うことができる。",0,"有線通信を利用することができないか又は著しく困難であることが要件である。"],
+["総務大臣は、非常の事態が発生し又は発生するおそれがある場合においては、人命の救助、災害の救援、交通通信の確保又は秩序の維持のために必要な通信を無線局に行わせることができる。",1,"電波法第74条のとおり。"],
+["総務大臣が電波法第74条の規定により無線局に通信を行わせたときは、国は、その通信に要した実費を弁償しなければならない。",1,"電波法第74条第2項のとおり。"],
+["電波法第74条の規定により無線局に通信を行わせた場合、国は費用を弁償する必要はない。",0,"国は実費を弁償しなければならない。"]
+]},
+
+// ===== 5 監督・その他 =====
+{k:"stmt",a:5,t:"電波の発射の停止・周波数等の変更・検査",s:[
+["総務大臣は、電波の規整その他公益上必要があるときは、無線局の目的の遂行に支障を及ぼさない範囲内に限り、無線局の周波数若しくは空中線電力の指定を変更し、又は人工衛星局の無線設備の設置場所の変更を命ずることができる。",1,"電波法第71条のとおり。"],
+["総務大臣は、無線局の発射する電波の質が総務省令で定めるものに適合していないと認めるときは、当該無線局に対して臨時に電波の発射の停止を命ずることができる。",1,"電波法第72条のとおり。"],
+["総務大臣は、電波の発射の停止を命じた無線局からその電波の質が適合するに至った旨の申出を受けたときは、その無線局に電波を試験的に発射させなければならない。",1,"電波法第72条第2項のとおり。"],
+["電波の発射の停止は、無線局の免許を取り消した上でなければ命ずることができない。",0,"免許の取消しとは関係なく、臨時に停止を命ずることができる。"],
+["総務大臣は、総務省令で定める時期ごとに、無線局に職員を派遣し、その無線設備等を検査させる(定期検査)。",1,"電波法第73条のとおり。"],
+["総務大臣は、免許人が電波法、放送法又はこれらに基づく命令等に違反したときは、3箇月以内の期間を定めて無線局の運用の停止を命じ、又は運用許容時間、周波数若しくは空中線電力を制限することができる。",1,"電波法第76条第1項のとおり。"],
+["電波法第76条による無線局の運用の停止の期間は、6箇月以内である。",0,"3箇月以内である。"]
+]},
+{k:"stmt",a:5,t:"無線従事者に対する処分と総務大臣への報告",s:[
+["総務大臣は、無線従事者が電波法等に違反したときは、その免許を取り消し、又は3箇月以内の期間を定めてその業務に従事することを停止することができる。",1,"電波法第79条のとおり。"],
+["無線従事者に対する業務従事停止の期間は、6箇月以内である。",0,"3箇月以内である。"],
+["無線従事者が著しく心身に欠陥があって無線従事者たるに適しない者に該当するに至ったときは、総務大臣はその免許を取り消すことができる。",1,"電波法第79条のとおり。"],
+["無線局の免許人等は、遭難通信、緊急通信、安全通信又は非常通信を行ったときは、総務省令で定める手続により、総務大臣に報告しなければならない。",1,"電波法第80条のとおり。"],
+["無線局の免許人等は、電波法等の規定に違反して運用した無線局を認めたときは、総務大臣に報告しなければならない。",1,"電波法第80条のとおり。"],
+["非常通信を行った場合でも、総務大臣への報告は要しない。",0,"報告しなければならない。"]
+]},
+{k:"stmt",a:5,t:"業務書類等",s:[
+["無線局には、正確な時計及び無線業務日誌その他総務省令で定める書類を備え付けておかなければならない(総務省令で定める無線局を除く)。",1,"電波法第60条のとおり。"],
+["使用を終わった無線業務日誌は、使用を終わった日から2年間保存しなければならない。",1,"電波法施行規則第40条のとおり。"],
+["使用を終わった無線業務日誌の保存期間は、使用を終わった日から5年間である。",0,"2年間である。"],
+["無線局の免許状は、主たる送信装置のある場所の見やすい箇所に掲げておかなければならない(一定の無線局を除く)。",1,"電波法施行規則第38条のとおり。"],
+["無線局に備え付けた時計は、その時刻を毎日1回以上中央標準時又は協定世界時に照合しておかなければならない。",1,"無線局運用規則第3条のとおり。"]
+]},
+{k:"stmt",a:5,t:"高周波利用設備と伝搬障害防止区域",s:[
+["電線路に10キロヘルツ以上の高周波電流を通ずる電信、電話その他の通信設備を設置しようとする者は、原則として総務大臣の許可を受けなければならない。",1,"電波法第100条のとおり。"],
+["無線設備及び通信設備以外の設備で、10キロヘルツ以上の高周波電流を利用するもののうち総務省令で定めるもの(医療用設備・工業用加熱設備など)を設置しようとする者は、原則として許可を受けなければならない。",1,"電波法第100条のとおり。"],
+["伝搬障害防止区域は、890メガヘルツ以上の周波数の電波による特定の固定地点間の無線通信の電波伝搬路における障害を防止するために指定される。",1,"電波法第102条の2のとおり。"],
+["伝搬障害防止区域内において、その最高部の地表からの高さが31メートルを超える建築物等の新築等をしようとする建築主は、総務大臣に届け出なければならない。",1,"電波法第102条の3のとおり。"],
+["伝搬障害防止区域は、30メガヘルツ以上の周波数の電波による無線通信のために指定される。",0,"890メガヘルツ以上である。"],
+["伝搬障害防止区域内で高さ31メートルを超える建築物を建てるときは、都道府県知事に届け出ればよい。",0,"総務大臣に届け出なければならない。"]
+]},
+
+// ===== 字句の組合せ(A問題) =====
+{k:"combo",a:1,t:"電波法の定義",q:"①「電波」とは、［A］以下の周波数の電磁波をいう。②「無線局」とは、無線設備及び無線設備の［B］の総体をいう。ただし、［C］を目的とするものを含まない。",slots:[["300万メガヘルツ","3,000万メガヘルツ"],["操作を行う者","監督を行う者"],["受信のみ","送信のみ"]],e:"電波法第2条。"},
+{k:"combo",a:1,t:"無線局の免許の欠格事由",q:"次のいずれかに該当する者には、無線局の免許を与えないことができる。①電波法又は放送法に規定する罪を犯し［A］以上の刑に処せられ、その執行を終わり、又はその執行を受けることがなくなった日から［B］を経過しない者 ②無線局の免許の［C］を受け、その日から2年を経過しない者",slots:[["罰金","過料"],["2年","5年"],["取消し","運用の停止"]],e:"電波法第5条第3項。"},
+{k:"combo",a:1,t:"予備免許と工事落成",q:"①予備免許の際には、工事落成の［A］、電波の型式及び周波数、識別信号、［B］並びに運用許容時間が指定される。②総務大臣は、工事落成の期限経過後［C］以内に工事落成の届出がないときは、その無線局の免許を拒否しなければならない。",slots:[["期限","予定期日"],["空中線電力","無線設備の設置場所"],["2週間","1箇月"]],e:"電波法第8条・第11条。"},
+{k:"combo",a:1,t:"免許の有効期間と再免許の申請",q:"①免許の有効期間は、免許の日から起算して［A］を超えない範囲内において総務省令で定める。②固定局の再免許の申請は、原則として免許の有効期間満了前［B］以上［C］を超えない期間において行わなければならない。",slots:[["5年","10年"],["3箇月","1箇月"],["6箇月","1年"]],e:"電波法第13条、無線局免許手続規則第18条。"},
+{k:"combo",a:2,t:"周波数測定装置の備付け",q:"総務省令で定める送信設備には、その誤差が使用周波数の許容偏差の［A］以下である周波数測定装置を備え付けなければならない。ただし、［B］を超える周波数の電波を利用するものや、空中線電力［C］以下のものなどについては、この限りでない。",slots:[["2分の1","10分の1"],["26.175MHz","30MHz"],["10ワット","50ワット"]],e:"電波法第31条、施行規則第11条の3。"},
+{k:"combo",a:2,t:"高圧電気に対する安全施設",q:"高圧電気とは、高周波若しくは交流の電圧［A］又は直流の電圧［B］を超える電気をいう。高圧電気を通ずる送信設備の空中線、給電線又はカウンターポイズは、原則としてその高さが人の歩行その他起居する平面から［C］以上のものでなければならない。",slots:[["300ボルト","100ボルト"],["750ボルト","600ボルト"],["2.5メートル","3メートル"]],e:"無線設備規則第9条・第11条。"},
+{k:"combo",a:2,t:"占有周波数帯幅とスプリアス発射",q:"①「占有周波数帯幅」とは、その上限の周波数を超えて輻射され、及びその下限の周波数未満において輻射される［A］がそれぞれ与えられた発射によって輻射される全［A］の［B］に等しい上限及び下限の周波数帯幅をいう。②「スプリアス発射」は［C］を含まない。",slots:[["平均電力","尖頭電力"],["0.5パーセント","5パーセント"],["帯域外発射","寄生発射"]],e:"電波法施行規則第2条。"},
+{k:"combo",a:3,t:"主任無線従事者の講習",q:"①主任無線従事者は、選任の日から［A］以内に総務大臣の行う講習を受けなければならない。②その後は、講習を受けた日から［B］以内に講習を受けなければならない。③免許人は、主任無線従事者を選任したときは、［C］その旨を総務大臣に届け出なければならない。",slots:[["6箇月","1年"],["5年","3年"],["遅滞なく","10日以内に"]],e:"電波法第39条、施行規則第34条の7。"},
+{k:"combo",a:3,t:"免許証等の返納",q:"①無線従事者は、免許の取消しの処分を受けたときは、その処分を受けた日から［A］以内に免許証を返納しなければならない。②免許証の再交付を受けた後失った免許証を発見したときは、発見した日から［B］以内に返納しなければならない。③無線局の免許がその効力を失ったときは、免許人であった者は［C］以内に免許状を返納しなければならない。",slots:[["10日","1箇月"],["10日","1箇月"],["1箇月","10日"]],e:"無線従事者規則第51条、電波法第24条。"},
+{k:"combo",a:5,t:"無線局・無線従事者に対する処分",q:"①総務大臣は、免許人が電波法等に違反したときは、［A］以内の期間を定めて無線局の運用の停止を命ずることができる。②無線従事者が電波法等に違反したときは、その免許を取り消し、又は［B］以内の期間を定めて業務に従事することを停止することができる。③正当な理由なく無線局の運用を引き続き［C］以上休止したときは、免許を取り消すことができる。",slots:[["3箇月","6箇月"],["3箇月","6箇月"],["6箇月","1年"]],e:"電波法第76条・第79条。"},
+{k:"combo",a:4,t:"非常通信",q:"地震、台風、洪水、津波、雪害、火災、暴動その他非常の事態が発生し、又は発生するおそれがある場合において、［A］を利用することができないか又はこれを利用することが著しく困難であるときに、人命の救助、災害の救援、［B］の確保又は秩序の維持のために行われる無線通信を［C］という。",slots:[["有線通信","携帯電話"],["交通通信","電力供給"],["非常通信","緊急通信"]],e:"電波法第52条第4号。"},
+{k:"combo",a:5,t:"伝搬障害防止区域",q:"①伝搬障害防止区域は、［A］以上の周波数の電波による特定の固定地点間の無線通信の電波伝搬路における障害を防止するため指定される。②区域内において最高部の地表からの高さが［B］を超える建築物等の新築等をしようとする建築主は、［C］に届け出なければならない。",slots:[["890メガヘルツ","30メガヘルツ"],["31メートル","60メートル"],["総務大臣","都道府県知事"]],e:"電波法第102条の2・第102条の3。"},
+
+// ===== 穴埋め(B問題) =====
+{k:"fill",a:4,t:"無線局の運用(目的外使用の禁止等)",q:"①無線局は、免許状に記載された目的等の範囲を超えて運用してはならない。ただし、（ア）、緊急通信、安全通信、（イ）などについては、この限りでない。②無線局を運用する場合の空中線電力は、免許状に記載されたものの（ウ）であり、かつ、通信を行うため（エ）のものでなければならない。③無線局は、免許状に記載された（オ）内でなければ、運用してはならない。",ans:["遭難通信","非常通信","範囲内","必要最小","運用許容時間"],dis:["一般通信","業務通信","範囲外","必要最大","免許の有効期間","工事落成の期限"],e:"電波法第52条・第54条・第55条。"},
+{k:"fill",a:2,t:"空中線電力と利得の定義",q:"①「（ア）」とは、通常の動作状態において、変調包絡線の最高尖頭における無線周波数1サイクルの間に送信機から空中線系の給電線に供給される平均の電力をいう。②「（イ）」とは、変調のない状態における無線周波数1サイクルの間に送信機から空中線系の給電線に供給される平均の電力をいう。③空中線の（ウ）とは、基準空中線が空間に孤立している等方性空中線であるときの利得をいい、（エ）とは、基準空中線が半波無損失ダイポールであるときの利得をいう。④「（オ）」とは、空中線に供給される電力に、与えられた方向における空中線の絶対利得を乗じたものをいう。",ans:["尖頭電力","搬送波電力","絶対利得","相対利得","等価等方輻射電力"],dis:["平均電力","規格電力","指向性利得","実効輻射電力","最大電力","合成利得"],e:"電波法施行規則第2条。実効輻射電力は相対利得を乗じたもの。"},
+{k:"fill",a:3,t:"主任無線従事者の職務",q:"主任無線従事者の職務は次のとおりである。①その監督を受けて無線設備の操作を行う者に対する（ア）（実習を含む。）の計画を立案し、実施すること。②無線設備の機器の（イ）を行い、又はその監督を行うこと。③無線業務日誌その他の書類を作成し、又はその作成を監督すること。④主任無線従事者の職務を遂行するために必要な事項に関し（ウ）に対して意見を述べること。また、主任無線従事者は選任の日から（エ）以内に講習を受け、その後は講習を受けた日から（オ）以内に講習を受けなければならない。",ans:["訓練","点検若しくは保守","免許人等","6箇月","5年"],dis:["試験","製造","総務大臣","1年","3年","10年"],e:"電波法施行規則第34条の5・第34条の7。"},
+{k:"fill",a:2,t:"スプリアス発射等の定義",q:"「（ア）」とは、必要周波数帯外における一又は二以上の周波数の電波の発射であって、そのレベルを情報の伝送に影響を与えないで低減することができるものをいい、高調波発射、低調波発射、（イ）及び相互変調積を含み、（ウ）を含まないものとする。「（ウ）」とは、必要周波数帯に近接する周波数の電波の発射で情報の伝送のための変調の過程において生ずるものをいう。スプリアス発射及び帯域外発射を総称して「（エ）」という。また、占有周波数帯幅の定義では、上限・下限の外側の平均電力はそれぞれ全平均電力の（オ）に等しいとされる。",ans:["スプリアス発射","寄生発射","帯域外発射","不要発射","0.5パーセント"],dis:["不要輻射","副次的に発する電波","高調波","5パーセント","1パーセント","スプリアス領域"],e:"電波法施行規則第2条。"},
+{k:"fill",a:4,t:"無線通信の原則",q:"①（ア）無線通信は、これを行ってはならない。②無線通信に使用する用語は、できる限り（イ）でなければならない。③無線通信を行うときは、自局の（ウ）を付して、その出所を明らかにしなければならない。④無線通信は、（エ）に行うものとし、通信上の誤りを知ったときは、（オ）訂正しなければならない。",ans:["必要のない","簡潔","識別信号","正確","直ちに"],dis:["緊急でない","丁寧","免許番号","迅速","通信終了後に","明瞭"],e:"無線局運用規則第10条。"},
+{k:"fill",a:5,t:"電波の発射の停止と無線局の処分",q:"①総務大臣は、無線局の発射する（ア）が総務省令で定めるものに適合していないと認めるときは、当該無線局に対して（イ）電波の発射の停止を命ずることができる。②この命令を受けた無線局から適合するに至った旨の申出を受けたときは、その無線局に電波を（ウ）に発射させなければならない。③免許人が電波法等に違反したときは、（エ）以内の期間を定めて無線局の運用の停止を命ずることができる。④正当な理由がないのに無線局の運用を引き続き（オ）以上休止したときは、免許を取り消すことができる。",ans:["電波の質","臨時に","試験的","3箇月","6箇月"],dis:["空中線電力","直ちに","継続的","1箇月","1年","2週間"],e:"電波法第72条・第76条。"}
+];
+
+// ===== 科目定義 =====
+const SUBJ = {
+  kiso: { name: "無線工学の基礎", short: "基礎", day: "1日目 午前", min: 150, nA: 20, nB: 5, opt: 5, full: 125, pass: 75, ready: true,
+    areas: { 1: "電気物理", 2: "磁気・電磁誘導", 3: "電気回路", 4: "半導体・電子管", 5: "電子回路", 6: "測定・計器" },
+    quota: { calc: 13, stmt: 4, combo: 3 }, pool: () => KISO },
+  hoki: { name: "法規", short: "法規", day: "1日目 午後", min: 120, nA: 15, nB: 5, opt: 4, full: 100, pass: 60, ready: true,
+    areas: { 1: "総則・無線局の免許", 2: "無線設備", 3: "無線従事者", 4: "無線局の運用", 5: "監督・その他" },
+    quota: { stmt: 10, combo: 5 }, pool: () => HOKI },
+  a: { name: "無線工学A", short: "工学A", day: "2日目 午前", min: 150, nA: 20, nB: 5, opt: 5, full: 125, pass: 75, ready: false, areas: {}, pool: () => [] },
+  b: { name: "無線工学B", short: "工学B", day: "2日目 午後", min: 150, nA: 20, nB: 5, opt: 5, full: 125, pass: 75, ready: false, areas: {}, pool: () => [] }
+};
+const SUBJ_ORDER = ["kiso", "hoki", "a", "b"];
+const SETS = 30;
+
+// ===== 乱数・ユーティリティ =====
+function rngFrom(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
+function shuffle(r, arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const sig = (v, n) => parseFloat(Number(v).toPrecision(n || 3));
+const SUP = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": "⁻" };
+const sup = n => String(n).split("").map(c => SUP[c] || c).join("");
+function fmtN(v, n) {
+  const a = Math.abs(v);
+  if (a === 0) return "0";
+  if (a >= 0.01 && a < 1e5) return sig(v, n || 3).toLocaleString("ja-JP", { maximumFractionDigits: 6 });
+  const e = Math.floor(Math.log10(a)); let m = sig(v / Math.pow(10, e), n || 3);
+  if (Math.abs(m) >= 10) { m = sig(m / 10, n || 3); return `${m}×10${sup(e + 1)}`; }
+  return `${m}×10${sup(e)}`;
+}
+const U = (v, unit, n) => `${fmtN(v, n)} [${unit}]`;
+// 5肢(4肢)の数値選択肢
+function mcNum(r, correct, cands, fmt, nOpt) {
+  nOpt = nOpt || 5;
+  const vals = [correct], seen = new Set([fmt(correct)]);
+  const push = c => { if (vals.length >= nOpt || c == null || !isFinite(c) || c === 0) return; const s = fmt(c); if (seen.has(s)) return; seen.add(s); vals.push(c); };
+  cands.forEach(push);
+  [2, 0.5, 4, 0.25, 10, 0.1, 3, 1 / 3, 1.5, 2 / 3, 5, 0.2].forEach(k => push(correct * k));
+  const sh = shuffle(r, vals);
+  return { choices: sh.map(fmt), ans: sh.findIndex(v => v === correct) };
+}
+const RATIO_PAD = ["1/16倍", "1/9倍", "1/8倍", "1/4倍", "1/3倍", "1/2倍", "2/3倍", "1倍", "3/2倍", "2倍", "3倍", "4倍", "8倍", "9倍", "16倍"];
+function mcStr(r, correct, cands, nOpt, pad) {
+  nOpt = nOpt || 5;
+  const vals = [correct];
+  for (const c of cands) { if (vals.length >= nOpt) break; if (!vals.includes(c)) vals.push(c); }
+  for (const c of shuffle(r, pad || RATIO_PAD)) { if (vals.length >= nOpt) break; if (!vals.includes(c)) vals.push(c); }
+  const sh = shuffle(r, vals);
+  return { choices: sh, ans: sh.indexOf(correct) };
+}
+const ratioStr = x => {
+  const fr = [[1, 1], [2, 1], [1, 2], [3, 1], [1, 3], [4, 1], [1, 4], [3, 2], [2, 3], [9, 1], [1, 9], [6, 1], [1, 6], [8, 1], [1, 8], [16, 1], [1, 16], [4, 3], [3, 4], [12, 1], [1, 12]];
+  for (const [p, q] of fr) if (Math.abs(x - p / q) < 1e-9) return q === 1 ? `${p}倍` : `${p}/${q}倍`;
+  return `${sig(x, 3)}倍`;
+};
+
+// ===== 計算問題(無線工学の基礎) =====
+const K9 = 9e9, EPS0 = 8.85e-12;
+const CALC = {
+  pointE(r) {
+    const q = pick(r, [1, 2, 3, 4, 5, 6, 8]), d = pick(r, [0.1, 0.2, 0.3, 0.5, 1, 2, 3]), Q = q * 1e-9;
+    const E = K9 * Q / (d * d), V = K9 * Q / d;
+    if (r() < 0.5) {
+      const m = mcNum(r, E, [V, E * 2, E / 2, E * 4], v => U(v, "V/m"));
+      return { q: `真空中に置かれた ${q}×10⁻⁹ [C] の点電荷から ${d} [m] 離れた点の電界の強さの値として、最も近いものを下の番号から選べ。ただし、1/(4πε₀) = 9×10⁹ とする。`, ...m,
+        e: `E = Q/(4πε₀r²) = 9×10⁹ × ${q}×10⁻⁹ ÷ ${d}² = ${U(E, "V/m")}。距離の2乗に反比例することに注意(1乗で割ると電位になる)。` };
+    }
+    const m = mcNum(r, V, [E, V * 2, V / 2, V * d * d], v => U(v, "V"));
+    return { q: `真空中に置かれた ${q}×10⁻⁹ [C] の点電荷から ${d} [m] 離れた点の電位の値として、最も近いものを下の番号から選べ。ただし、無限遠点の電位を0とし、1/(4πε₀) = 9×10⁹ とする。`, ...m,
+      e: `V = Q/(4πε₀r) = 9×10⁹ × ${q}×10⁻⁹ ÷ ${d} = ${U(V, "V")}。電位は距離に反比例する。` };
+  },
+  coulomb(r) {
+    const q1 = pick(r, [1, 2, 3, 4, 5]), q2 = pick(r, [1, 2, 3, 4, 6]), d = pick(r, [0.1, 0.2, 0.3, 0.5, 1]);
+    const F = K9 * q1 * q2 * 1e-12 / (d * d);
+    const m = mcNum(r, F, [F * d, F * 2, F / 2, F * 10], v => U(v, "N"));
+    return { q: `真空中で ${q1} [μC] と ${q2} [μC] の点電荷が ${d} [m] 離れて置かれているとき、両電荷間に働く静電力の大きさとして、最も近いものを下の番号から選べ。ただし、1/(4πε₀) = 9×10⁹ とする。`, ...m,
+      e: `F = Q₁Q₂/(4πε₀r²) = 9×10⁹ × ${q1}×10⁻⁶ × ${q2}×10⁻⁶ ÷ ${d}² = ${U(F, "N")}(クーロンの法則)。` };
+  },
+  plateC(r) {
+    const er = pick(r, [1, 2, 3, 4, 5]), S = pick(r, [100, 200, 250, 400, 500]), d = pick(r, [0.5, 1, 2, 4]);
+    const C = EPS0 * er * S * 1e-4 / (d * 1e-3), pF = C * 1e12;
+    if (r() < 0.6) {
+      const m = mcNum(r, pF, [pF / er, pF * 10, pF / 10, pF * 100], v => U(v, "pF"));
+      return { q: `面積 ${S} [cm²] の2枚の平行平板電極を ${d} [mm] の間隔で置き、間を比誘電率 ${er} の誘電体で満たしたコンデンサの静電容量として、最も近いものを下の番号から選べ。ただし、真空の誘電率 ε₀ = 8.85×10⁻¹² [F/m] とし、端効果は無視する。`, ...m,
+        e: `C = ε₀εᵣS/d = 8.85×10⁻¹² × ${er} × ${S}×10⁻⁴ ÷ (${d}×10⁻³) ≒ ${U(pF, "pF")}。面積は[m²]、間隔は[m]に直して計算する。` };
+    }
+    const k = pick(r, [2, 3, 4]), how = pick(r, ["d", "S", "er"]);
+    const ratio = how === "d" ? 1 / k : k;
+    const txt = how === "d" ? `電極間隔を ${k} 倍` : how === "S" ? `電極の面積を ${k} 倍` : `誘電体の比誘電率が ${k} 倍のものに替え`;
+    const m = mcStr(r, ratioStr(ratio), [ratioStr(1 / ratio), ratioStr(ratio * ratio), ratioStr(1 / (ratio * ratio)), "1倍", ratioStr(ratio * 2)]);
+    return { q: `平行平板コンデンサにおいて、${txt}たとき、静電容量は元の何倍になるか。正しいものを下の番号から選べ。ただし、端効果は無視する。`, ...m,
+      e: `C = ε₀εᵣS/d より、C は面積と比誘電率に比例し、電極間隔に反比例する。よって ${ratioStr(ratio)}。` };
+  },
+  capDivide(r) {
+    let c1 = pick(r, [1, 2, 3, 4, 6]), c2 = pick(r, [1, 2, 3, 4, 6]); if (c1 === c2) c2 = c1 === 6 ? 3 : 6;
+    const V = pick(r, [12, 24, 30, 60, 90, 120]), V1 = V * c2 / (c1 + c2);
+    const m = mcNum(r, V1, [V * c1 / (c1 + c2), V / 2, V * c1 / c2, V], v => U(v, "V"));
+    return { q: `静電容量 C₁ = ${c1} [μF] と C₂ = ${c2} [μF] のコンデンサを直列に接続し、両端に ${V} [V] の直流電圧を加えた。C₁ の両端の電圧として、正しいものを下の番号から選べ。ただし、各コンデンサの初期電荷は0とする。`, ...m,
+      e: `直列接続では各コンデンサの電荷 Q が等しく、電圧は静電容量に反比例して分配される。V₁ = V × C₂/(C₁+C₂) = ${V} × ${c2}/${c1 + c2} = ${U(V1, "V")}。` };
+  },
+  wireH(r) {
+    const I = pick(r, [2, 3, 4, 5, 6, 8, 10]), d = pick(r, [0.05, 0.1, 0.2, 0.25, 0.5]), H = I / (2 * Math.PI * d);
+    const m = mcNum(r, H, [I / (Math.PI * d), I / (2 * d), I / (4 * Math.PI * d), I / (2 * Math.PI * d * d)], v => U(v, "A/m"));
+    return { q: `真空中に置かれた無限長の直線導体に ${I} [A] の直流電流を流したとき、導体から ${d} [m] 離れた点の磁界の強さとして、最も近いものを下の番号から選べ。`, ...m,
+      e: `アンペアの周回積分の法則より H × 2πr = I、H = I/(2πr) = ${I} ÷ (2π × ${d}) ≒ ${U(H, "A/m")}。` };
+  },
+  loopH(r) {
+    const N = pick(r, [10, 20, 50, 100]), I = pick(r, [0.5, 1, 2]), a = pick(r, [0.05, 0.1, 0.2, 0.25]), H = N * I / (2 * a);
+    const m = mcNum(r, H, [N * I / (2 * Math.PI * a), N * I / a, N * I / (4 * a), I / (2 * a)], v => U(v, "A/m"));
+    return { q: `半径 ${a} [m]、巻数 ${N} の円形コイルに ${I} [A] の直流電流を流したとき、コイルの中心の磁界の強さとして、最も近いものを下の番号から選べ。ただし、コイルの導線の太さは無視する。`, ...m,
+      e: `円形コイルの中心の磁界は H = NI/(2a) = ${N} × ${I} ÷ (2 × ${a}) = ${U(H, "A/m")}。直線導体の式 I/(2πr) と混同しないこと。` };
+  },
+  toroidB(r) {
+    const N = pick(r, [200, 500, 1000]), I = pick(r, [0.5, 1, 2]), a = pick(r, [0.1, 0.2, 0.25]), mr = pick(r, [100, 500, 1000]);
+    const B = 2e-7 * mr * N * I / a;
+    const m = mcNum(r, B, [B / mr, B * 2, B / 2, B * Math.PI], v => U(v, "T"));
+    return { q: `比透磁率 ${mr} の環状鉄心(平均半径 ${a} [m])に巻数 ${N} のコイルを一様に巻き、${I} [A] の電流を流したとき、鉄心内の平均磁束密度の大きさとして、最も近いものを下の番号から選べ。ただし、真空の透磁率 μ₀ = 4π×10⁻⁷ [H/m] とし、漏れ磁束はないものとする。`, ...m,
+      e: `H = NI/(2πa)、B = μ₀μᵣH = 4π×10⁻⁷ × ${mr} × ${N} × ${I} ÷ (2π × ${a}) = 2×10⁻⁷ × ${mr} × ${N} × ${I} ÷ ${a} ≒ ${U(B, "T")}。` };
+  },
+  magCircuit(r) {
+    const N = pick(r, [200, 500, 1000]), I = pick(r, [0.5, 1, 2]), mu = pick(r, [1, 2, 4]), S = pick(r, [4, 5, 8, 10]), l = pick(r, [0.2, 0.4, 0.5]);
+    const Rm = l / (mu * 1e-3 * S * 1e-4);
+    if (r() < 0.5) {
+      const Phi = N * I / Rm;
+      const m = mcNum(r, Phi, [Phi * 2, Phi / 2, Phi * 10, N * I * Rm * 1e-10], v => U(v, "Wb"));
+      return { q: `透磁率 μ = ${mu}×10⁻³ [H/m]、断面積 ${S} [cm²]、磁路の平均の長さ ${l} [m] の環状鉄心に、巻数 ${N} のコイルを巻いて ${I} [A] の電流を流した。鉄心中の磁束の値として、最も近いものを下の番号から選べ。ただし、漏れ磁束はないものとする。`, ...m,
+        e: `磁気抵抗 Rm = l/(μS) = ${l} ÷ (${mu}×10⁻³ × ${S}×10⁻⁴) ≒ ${fmtN(Rm)} [H⁻¹]。Φ = NI/Rm = ${N * I} ÷ ${fmtN(Rm)} ≒ ${U(Phi, "Wb")}(磁気回路のオームの法則)。` };
+    }
+    const L = N * N / Rm;
+    const m = mcNum(r, L, [N / Rm, L * 2, L / 2, L * N], v => U(v, "H"));
+    return { q: `透磁率 μ = ${mu}×10⁻³ [H/m]、断面積 ${S} [cm²]、磁路の平均の長さ ${l} [m] の環状鉄心に、巻数 ${N} のコイルを巻いた。このコイルの自己インダクタンスとして、最も近いものを下の番号から選べ。ただし、漏れ磁束はないものとする。`, ...m,
+      e: `L = N²/Rm = μSN²/l = ${mu}×10⁻³ × ${S}×10⁻⁴ × ${N}² ÷ ${l} ≒ ${U(L, "H")}。巻数の2乗に比例する。` };
+  },
+  emf(r) {
+    const B = pick(r, [0.2, 0.4, 0.5, 0.8, 1]), l = pick(r, [0.1, 0.2, 0.3, 0.5]), v = pick(r, [2, 5, 10, 20]), th = pick(r, [90, 30, 60]);
+    const s = { 90: 1, 30: 0.5, 60: Math.sqrt(3) / 2 }[th], c = { 90: 0, 30: Math.sqrt(3) / 2, 60: 0.5 }[th];
+    const e = B * l * v * s;
+    const m = mcNum(r, e, [B * l * v * (c || 2), B * l * v, e * 2, e / 2], x => U(x, "V"));
+    return { q: `磁束密度 ${B} [T] の一様な磁界中に、磁界と直角に置かれた長さ ${l} [m] の直線導体を、磁界の方向と ${th}° の角度をなす方向に速度 ${v} [m/s] で動かしたとき、導体に誘起される起電力の大きさとして、最も近いものを下の番号から選べ。`, ...m,
+      e: `e = Blv sinθ = ${B} × ${l} × ${v} × sin${th}° ≒ ${U(e, "V")}(フレミングの右手の法則で向きを判断する)。` };
+  },
+  mutualM(r) {
+    const L1 = pick(r, [20, 30, 40, 50]), L2 = pick(r, [20, 40, 60, 80]), M = pick(r, [5, 10, 15]);
+    const La = L1 + L2 + 2 * M, Lb = L1 + L2 - 2 * M;
+    const m = mcNum(r, M, [(La - Lb) / 2, La - Lb, (La + Lb) / 4, (La - Lb) / 8], v => U(v, "mH"));
+    return { q: `2つのコイルを直列に接続したとき、和動接続の合成インダクタンスが ${La} [mH]、差動接続の合成インダクタンスが ${Lb} [mH] であった。2つのコイル間の相互インダクタンス M の値として、正しいものを下の番号から選べ。`, ...m,
+      e: `和動 La = L₁+L₂+2M、差動 Lb = L₁+L₂−2M。差をとると La−Lb = 4M より、M = (${La}−${Lb})/4 = ${U(M, "mH")}。` };
+  },
+  electronR(r) {
+    const a = pick(r, [2, 3, 0.5]), b = pick(r, [2, 4, 0.5]);
+    if (r() < 0.6) {
+      const ratio = a / b;
+      const m = mcStr(r, ratioStr(ratio), [ratioStr(b / a), ratioStr(a * b), ratioStr(ratio * ratio), "1倍", ratioStr(1 / (a * b))]);
+      return { q: `一様な磁界中に、磁界と直角に入射した電子は円運動をする。電子の速度を ${ratioStr(a)}、磁束密度を ${ratioStr(b)} にすると、円運動の半径は元の何倍になるか。正しいものを下の番号から選べ。`, ...m,
+        e: `ローレンツ力 evB が向心力 mv²/r と等しいので r = mv/(eB)。半径は速度に比例し、磁束密度に反比例する。よって ${ratioStr(a)} ÷ ${ratioStr(b).replace("倍", "")} = ${ratioStr(ratio)}。` };
+    }
+    const ratio = 1 / b;
+    const m = mcStr(r, ratioStr(ratio), [ratioStr(b), ratioStr(a / b), ratioStr(a), "1倍", ratioStr(1 / (b * b))]);
+    return { q: `一様な磁界中に、磁界と直角に入射した電子は円運動をする。電子の速度を ${ratioStr(a)}、磁束密度を ${ratioStr(b)} にすると、円運動の周期は元の何倍になるか。正しいものを下の番号から選べ。`, ...m,
+      e: `周期 T = 2πr/v = 2πm/(eB) となり、速度には無関係で磁束密度に反比例する。よって ${ratioStr(ratio)}。` };
+  },
+  resonance(r) {
+    const L = pick(r, [10, 20, 50, 100, 200]), C = pick(r, [100, 200, 250, 500, 1000]), R = pick(r, [5, 10, 20]);
+    const f0 = 1 / (2 * Math.PI * Math.sqrt(L * 1e-6 * C * 1e-12)), Q = 2 * Math.PI * f0 * L * 1e-6 / R;
+    const mode = pick(r, ["f", "Q", "B"]);
+    if (mode === "f") {
+      const m = mcNum(r, f0 / 1e6, [f0 * 2 * Math.PI / 1e6, f0 / 1e6 / 2, f0 / 1e6 * Math.sqrt(10), f0 / 1e6 / Math.sqrt(10)], v => U(v, "MHz"));
+      return { q: `自己インダクタンス ${L} [μH] のコイルと静電容量 ${C} [pF] のコンデンサからなる直列共振回路の共振周波数として、最も近いものを下の番号から選べ。`, ...m,
+        e: `f₀ = 1/(2π√(LC)) = 1/(2π√(${L}×10⁻⁶ × ${C}×10⁻¹²)) ≒ ${U(f0 / 1e6, "MHz")}。` };
+    }
+    if (mode === "Q") {
+      const m = mcNum(r, Q, [1 / Q, Q * 2, Q / 2, Q * 2 * Math.PI], v => fmtN(v));
+      return { q: `抵抗 ${R} [Ω]、自己インダクタンス ${L} [μH]、静電容量 ${C} [pF] の RLC 直列共振回路の尖鋭度(Q)の値として、最も近いものを下の番号から選べ。`, ...m,
+        e: `共振周波数 f₀ = 1/(2π√(LC)) ≒ ${U(f0 / 1e6, "MHz")}。Q = ω₀L/R = (1/R)√(L/C) = (1/${R})√(${L}×10⁻⁶ ÷ ${C}×10⁻¹²) ≒ ${fmtN(Q)}。` };
+    }
+    const BW = f0 / Q;
+    const m = mcNum(r, BW / 1e3, [f0 * Q / 1e3 / 1e3, BW / 1e3 * 2, BW / 1e3 / 2, BW / 1e3 * 2 * Math.PI], v => U(v, "kHz"));
+    return { q: `抵抗 ${R} [Ω]、自己インダクタンス ${L} [μH]、静電容量 ${C} [pF] の RLC 直列共振回路の半値幅(電流が共振時の 1/√2 になる周波数の幅)として、最も近いものを下の番号から選べ。`, ...m,
+      e: `Q = (1/R)√(L/C) ≒ ${fmtN(Q)}、f₀ ≒ ${U(f0 / 1e6, "MHz")}。半値幅 B = f₀/Q = R/(2πL) ≒ ${U(BW / 1e3, "kHz")}。` };
+  },
+  rlcI(r) {
+    const [a, b, c] = pick(r, [[3, 4, 5], [4, 3, 5], [5, 12, 13], [8, 6, 10], [8, 15, 17]]), k = pick(r, [2, 5, 10, 20]);
+    const R = a * k, X = b * k, Z = c * k, XC = pick(r, [20, 30, 50, 60, 100]), XL = X + XC;
+    const V = Z * pick(r, [1, 2, 4, 5]);
+    const I = V / Z, mode = pick(r, ["I", "P", "pf"]);
+    const ctx = `抵抗 R = ${R} [Ω]、誘導リアクタンス XL = ${fmtN(XL)} [Ω]、容量リアクタンス XC = ${fmtN(XC)} [Ω] の直列回路に、${V} [V] の正弦波交流電圧を加えた。`;
+    if (mode === "I") {
+      const m = mcNum(r, I, [V / R, V / (R + X), V / X, V / (R + XL + XC)], v => U(v, "A"));
+      return { q: `${ctx}回路に流れる電流の大きさとして、最も近いものを下の番号から選べ。`, ...m, e: `Z = √(R² + (XL−XC)²) = √(${R}² + ${X}²) = ${Z} [Ω]。I = V/Z = ${V} ÷ ${Z} = ${U(I, "A")}。` };
+    }
+    if (mode === "P") {
+      const P = I * I * R;
+      const m = mcNum(r, P, [V * I, I * I * Z, (V / R) * (V / R) * R, I * I * X], v => U(v, "W"));
+      return { q: `${ctx}回路で消費される電力(有効電力)として、最も近いものを下の番号から選べ。`, ...m, e: `Z = √(${R}² + ${X}²) = ${Z} [Ω]、I = ${fmtN(I)} [A]。電力を消費するのは抵抗だけなので P = I²R = ${fmtN(I)}² × ${R} = ${U(P, "W")}。` };
+    }
+    const pf = R / Z;
+    const m = mcNum(r, pf, [X / Z, R / X, X / R > 1 ? R / (R + X) : X / R, 1 - pf], v => fmtN(v));
+    return { q: `${ctx}この回路の力率として、正しいものを下の番号から選べ。`, ...m, e: `力率 cosθ = R/Z = ${R}/√(${R}² + ${X}²) = ${R}/${Z} = ${fmtN(pf)}。` };
+  },
+  maxPower(r) {
+    const E = pick(r, [6, 9, 10, 12, 20, 24]), ri = pick(r, [1, 2, 3, 4, 5, 6]);
+    if (r() < 0.55) {
+      const P = E * E / (4 * ri);
+      const m = mcNum(r, P, [E * E / ri, E * E / (2 * ri), E * E / (8 * ri), E * E / (4 * ri) * 2], v => U(v, "W"));
+      return { q: `起電力 ${E} [V]、内部抵抗 ${ri} [Ω] の電池に負荷抵抗を接続する。負荷抵抗の値を変化させたとき、負荷で消費される電力の最大値として、正しいものを下の番号から選べ。`, ...m,
+        e: `負荷抵抗が内部抵抗に等しい(RL = r)とき最大となる(最大電力供給の定理)。Pmax = E²/(4r) = ${E}² ÷ (4 × ${ri}) = ${U(P, "W")}。` };
+    }
+    const RL = pick(r, [1, 2, 3, 4, 6, 8].filter(x => x !== ri)), P = E * E * RL / Math.pow(ri + RL, 2);
+    const m = mcNum(r, P, [E * E / RL, E * E / (4 * ri), E * E * RL / (ri * ri + RL * RL), E * E / (ri + RL)], v => U(v, "W"));
+    return { q: `起電力 ${E} [V]、内部抵抗 ${ri} [Ω] の電池に ${RL} [Ω] の負荷抵抗を接続したとき、負荷で消費される電力として、最も近いものを下の番号から選べ。`, ...m,
+      e: `I = E/(r+RL) = ${E} ÷ ${ri + RL} [A]、P = I²RL = ${E}² × ${RL} ÷ ${ri + RL}² ≒ ${U(P, "W")}。` };
+  },
+  thevenin(r) {
+    const E = pick(r, [12, 18, 24, 30, 36, 60]), R1 = pick(r, [2, 3, 4, 6]), R2 = pick(r, [2, 3, 6, 12]), RL = pick(r, [1, 2, 3, 4]);
+    const Vth = E * R2 / (R1 + R2), Rth = R1 * R2 / (R1 + R2), IL = Vth / (Rth + RL);
+    const m = mcNum(r, IL, [E / (R1 + RL), E / (R1 + R2 + RL), Vth / RL, E / (Rth + RL)], v => U(v, "mA"));
+    return { q: `起電力 ${E} [V] の直流電源(内部抵抗0)に R₁ = ${R1} [kΩ] と R₂ = ${R2} [kΩ] の抵抗を直列に接続し、R₂ の両端に負荷抵抗 RL = ${RL} [kΩ] を接続した。RL に流れる電流として、最も近いものを下の番号から選べ。`, ...m,
+      e: `RL を外した端子から見たテブナン等価回路は、開放電圧 V₀ = E×R₂/(R₁+R₂) = ${fmtN(Vth)} [V]、内部抵抗 R₀ = R₁R₂/(R₁+R₂) = ${fmtN(Rth)} [kΩ]。I = V₀/(R₀+RL) ≒ ${U(IL, "mA")}。` };
+  },
+  tempCoef(r) {
+    const R0 = pick(r, [100, 200, 500, 1000]), al = pick(r, [0.004, 0.0039, 0.003, 0.005]), t = pick(r, [50, 60, 70, 80, 100, 120]);
+    const Rt = R0 * (1 + al * (t - 20));
+    const m = mcNum(r, Rt, [R0 * (1 + al * t), R0 * al * (t - 20), R0 * (1 - al * (t - 20)), R0 * (1 + 2 * al * (t - 20))], v => U(v, "Ω"));
+    return { q: `20 [℃] における抵抗値が ${R0} [Ω]、20 [℃] における抵抗温度係数が ${al} [℃⁻¹] の導体がある。この導体の ${t} [℃] における抵抗値として、最も近いものを下の番号から選べ。`, ...m,
+      e: `R = R₂₀{1 + α(t−20)} = ${R0} × {1 + ${al} × (${t}−20)} ≒ ${U(Rt, "Ω")}。` };
+  },
+  rcTau(r) {
+    const R = pick(r, [1, 2, 5, 10]), C = pick(r, [1, 2, 10, 100]), E = pick(r, [10, 20, 50, 100]);
+    const tau = R * C;
+    const mode = pick(r, ["tau", "charge", "discharge"]);
+    if (mode === "tau") {
+      const m = mcNum(r, tau, [R / C, tau * 2 * Math.PI, tau / 2, tau * 0.632], v => U(v, "ms"));
+      return { q: `抵抗 ${R} [kΩ] と静電容量 ${C} [μF] のコンデンサを直列に接続した RC 回路の時定数として、正しいものを下の番号から選べ。`, ...m, e: `時定数 τ = CR = ${C}×10⁻⁶ × ${R}×10³ = ${U(tau, "ms")}。` };
+    }
+    if (mode === "charge") {
+      const v = E * (1 - Math.exp(-1));
+      const m = mcNum(r, v, [E * Math.exp(-1), E / 2, E * (1 - Math.exp(-2)), E], x => U(x, "V", 2));
+      return { q: `抵抗 ${R} [kΩ] と静電容量 ${C} [μF] の RC 直列回路に、時刻 t = 0 で ${E} [V] の直流電圧を加えた。t = ${fmtN(tau)} [ms] におけるコンデンサの端子電圧として、最も近いものを下の番号から選べ。ただし、初期電荷は0、e⁻¹ ≒ 0.37 とする。`, ...m,
+        e: `時定数 τ = CR = ${fmtN(tau)} [ms]。t = τ のとき v = E(1 − e⁻¹) ≒ 0.63E = ${U(v, "V", 2)}。` };
+    }
+    const v = E * Math.exp(-1);
+    const m = mcNum(r, v, [E * (1 - Math.exp(-1)), E / 2, E * Math.exp(-2), E * 0.1], x => U(x, "V", 2));
+    return { q: `${E} [V] に充電された静電容量 ${C} [μF] のコンデンサを、時刻 t = 0 で ${R} [kΩ] の抵抗を通して放電させた。t = ${fmtN(tau)} [ms] におけるコンデンサの端子電圧として、最も近いものを下の番号から選べ。ただし、e⁻¹ ≒ 0.37 とする。`, ...m,
+      e: `時定数 τ = CR = ${fmtN(tau)} [ms]。放電では v = Ee^(−t/τ)。t = τ で v ≒ 0.37E = ${U(v, "V", 2)}。` };
+  },
+  energy(r) {
+    if (r() < 0.5) {
+      const L = pick(r, [10, 20, 50, 100, 200]), I = pick(r, [1, 2, 3, 5]), W = L * 1e-3 * I * I / 2;
+      const m = mcNum(r, W, [L * 1e-3 * I * I, L * 1e-3 * I / 2, W * 2, W * 1000], v => U(v, "J"));
+      return { q: `自己インダクタンス ${L} [mH] のコイルに ${I} [A] の直流電流が流れているとき、コイルに蓄えられる磁気エネルギーとして、正しいものを下の番号から選べ。`, ...m, e: `W = LI²/2 = ${L}×10⁻³ × ${I}² ÷ 2 = ${U(W, "J")}。` };
+    }
+    const C = pick(r, [10, 20, 50, 100, 200]), V = pick(r, [10, 20, 50, 100]), W = C * 1e-6 * V * V / 2;
+    const m = mcNum(r, W, [C * 1e-6 * V * V, C * 1e-6 * V / 2, W * 2, W * 1000], v => U(v, "J"));
+    return { q: `静電容量 ${C} [μF] のコンデンサを ${V} [V] に充電したとき、コンデンサに蓄えられる静電エネルギーとして、正しいものを下の番号から選べ。`, ...m, e: `W = CV²/2 = ${C}×10⁻⁶ × ${V}² ÷ 2 = ${U(W, "J")}。` };
+  },
+  waveRMS(r) {
+    const W = pick(r, [["正弦波", 1 / Math.SQRT2, "Vm/√2"], ["方形波(振幅±Vm)", 1, "Vm"], ["三角波(振幅±Vm)", 1 / Math.sqrt(3), "Vm/√3"], ["半波整流波形(正弦波の正の半周期のみ)", 0.5, "Vm/2"], ["全波整流波形", 1 / Math.SQRT2, "Vm/√2"]]);
+    const Vm = pick(r, [10, 20, 30, 40, 60, 100]), R = pick(r, [5, 10, 20, 50]);
+    const Vr = Vm * W[1], P = Vr * Vr / R;
+    const m = mcNum(r, P, [Vm * Vm / R, Vm * Vm / (2 * R), Vm * Vm / (3 * R), Vm * Vm / (4 * R), Vm * Vm / (8 * R)], v => U(v, "W"));
+    return { q: `最大値 Vm = ${Vm} [V] の${W[0]}の電圧を ${R} [Ω] の抵抗に加えたとき、抵抗で消費される電力として、最も近いものを下の番号から選べ。`, ...m,
+      e: `${W[0]}の実効値は ${W[2]} = ${fmtN(Vr)} [V]。P = V²/R = ${fmtN(Vr)}² ÷ ${R} ≒ ${U(P, "W")}。電力は実効値で計算する。` };
+  },
+  rectMeter(r) {
+    const Vm = pick(r, [10, 20, 30, 50]);
+    const W = pick(r, [["方形波(振幅±Vm)", Vm, "Vm"], ["三角波(振幅±Vm)", Vm / 2, "Vm/2"], ["のこぎり波(振幅±Vm)", Vm / 2, "Vm/2"]]);
+    const read = 1.11 * W[1];
+    const m = mcNum(r, read, [W[1], Vm / Math.SQRT2, Vm, read * 2, Vm / Math.sqrt(3)], v => U(v, "V"));
+    return { q: `正弦波交流の実効値で目盛られた全波整流形電圧計で、Vm = ${Vm} [V] の${W[0]}の電圧を測定したときの指示値として、最も近いものを下の番号から選べ。ただし、正弦波の波形率を 1.11 とする。`, ...m,
+      e: `整流形計器は平均値に応答し、正弦波の実効値(平均値×波形率1.11)で目盛られている。${W[0]}の平均値は ${W[2]} = ${fmtN(W[1])} [V] なので、指示値 = 1.11 × ${fmtN(W[1])} ≒ ${U(read, "V")}。` };
+  },
+  shunt(r) {
+    if (r() < 0.5) {
+      const ra = pick(r, [0.5, 1, 2, 5, 9, 10]), n = pick(r, [5, 10, 20, 50, 100]), Rs = ra / (n - 1);
+      const m = mcNum(r, Rs, [ra / n, ra * (n - 1), ra / (n + 1), ra * n], v => U(v, "Ω"));
+      return { q: `内部抵抗 ${ra} [Ω] の電流計の測定範囲を ${n} 倍に拡大するために電流計に並列に接続する分流器の抵抗値として、最も近いものを下の番号から選べ。`, ...m, e: `分流器 Rs = r/(n−1) = ${ra} ÷ (${n}−1) ≒ ${U(Rs, "Ω")}。` };
+    }
+    const rv = pick(r, [1, 2, 5, 10, 20]), n = pick(r, [5, 10, 20, 50]), Rm = rv * (n - 1);
+    const m = mcNum(r, Rm, [rv * n, rv / (n - 1), rv * (n + 1), rv / n], v => U(v, "kΩ"));
+    return { q: `内部抵抗 ${rv} [kΩ] の電圧計の測定範囲を ${n} 倍に拡大するために電圧計に直列に接続する倍率器の抵抗値として、正しいものを下の番号から選べ。`, ...m, e: `倍率器 Rm = r(n−1) = ${rv} × (${n}−1) = ${U(Rm, "kΩ")}。` };
+  },
+  errMeasure(r) {
+    const R = pick(r, [10, 20, 50, 100]);
+    if (r() < 0.5) {
+      const ra = pick(r, [0.5, 1, 2, 5]), e = ra / R * 100;
+      const m = mcNum(r, e, [-e, e * 2, e / 2, ra / (R + ra) * 100], v => `${v > 0 ? "+" : ""}${fmtN(v)} [%]`);
+      return { q: `電圧計と電流計を用いて抵抗 R(真値 ${R} [Ω])を測定する。電流計を R と直列にし、電圧計を R と電流計の直列回路の両端に接続した。電流計の内部抵抗を ${ra} [Ω] とするとき、測定値の誤差率として最も近いものを下の番号から選べ。ただし、電圧計の内部抵抗は十分大きいものとする。`, ...m,
+        e: `電圧計は R と電流計の電圧を合わせて測るので、測定値は R + ra = ${R + ra} [Ω]。誤差率 ε = (測定値 − 真値)/真値 × 100 = ${ra}/${R} × 100 = +${fmtN(e)} [%]。` };
+    }
+    const rv = pick(r, [1000, 2000, 5000, 10000]), Rm = R * rv / (R + rv), e = (Rm - R) / R * 100;
+    const m = mcNum(r, e, [-e, e * 2, R / rv * 100, e / 2], v => `${v > 0 ? "+" : ""}${fmtN(v)} [%]`);
+    return { q: `電圧計と電流計を用いて抵抗 R(真値 ${R} [Ω])を測定する。電圧計を R の両端に接続し、電流計を R と電圧計の並列回路に直列に接続した。電圧計の内部抵抗を ${rv} [Ω] とするとき、測定値の誤差率として最も近いものを下の番号から選べ。ただし、電流計の内部抵抗は無視する。`, ...m,
+      e: `電流計は R と電圧計の電流の和を測るので、測定値は R と rv の並列値 R·rv/(R+rv) ≒ ${fmtN(Rm, 5)} [Ω]。誤差率 = (${fmtN(Rm, 5)} − ${R})/${R} × 100 = −R/(R+rv) × 100 ≒ ${fmtN(e)} [%]。` };
+  },
+  threeVolt(r) {
+    const V1 = pick(r, [20, 30, 40, 50]), V2 = pick(r, [30, 40, 50, 60]), R = pick(r, [5, 10, 20]);
+    const lo = Math.ceil(Math.sqrt(V1 * V1 + V2 * V2)) + 3, hi = V1 + V2 - 3;
+    const V3 = lo + Math.floor(r() * Math.max(1, hi - lo));
+    const P = (V3 * V3 - V1 * V1 - V2 * V2) / (2 * R);
+    const m = mcNum(r, P, [P * 2, (V3 - V1 - V2) * (V3 - V1 - V2) / R, (V3 * V3 - V1 * V1 - V2 * V2) / R / 4, V2 * V1 / R], v => U(v, "W"));
+    return { q: `3電圧計法で負荷の電力を測定する。既知抵抗 R = ${R} [Ω] と負荷を直列に接続し交流電圧を加えたところ、R の両端の電圧 V₁ = ${V1} [V]、負荷の両端の電圧 V₂ = ${V2} [V]、全体の電圧 V₃ = ${V3} [V] であった。負荷の消費電力として、最も近いものを下の番号から選べ。`, ...m,
+      e: `3電圧計法では P = (V₃² − V₁² − V₂²)/(2R) = (${V3}² − ${V1}² − ${V2}²) ÷ (2 × ${R}) ≒ ${U(P, "W")}。` };
+  },
+  opamp(r) {
+    const Ri = pick(r, [1, 2, 5, 10]), k = pick(r, [5, 10, 20]), Rf = Ri * k, Vin = pick(r, [0.1, 0.2, 0.3, 0.5]);
+    if (r() < 0.5) {
+      const Vo = -k * Vin;
+      const m = mcNum(r, Vo, [k * Vin, -(k + 1) * Vin, (k + 1) * Vin, -Vin / k], v => U(v, "V"));
+      return { q: `理想的な演算増幅器を用いた反転増幅回路で、入力抵抗 R₁ = ${Ri} [kΩ]、帰還抵抗 R₂ = ${Rf} [kΩ] とする。入力電圧が ${Vin} [V] のときの出力電圧として、正しいものを下の番号から選べ。`, ...m,
+        e: `反転増幅回路の電圧増幅度は −R₂/R₁ = −${k}。出力電圧 = −${k} × ${Vin} = ${U(Vo, "V")}(入力と逆位相)。` };
+    }
+    const G = 1 + k, Vo = G * Vin;
+    const m = mcNum(r, Vo, [k * Vin, -k * Vin, -G * Vin, (k - 1) * Vin], v => U(v, "V"));
+    return { q: `理想的な演算増幅器を用いた非反転増幅回路で、反転入力端子と接地間の抵抗 R₁ = ${Ri} [kΩ]、帰還抵抗 R₂ = ${Rf} [kΩ] とする。入力電圧が ${Vin} [V] のときの出力電圧として、正しいものを下の番号から選べ。`, ...m,
+      e: `非反転増幅回路の電圧増幅度は 1 + R₂/R₁ = ${G}。出力電圧 = ${G} × ${Vin} = ${U(Vo, "V")}(入力と同位相)。` };
+  },
+  trAmp(r) {
+    const hfe = pick(r, [100, 150, 200]), hie = pick(r, [2, 3, 5]), RC = pick(r, [4, 6, 12]), RL = pick(r, [4, 6, 12]);
+    const RLp = RC * RL / (RC + RL), Av = hfe * RLp / hie;
+    const m = mcNum(r, Av, [hfe * RC / hie, hfe * RL / hie, hfe * (RC + RL) / hie, hfe * RLp], v => fmtN(v));
+    return { q: `エミッタ接地トランジスタ増幅回路において、電流増幅率 hfe = ${hfe}、入力インピーダンス hie = ${hie} [kΩ]、コレクタ抵抗 RC = ${RC} [kΩ]、負荷抵抗 RL = ${RL} [kΩ] のとき、電圧増幅度の大きさとして最も近いものを下の番号から選べ。ただし、hre、hoe 及びバイアス回路の影響は無視し、結合コンデンサのリアクタンスは0とする。`, ...m,
+      e: `交流負荷 RL′ = RC∥RL = ${RC}×${RL}/(${RC}+${RL}) = ${fmtN(RLp)} [kΩ]。|Av| = hfe × RL′/hie = ${hfe} × ${fmtN(RLp)} ÷ ${hie} ≒ ${fmtN(Av)}。` };
+  },
+  heat(r) {
+    const Tj = pick(r, [125, 150, 175]), Ta = pick(r, [25, 40, 50]), t1 = pick(r, [1, 1.5, 2]), t2 = pick(r, [3, 3.5, 4, 8]);
+    const P = (Tj - Ta) / (t1 + t2);
+    const m = mcNum(r, P, [(Tj - Ta) / t2, Tj / (t1 + t2), (Tj - Ta) / t1, (Tj + Ta) / (t1 + t2)], v => U(v, "W"));
+    return { q: `最高接合部温度 ${Tj} [℃] のトランジスタを放熱器に取り付けて周囲温度 ${Ta} [℃] で使用する。接合部とケース間の熱抵抗が ${t1} [℃/W]、ケースと周囲間(放熱器を含む)の熱抵抗が ${t2} [℃/W] のとき、許容できる最大コレクタ損失として、最も近いものを下の番号から選べ。`, ...m,
+      e: `熱抵抗は直列に加算できる。Pc = (Tj − Ta)/(θ₁ + θ₂) = (${Tj} − ${Ta}) ÷ (${t1} + ${t2}) ≒ ${U(P, "W")}。` };
+  },
+  osc(r) {
+    const mode = pick(r, ["wien", "phase", "colpitts"]);
+    if (mode === "wien") {
+      const R = pick(r, [1, 2, 5, 10]), C = pick(r, [0.01, 0.02, 0.1]), f = 1 / (2 * Math.PI * R * 1e3 * C * 1e-6);
+      const m = mcNum(r, f / 1e3, [f / 1e3 * 2 * Math.PI, f / 1e3 / Math.sqrt(6), f / 1e3 * 2, f / 1e3 / 2], v => U(v, "kHz"));
+      return { q: `ウィーンブリッジ形 CR 発振回路で、ブリッジの抵抗をすべて ${R} [kΩ]、コンデンサをすべて ${C} [μF] としたときの発振周波数として、最も近いものを下の番号から選べ。`, ...m,
+        e: `ウィーンブリッジ発振回路の発振周波数は f = 1/(2πCR) = 1/(2π × ${C}×10⁻⁶ × ${R}×10³) ≒ ${U(f / 1e3, "kHz")}。増幅器には3倍以上の利得が必要。` };
+    }
+    if (mode === "phase") {
+      const R = pick(r, [1, 2, 5, 10]), C = pick(r, [0.01, 0.02, 0.1]), f = 1 / (2 * Math.PI * Math.sqrt(6) * R * 1e3 * C * 1e-6);
+      const m = mcNum(r, f / 1e3, [f / 1e3 * Math.sqrt(6), f / 1e3 * 2 * Math.PI, f / 1e3 * 6, f / 1e3 / 2], v => U(v, "kHz"));
+      return { q: `3段の CR 回路(直列に C、並列に R)を帰還回路とする移相形 CR 発振回路で、R = ${R} [kΩ]、C = ${C} [μF] としたときの発振周波数として、最も近いものを下の番号から選べ。`, ...m,
+        e: `この形式の移相形発振回路の発振周波数は f = 1/(2π√6·CR) ≒ ${U(f / 1e3, "kHz")}。発振には増幅器の利得29以上が必要。` };
+    }
+    const L = pick(r, [10, 20, 50, 100]), C1 = pick(r, [200, 300, 600]), C2 = pick(r, [300, 600, 1200]);
+    const Cs = C1 * C2 / (C1 + C2), f = 1 / (2 * Math.PI * Math.sqrt(L * 1e-6 * Cs * 1e-12));
+    const m = mcNum(r, f / 1e6, [1 / (2 * Math.PI * Math.sqrt(L * 1e-6 * (C1 + C2) * 1e-12)) / 1e6, f / 1e6 * 2, f / 1e6 / 2, f / 1e6 * Math.SQRT2], v => U(v, "MHz"));
+    return { q: `コルピッツ発振回路で、コイルのインダクタンス L = ${L} [μH]、帰還用コンデンサ C₁ = ${C1} [pF]、C₂ = ${C2} [pF] のとき、発振周波数として最も近いものを下の番号から選べ。`, ...m,
+      e: `C₁ と C₂ は直列に見えるので C = C₁C₂/(C₁+C₂) = ${fmtN(Cs)} [pF]。f = 1/(2π√(LC)) ≒ ${U(f / 1e6, "MHz")}。` };
+  },
+  daConv(r) {
+    const Vref = pick(r, [8, 10, 16, 5]), D = 1 + Math.floor(r() * 15), bits = D.toString(2).padStart(4, "0");
+    const Vo = Vref * D / 16, rev = parseInt(bits.split("").reverse().join(""), 2);
+    const m = mcNum(r, Vo, [Vref * D / 15, Vref * D / 8, Vref * rev / 16, Vref * (16 - D) / 16], v => U(v, "V"));
+    return { q: `基準電圧 ${Vref} [V] の4ビット R-2R ラダー形 D-A 変換器(出力は基準電圧 × 入力値/16 となるもの)に、2進数 ${bits}(左端が最上位ビット)を入力したときの出力電圧の大きさとして、正しいものを下の番号から選べ。`, ...m,
+      e: `${bits}₂ = ${D}。出力 = ${Vref} × ${D}/16 = ${U(Vo, "V")}。` };
+  },
+  bridge(r) {
+    const P = pick(r, [10, 100, 1000]), Q = pick(r, [20, 50, 200, 500]), Rv = pick(r, [120, 250, 340, 500, 680]);
+    const X = Q * Rv / P;
+    const m = mcNum(r, X, [P * Rv / Q, P * Q / Rv, Rv * P / (Q * 2), X * 2], v => U(v, "Ω"));
+    return { q: `ホイートストンブリッジで未知抵抗 X を測定する。比例辺を P = ${P} [Ω]、Q = ${Q} [Ω] とし、可変抵抗 R を ${Rv} [Ω] に調整したとき検流計の振れが0になった。平衡条件が PX = QR のとき、X の値として正しいものを下の番号から選べ。`, ...m,
+      e: `平衡条件 PX = QR より X = QR/P = ${Q} × ${Rv} ÷ ${P} = ${U(X, "Ω")}。` };
+  }
+};
+
+// ===== 問題の組み立て =====
+const NUM = ["1", "2", "3", "4", "5"];
+const KANA5 = ["ア", "イ", "ウ", "エ", "オ"];
+const SLOT = ["A", "B", "C", "D"];
+function buildA(item, r, s) {
+  const S = SUBJ[s], n = S.opt;
+  if (item.k === "calc") {
+    const g = CALC[item.g](r);
+    return { kind: "A", sub: "calc", p: item.a, t: item.t, q: g.q, choices: g.choices, ans: g.ans, e: g.e };
+  }
+  if (item.k === "combo") {
+    const k = item.slots.length, all = [];
+    for (let m = 0; m < (1 << k); m++) all.push(item.slots.map((sl, i) => sl[(m >> i) & 1]));
+    const rows = shuffle(r, [all[0], ...shuffle(r, all.slice(1)).slice(0, n - 1)]);
+    const ans = rows.indexOf(all[0]);
+    const q = `次の記述は、${item.t}について述べたものである。${S === SUBJ.hoki ? "電波法令の規定に照らし、" : ""}［　］内に入れるべき${S === SUBJ.hoki ? "最も適切な" : "適切な"}字句の正しい組合せを下の番号から選べ。`;
+    return { kind: "A", sub: "combo", p: item.a, t: item.t, q, body: item.q, cols: SLOT.slice(0, k), rows, ans, e: item.e || "" };
+  }
+  // stmt
+  const T = item.s.filter(x => x[1]), F = item.s.filter(x => !x[1]);
+  const fm = [];
+  if (F.length >= 1 && T.length >= n - 1) fm.push("wrong", "wrong", "wrong");
+  if (T.length >= 1 && F.length >= n - 1) fm.push("right");
+  const f = pick(r, fm.length ? fm : ["wrong"]);
+  const target = f === "right" ? T : F, others = f === "right" ? F : T;
+  const st = shuffle(r, [pick(r, target), ...shuffle(r, others).slice(0, n - 1)]);
+  const ans = st.findIndex(x => (f === "right") === !!x[1]);
+  const word = s === "hoki" ? (f === "right" ? "規定に適合するもの" : "規定に適合しないもの") : (f === "right" ? "正しいもの" : "誤っているもの");
+  const q = `${item.t}に関する次の記述のうち、${word}を下の番号から選べ。`;
+  return { kind: "A", sub: "stmt", f, p: item.a, t: item.t, q, stmts: st.map(x => ({ t: x[0], ok: !!x[1], e: x[2] })), ans };
+}
+function buildB(item, r, s) {
+  if (item.k === "fill") {
+    const opts = shuffle(r, [...item.ans, ...shuffle(r, item.dis).slice(0, 10 - item.ans.length)]);
+    return { kind: "B", sub: "fill", p: item.a, t: item.t,
+      q: `次の記述は、${item.t}について述べたものである。（　）内に入れるべき字句を下の番号から選べ。`,
+      body: item.q, options: opts, ans: item.ans.map(x => opts.indexOf(x)), e: item.e || "" };
+  }
+  const T = item.s.filter(x => x[1]), F = item.s.filter(x => !x[1]);
+  const lo = Math.max(1, 5 - T.length), hi = Math.max(lo, Math.min(F.length, 3));
+  const nF = lo + Math.floor(r() * (hi - lo + 1));
+  const chosen = shuffle(r, [...shuffle(r, F).slice(0, nF), ...shuffle(r, T).slice(0, 5 - nF)]).slice(0, 5);
+  return { kind: "B", sub: "tf", p: item.a, t: item.t,
+    q: `次の記述は、${item.t}に関するものである。${s === "hoki" ? "電波法令の規定に照らし、" : ""}正しいものを1、誤っているものを2として解答せよ。`,
+    items: chosen.map(x => ({ t: x[0], ok: !!x[1], e: x[2] })), options: ["1（正）", "2（誤）"], ans: chosen.map(x => x[1] ? 0 : 1) };
+}
+const canB = it => it.k === "fill" || (it.k === "stmt" && it.s.length >= 5 && it.s.some(x => !x[1]) && it.s.filter(x => x[1]).length >= 2);
+function buildExam(s, seed) {
+  const S = SUBJ[s], r = rngFrom(seed), pool = S.pool(), used = new Set(), A = [], B = [];
+  const take = (cands, n) => { const out = []; for (const it of shuffle(r, cands)) { if (out.length >= n) break; if (used.has(it.t)) continue; used.add(it.t); out.push(it); } return out; };
+  // B問題: 穴埋めと正誤をバランスよく
+  const fills = pool.filter(x => x.k === "fill"), tfs = pool.filter(x => x.k === "stmt" && canB(x));
+  const nFill = Math.min(fills.length, 2 + Math.floor(r() * 2));
+  const bItems = [...take(fills, nFill), ...take(tfs, S.nB - nFill)];
+  // A問題
+  const q = S.quota, aItems = [];
+  for (const k of Object.keys(q)) aItems.push(...take(pool.filter(x => x.k === k), q[k]));
+  if (aItems.length < S.nA) aItems.push(...take(pool.filter(x => x.k !== "fill"), S.nA - aItems.length));
+  const areaOrder = Object.keys(S.areas);
+  shuffle(r, aItems).sort((x, y) => areaOrder.indexOf(String(x.a)) - areaOrder.indexOf(String(y.a))).slice(0, S.nA).forEach(it => A.push(buildA(it, r, s)));
+  bItems.sort((x, y) => areaOrder.indexOf(String(x.a)) - areaOrder.indexOf(String(y.a))).forEach(it => B.push(buildB(it, r, s)));
+  return [...A, ...B];
+}
+function buildOne(item, r, s) {
+  if (item.k === "fill") return buildB(item, r, s);
+  if (item.k === "stmt" && canB(item) && r() < 0.35) return buildB(item, r, s);
+  return buildA(item, r, s);
+}
+const seedFor = (s, n) => ({ kiso: 31337, hoki: 52361, a: 71993, b: 93911 }[s]) + n * 7919;
+const qScore = (q, a) => q.kind === "A" ? (a === q.ans ? 5 : 0) : q.ans.reduce((t, x, i) => t + ((a && a[i] === x) ? 1 : 0), 0);
+const qFull = q => 5;
+
+if (typeof module !== "undefined") module.exports = { SUBJ, SETS, CALC, buildExam, buildOne, buildA, buildB, seedFor, rngFrom, qScore, fmtN };
+
+const HKEY = "rikugi.hist.v1", SKEY = "rikugi.study.v1";
+const jget = k => { try { return JSON.parse(localStorage.getItem(k) || "{}") || {}; } catch (e) { return {}; } };
+const jset = (k, d) => { try { localStorage.setItem(k, JSON.stringify(d)); } catch (e) {} };
+const sUnit = (d, s) => d[s] || (d[s] = { wrong: [], marks: [], stats: {} });
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $app = document.getElementById("app");
+let S = { view: "home" }, tick = null;
+
+// ---------- 記録 ----------
+function qid(q) {
+  const str = [q.q, q.body || "", (q.stmts || []).map(x => x.t).join("|"), (q.items || []).map(x => x.t).join("|"), (q.choices || []).join("|"), (q.rows || []).map(r => r.join("/")).join("|"), (q.options || []).join("|"), JSON.stringify(q.ans)].join("#");
+  let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36);
+}
+const tkey = q => q.p + "|" + q.t;
+function recordMany(s, list) {
+  const d = jget(SKEY), su = sUnit(d, s), now = Date.now();
+  for (const { q, score } of list) {
+    const st = su.stats[tkey(q)] || (su.stats[tkey(q)] = { a: 0, c: 0 }); st.a++; st.c += score / 5; st.at = now;
+    if (score < 5) { const id = qid(q); su.wrong = su.wrong.filter(w => w.id !== id); su.wrong.push({ id, q, at: now }); }
+  }
+  if (su.wrong.length > 300) su.wrong = su.wrong.slice(-300);
+  jset(SKEY, d);
+}
+function clearWrong(s, id) { const d = jget(SKEY), su = sUnit(d, s); su.wrong = su.wrong.filter(w => w.id !== id); jset(SKEY, d); }
+const isMarked = (s, q) => { const id = qid(q); return sUnit(jget(SKEY), s).marks.some(m => m.id === id); };
+function toggleMark(s, q) { const d = jget(SKEY), su = sUnit(d, s), id = qid(q), i = su.marks.findIndex(m => m.id === id); if (i >= 0) su.marks.splice(i, 1); else su.marks.push({ id, q, at: Date.now() }); jset(SKEY, d); }
+function removeMark(s, id) { const d = jget(SKEY), su = sUnit(d, s); su.marks = su.marks.filter(m => m.id !== id); jset(SKEY, d); }
+function analysis(s) {
+  const Sb = SUBJ[s], su = sUnit(jget(SKEY), s);
+  const topics = Sb.pool().map(it => { const st = su.stats[it.a + "|" + it.t] || { a: 0, c: 0 }; return { p: String(it.a), t: it.t, a: st.a, c: st.c, acc: (st.c + 1) / (st.a + 2), item: it }; });
+  const parts = Object.keys(Sb.areas).map(p => { const ts = topics.filter(x => x.p === p); const a = ts.reduce((t, x) => t + x.a, 0), c = ts.reduce((t, x) => t + x.c, 0); return { p, a, c, rate: a ? c / a : null }; });
+  const a = parts.reduce((t, x) => t + x.a, 0), c = parts.reduce((t, x) => t + x.c, 0), avg = a ? c / a : 0;
+  const rated = parts.filter(x => x.a >= 3).sort((x, y) => x.rate - y.rate);
+  return { topics, parts, a, c, avg, weak: rated.filter(x => x.rate < avg).slice(0, 2).map(x => x.p), weakest: rated.length ? rated[0].p : null };
+}
+
+// ---------- 表示部品 ----------
+const pct = x => Math.round(x * 100);
+const mmss = ms => { ms = Math.max(0, ms); const s = Math.ceil(ms / 1000); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+const setName = set => set === "r" ? "ランダム" : `第${set}回`;
+const qLabel = (s, i) => i < SUBJ[s].nA ? `A-${i + 1}` : `B-${i - SUBJ[s].nA + 1}`;
+const fmtBody = t => esc(t).replace(/［([A-D])］/g, '<span class="blank">$1</span>').replace(/（([アイウエオ])）/g, '<span class="blank kana">$1</span>');
+const answered = (q, a) => q.kind === "A" ? a != null : !!(a && a.every(x => x != null));
+const partial = (q, a) => q.kind === "B" && a && a.some(x => x != null) && !a.every(x => x != null);
+function star(on, src, i) {
+  return `<button class="star${on ? " on" : ""}" data-act="mark" data-src="${src}"${i != null ? ` data-i="${i}"` : ""} aria-pressed="${on}"><span aria-hidden="true">${on ? "★" : "☆"}</span>${on ? "保存済み" : "ブックマーク"}</button>`;
+}
+function waveSVG(seed) {
+  const r = rngFrom(seed), w = 600, h = 120; let d = "";
+  const f1 = 2 + Math.floor(r() * 3), f2 = 7 + Math.floor(r() * 5), a2 = 0.18 + r() * 0.2;
+  for (let x = 0; x <= w; x += 4) { const t = x / w * Math.PI * 2; const y = h / 2 - (Math.sin(t * f1) * 0.62 + Math.sin(t * f2 + 1) * a2) * h * 0.38; d += (x ? "L" : "M") + x + " " + y.toFixed(1); }
+  let grid = ""; for (let x = 0; x <= w; x += 60) grid += `<line x1="${x}" y1="0" x2="${x}" y2="${h}"/>`; for (let y = 0; y <= h; y += 30) grid += `<line x1="0" y1="${y}" x2="${w}" y2="${y}"/>`;
+  return `<svg class="wave" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><g class="grid">${grid}</g><path d="${d}"/></svg>`;
+}
+function qBody(q, sel, o) {
+  o = o || {};
+  let h = `<p class="prompt">${esc(q.q)}</p>`;
+  if (q.kind === "A") {
+    if (q.sub === "stmt") h += `<ol class="stmts">${q.stmts.map((x, i) => `<li${o.reveal ? ` class="${x.ok ? "is-ok" : "is-ng"}"` : ""}><span class="k">${i + 1}</span><div><p>${esc(x.t)}</p>${o.reveal ? `<p class="ex"><b>${x.ok ? "◯ 適合(正しい)" : "✕ 不適合(誤り)"}</b>${esc(x.e)}</p>` : ""}</div></li>`).join("")}</ol>`;
+    if (q.sub === "combo") h += `<div class="body">${fmtBody(q.body)}</div><div class="tbl"><table class="combo"><thead><tr><th scope="col"></th>${q.cols.map(c => `<th scope="col">${c}</th>`).join("")}</tr></thead><tbody>${q.rows.map((row, i) => `<tr${o.reveal && i === q.ans ? ' class="is-ans"' : ""}><th scope="row">${i + 1}</th>${row.map(x => `<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+    if (q.sub === "calc") h += `<ol class="choices">${q.choices.map((c, i) => `<li${o.reveal && i === q.ans ? ' class="is-ans"' : ""}><span class="k">${i + 1}</span><span>${esc(c)}</span></li>`).join("")}</ol>`;
+    const n = q.sub === "stmt" ? q.stmts.length : q.sub === "combo" ? q.rows.length : q.choices.length;
+    h += `<div class="ansbox"><p class="cap">解答</p><div class="bubbles" role="radiogroup" aria-label="解答">${Array.from({ length: n }, (_, i) => {
+      let c = "bub"; if (sel === i) c += " on"; if (o.reveal) { if (i === q.ans) c += " right"; else if (sel === i) c += " miss"; }
+      return `<button class="${c}" role="radio" aria-checked="${sel === i}" aria-label="${i + 1}" data-act="${o.act || "pick"}" data-i="${i}"${o.lock ? " disabled" : ""}><span class="lb">${i + 1}</span><span class="dot"></span></button>`;
+    }).join("")}</div></div>`;
+    if (o.reveal && q.e) h += `<div class="ex calc"><b>解説</b><p>${esc(q.e)}</p></div>`;
+    return h;
+  }
+  const a = sel || [];
+  if (q.sub === "tf") {
+    h += `<ol class="tf">${q.items.map((it, j) => `<li${o.reveal ? ` class="${it.ok ? "is-ok" : "is-ng"}"` : ""}><span class="k">${KANA5[j]}</span><div><p>${esc(it.t)}</p><div class="tfbtns" role="radiogroup" aria-label="${KANA5[j]}">${[0, 1].map(i => {
+      let c = "tfb"; if (a[j] === i) c += " on"; if (o.reveal) { if (i === q.ans[j]) c += " right"; else if (a[j] === i) c += " miss"; }
+      return `<button class="${c}" role="radio" aria-checked="${a[j] === i}" data-act="${o.bact || "bpick"}" data-j="${j}" data-i="${i}"${o.lock ? " disabled" : ""}>${i === 0 ? "1　正" : "2　誤"}</button>`;
+    }).join("")}</div>${o.reveal ? `<p class="ex"><b>${it.ok ? "◯ 正しい" : "✕ 誤り"}</b>${esc(it.e)}</p>` : ""}</div></li>`).join("")}</ol>`;
+    return h;
+  }
+  h += `<div class="body">${fmtBody(q.body)}</div><ol class="opts10">${q.options.map((x, i) => `<li${o.reveal && q.ans.includes(i) ? ' class="is-ans"' : ""}><span class="k">${i + 1}</span><span>${esc(x)}</span></li>`).join("")}</ol>`;
+  h += `<div class="ansbox"><p class="cap">解答</p>${q.ans.map((right, j) => `<div class="frow"><span class="fk">${KANA5[j]}</span><div class="n10" role="radiogroup" aria-label="${KANA5[j]}">${q.options.map((_, i) => {
+    let c = "nb"; if (a[j] === i) c += " on"; if (o.reveal) { if (i === right) c += " right"; else if (a[j] === i) c += " miss"; }
+    return `<button class="${c}" role="radio" aria-checked="${a[j] === i}" aria-label="${KANA5[j]}に${i + 1}" data-act="${o.bact || "bpick"}" data-j="${j}" data-i="${i}"${o.lock ? " disabled" : ""}>${i + 1}</button>`;
+  }).join("")}</div></div>`).join("")}</div>`;
+  if (o.reveal) h += `<div class="ex calc"><b>正解</b><p>${q.ans.map((x, j) => `${KANA5[j]}：${x + 1}(${esc(q.options[x])})`).join("　")}</p>${q.e ? `<p>${esc(q.e)}</p>` : ""}</div>`;
+  return h;
+}
+
+// ---------- ホーム ----------
+function home() {
+  const h = jget(HKEY);
+  return `<div class="home">
+  <header class="mast">${waveSVG(4)}
+    <p class="course">無線従事者国家試験</p>
+    <h1>第一級陸上無線技術士<span>模擬試験</span></h1>
+    <p class="lead">公開されている過去問の出題テーマ(過去15回程度)をもとにした予想問題です。A問題(計算・正誤・字句の組合せ)とB問題(穴埋め・正誤)を本番と同じ配点で出題します。計算問題は回ごとに数値が変わります。</p>
+  </header>
+  <div class="subjects">${SUBJ_ORDER.map(s => subjCard(s, h[s] || {})).join("")}</div>
+  <footer class="note">
+    <p>問題はオリジナルの予想問題で、実際の試験問題ではありません。法令は作成時点(2026年)の内容に基づいています。試験日程・最新の法令改正は日本無線協会や総務省の情報で確認してください。</p>
+    <p>4科目すべてに合格すると免許が受けられます。合格した科目は、その試験の翌月から3年以内の試験で免除されます(申請が必要)。受験記録はこの端末のブラウザに保存されます。</p>
+  </footer>
+</div>`;
+}
+function subjCard(s, hs) {
+  const Sb = SUBJ[s], recs = Object.values(hs), best = recs.length ? Math.max(...recs.map(x => x.best)) : null;
+  const passed = best != null && best >= Sb.pass;
+  return `<button class="scard s-${s}${Sb.ready ? "" : " soon"}" data-act="${Sb.ready ? "subj" : "soon"}" data-s="${s}"${Sb.ready ? "" : ' aria-disabled="true"'}>
+    <span class="sc-day">${Sb.day}</span>
+    <span class="sc-name">${Sb.name}</span>
+    <span class="sc-spec">${Sb.min}分・${Sb.nA + Sb.nB}問・合格 ${Sb.pass}/${Sb.full}点</span>
+    <span class="sc-stat">${Sb.ready ? (best == null ? "まだ受験していません" : `最高 ${best}点${passed ? "　合格点到達" : ""}　受験 ${recs.reduce((t, x) => t + x.n, 0)}回`) : "準備中(次の更新で追加します)"}</span>
+  </button>`;
+}
+
+// ---------- 科目ページ ----------
+function subj() {
+  const s = S.sb.s, Sb = SUBJ[s], hs = jget(HKEY)[s] || {}, su = sUnit(jget(SKEY), s), an = analysis(s);
+  const cells = Array.from({ length: SETS }, (_, i) => { const k = String(i + 1), rec = hs[k]; const st = rec ? (rec.best >= Sb.pass ? "pass" : "tried") : "";
+    return `<button class="set ${st}" data-act="start" data-s="${s}" data-set="${k}" aria-label="第${k}回${rec ? `、最高${rec.best}点` : "、未受験"}"><span class="n">${k}</span><span class="b">${rec ? rec.best + "点" : ""}</span></button>`; }).join("");
+  return `<div class="page s-${s}">
+  <div class="dr-top"><button class="btn sm" data-act="home">科目一覧へ</button></div>
+  <header class="shead">${waveSVG({ kiso: 11, hoki: 23 }[s] || 5)}<p class="sc-day">${Sb.day}</p><h1>${Sb.name}</h1>
+    <dl class="spec"><div><dt>試験時間</dt><dd>${Sb.min}分</dd></div><div><dt>問題数</dt><dd>A ${Sb.nA}問・B ${Sb.nB}問</dd></div><div><dt>合格基準</dt><dd>${Sb.pass}点／${Sb.full}点</dd></div></dl></header>
+  <section class="panel">
+    <p class="ph">受験する回を選んでください</p>
+    <div class="sets">${cells}</div>
+    <p class="legend"><span class="lg tried"></span>受験済み <span class="lg pass"></span>合格点に到達</p>
+    <div class="row"><button class="btn primary" data-act="start" data-s="${s}" data-set="r">ランダムな組み合わせで受験</button><button class="btn" data-act="drill" data-s="${s}">分野別ドリルで練習</button></div>
+    ${hs.r ? `<p class="small">ランダム受験:最高${hs.r.best}点(${hs.r.n}回)</p>` : ""}
+    <p class="ph sub-h">復習と分析</p>
+    <div class="study">
+      <button class="tile" data-act="review" data-s="${s}"><span class="tl">間違えた問題</span><b>${su.wrong.length}<small>問</small></b></button>
+      <button class="tile" data-act="marks" data-s="${s}"><span class="tl">ブックマーク</span><b>${su.marks.length}<small>問</small></b></button>
+      <button class="tile" data-act="weak" data-s="${s}"><span class="tl">${an.weakest ? "いちばん苦手" : "苦手分析"}</span><b class="wk">${an.weakest ? esc(Sb.areas[an.weakest]) : "—"}</b></button>
+    </div>
+  </section>
+</div>`;
+}
+
+// ---------- 試験 ----------
+function startExam(s, set) {
+  const Sb = SUBJ[s], seed = set === "r" ? (Date.now() % 2147483647) : seedFor(s, +set), qs = buildExam(s, seed), now = Date.now();
+  S = { view: "exam", ex: { s, set, qs, a: qs.map(q => q.kind === "A" ? null : [null, null, null, null, null]), fl: qs.map(() => false), cur: 0, t0: now, end: now + Sb.min * 60000, sheet: null, quitArm: false } };
+  clearInterval(tick);
+  tick = setInterval(() => { if (S.view !== "exam") { clearInterval(tick); return; } const left = S.ex.end - Date.now(), el = document.getElementById("timer"); if (el) { el.textContent = mmss(left); el.classList.toggle("low", left < 600000); } if (left <= 0) finish(true); }, 1000);
+  render(true);
+}
+function exam() {
+  const ex = S.ex, Sb = SUBJ[ex.s], q = ex.qs[ex.cur], n = ex.qs.length, left = ex.end - Date.now();
+  return `<div class="exam s-${ex.s}">
+  <div class="bar"><span class="chip">${Sb.short}　${setName(ex.set)}</span><span class="prog">${ex.cur + 1}<small>／${n}</small></span>
+    <span class="timer${left < 600000 ? " low" : ""}" id="timer" role="timer" aria-label="残り時間">${mmss(left)}</span>
+    <button class="btn sm" data-act="sheet" data-v="list"><span class="w">問題</span>一覧</button></div>
+  <main class="sheet">
+    <div class="qhead"><span class="qno">${qLabel(ex.s, ex.cur)}</span><span class="qpart">${esc(Sb.areas[q.p])}${q.kind === "B" ? "　小問各1点" : ""}</span>${star(isMarked(ex.s, q), "exam")}</div>
+    ${qBody(q, ex.a[ex.cur], {})}
+  </main>
+  <nav class="foot" aria-label="問題の移動">
+    <button class="btn" data-act="prev"${ex.cur === 0 ? " disabled" : ""}>前へ</button>
+    <button class="btn flag${ex.fl[ex.cur] ? " on" : ""}" data-act="flag" aria-pressed="${ex.fl[ex.cur]}">見直し</button>
+    ${ex.cur < n - 1 ? `<button class="btn primary" data-act="next">次へ</button>` : `<button class="btn primary" data-act="sheet" data-v="confirm">解答を終了</button>`}
+  </nav>
+  ${ex.sheet === "list" ? listSheet() : ""}${ex.sheet === "confirm" ? confirmSheet() : ""}
+</div>`;
+}
+function listSheet() {
+  const ex = S.ex, un = ex.qs.filter((q, i) => !answered(q, ex.a[i])).length;
+  return `<div class="overlay" data-act="close"><div class="sheetbox" role="dialog" aria-modal="true" aria-label="問題一覧">
+    <div class="sb-head"><h2>問題一覧</h2><button class="btn sm" data-act="close">閉じる</button></div>
+    <div class="grid">${ex.qs.map((q, i) => `<button class="cell${answered(q, ex.a[i]) ? " done" : partial(q, ex.a[i]) ? " part" : ""}${ex.fl[i] ? " fl" : ""}${i === ex.cur ? " cur" : ""}" data-act="jump" data-i="${i}">${qLabel(ex.s, i)}</button>`).join("")}</div>
+    <p class="legend"><span class="lg done"></span>解答済み <span class="lg part"></span>B問題の途中 <span class="lg fl"></span>見直し　未完了 ${un}問</p>
+    <div class="row"><button class="btn primary" data-act="sheet" data-v="confirm">解答を終了</button><button class="btn ghost" data-act="quit">${ex.quitArm ? "もう一度押すと中断します(記録されません)" : "中断して戻る"}</button></div>
+  </div></div>`;
+}
+function confirmSheet() {
+  const ex = S.ex, un = ex.qs.filter((q, i) => !answered(q, ex.a[i])).length, fl = ex.fl.filter(Boolean).length;
+  return `<div class="overlay" data-act="close"><div class="sheetbox" role="dialog" aria-modal="true" aria-label="解答の終了">
+    <h2>解答を終了して採点しますか</h2><p>${un ? `解答が終わっていない問題が${un}問あります。` : "すべての問題に解答しています。"}${fl ? `見直しの印が${fl}問に付いています。` : ""}</p>
+    <div class="row"><button class="btn" data-act="close">試験に戻る</button><button class="btn primary" data-act="finish">採点する</button></div>
+  </div></div>`;
+}
+function finish(timeout) {
+  const ex = S.ex; clearInterval(tick);
+  const Sb = SUBJ[ex.s], sc = ex.qs.map((q, i) => qScore(q, ex.a[i])), score = sc.reduce((t, x) => t + x, 0);
+  const h = jget(HKEY); h[ex.s] = h[ex.s] || {}; const rec = h[ex.s][ex.set] || { best: 0, n: 0 };
+  rec.best = Math.max(rec.best, score); rec.last = score; rec.n++; rec.at = Date.now(); h[ex.s][ex.set] = rec; jset(HKEY, h);
+  recordMany(ex.s, ex.qs.map((q, i) => ({ q, score: sc[i] })));
+  S = { view: "result", rs: { s: ex.s, set: ex.set, qs: ex.qs, a: ex.a, sc, score, used: Math.min(Date.now(), ex.end) - ex.t0, timeout: !!timeout, onlyWrong: false, nWrong: sc.filter(x => x < 5).length } };
+  render(true);
+}
+function result() {
+  const R = S.rs, Sb = SUBJ[R.s], pass = R.score >= Sb.pass;
+  const aPts = R.sc.slice(0, Sb.nA).reduce((t, x) => t + x, 0), bPts = R.sc.slice(Sb.nA).reduce((t, x) => t + x, 0);
+  const parts = Object.keys(Sb.areas).map(p => { const idx = R.qs.map((q, i) => i).filter(i => String(R.qs[i].p) === p); return { p, c: idx.reduce((t, i) => t + R.sc[i], 0), t: idx.length * 5 }; }).filter(x => x.t);
+  const items = R.qs.map((q, i) => ({ q, i })).filter(o => !R.onlyWrong || R.sc[o.i] < 5);
+  return `<div class="result s-${R.s}">
+  <section class="score-card">
+    <p class="rs-title">${Sb.name}　${setName(R.set)}の結果</p>
+    <p class="score"><b>${R.score}</b><span>／${Sb.full}点</span></p>
+    <p class="verdict ${pass ? "pass" : "fail"}">${pass ? "合格基準に到達しました" : `合格基準まであと${Sb.pass - R.score}点`}<span>合格基準 ${Sb.pass}点</span></p>
+    <p class="meta">A問題 ${aPts}／${Sb.nA * 5}点　B問題 ${bPts}／${Sb.nB * 5}点<br>所要時間 ${Math.max(1, Math.round(R.used / 60000))}分${R.timeout ? "(時間切れで自動採点)" : ""}</p>
+    <div class="row"><button class="btn primary" data-act="start" data-s="${R.s}" data-set="${R.set}">${R.set === "r" ? "新しい組み合わせで受験" : "この回をもう一度受験"}</button><button class="btn" data-act="subj" data-s="${R.s}">回の一覧へ戻る</button></div>
+    ${R.nWrong ? `<div class="note-box"><p>満点でなかった問題 ${R.nWrong}問を、復習リストに追加しました。</p><button class="btn sm" data-act="review" data-s="${R.s}">今すぐ復習する</button></div>` : ""}
+  </section>
+  <section class="breakdown"><h2>分野別の得点</h2>${parts.map(x => `<div class="bd"><span class="bd-n">${esc(Sb.areas[x.p])}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.c / x.t * 100}%"></i></span><span class="bd-v">${x.c}／${x.t}</span></div>`).join("")}</section>
+  <section class="review"><div class="rv-head"><h2>問題と解説</h2><label class="tog"><input type="checkbox" id="onlywrong"${R.onlyWrong ? " checked" : ""}> 満点でない問題だけ表示</label></div>
+    ${items.map(({ q, i }) => { const full = R.sc[i] === 5, none = R.sc[i] === 0;
+      return `<details class="rv ${full ? "ok" : none ? "ng" : "pt"}" data-k="r${i}"><summary><span class="mk">${full ? "◯" : none ? "✕" : "△"}</span><span class="rv-no">${qLabel(R.s, i)}</span><span class="rv-t">${esc(q.t)}</span><span class="rv-a">${R.sc[i]}／5点${q.kind === "A" ? `　あなた ${R.a[i] == null ? "未解答" : R.a[i] + 1}　正解 ${q.ans + 1}` : ""}</span></summary><div class="rv-body"><div class="rv-tools">${star(isMarked(R.s, q), "rs", i)}</div>${qBody(q, R.a[i], { reveal: true, lock: true })}</div></details>`; }).join("")}
+    ${items.length ? "" : `<p class="small">満点でなかった問題はありません。</p>`}
+  </section>
+</div>`;
+}
+
+// ---------- ドリル・復習・ブックマーク・苦手 ----------
+const DTITLE = { drill: "分野別ドリル", focus: "苦手分野の重点練習", review: "間違えた問題の復習", marks: "ブックマークの問題" };
+function startDrill(s, mode) { S = { view: "drill", dr: { s, mode: mode || "drill", parts: Object.keys(SUBJ[s].areas), q: null, sel: null, done: false, c: 0, n: 0, last: null, queue: [], lastId: null, cleared: 0 } }; nextDrill(); render(true); }
+function wpick(items, ws) { const tot = ws.reduce((a, b) => a + b, 0); let x = Math.random() * tot; for (let i = 0; i < items.length; i++) { x -= ws[i]; if (x <= 0) return items[i]; } return items[items.length - 1]; }
+function nextDrill() {
+  const d = S.dr, Sb = SUBJ[d.s], seed = () => rngFrom(Math.floor(Math.random() * 2147483647));
+  d.done = false;
+  if (d.mode === "review" || d.mode === "marks") {
+    const su = sUnit(jget(SKEY), d.s), list = d.mode === "review" ? su.wrong : su.marks;
+    if (!list.length) { d.q = null; return; }
+    d.queue = d.queue.filter(id => list.some(x => x.id === id));
+    if (!d.queue.length) d.queue = shuffle(seed(), list.map(x => x.id));
+    let id = d.queue.shift(); if (id === d.lastId && d.queue.length) { d.queue.push(id); id = d.queue.shift(); }
+    d.lastId = id; d.q = list.find(x => x.id === id).q;
+  } else {
+    let it;
+    if (d.mode === "focus") { const c = analysis(d.s).topics.filter(x => x.item !== d.last); it = wpick(c, c.map(x => Math.max(0.02, Math.pow(1 - x.acc, 2)))).item; }
+    else { const pool = Sb.pool().filter(x => d.parts.includes(String(x.a))); if (!pool.length) { d.q = null; return; } let g = 0; do { it = pool[Math.floor(Math.random() * pool.length)]; g++; } while (pool.length > 1 && it === d.last && g < 10); }
+    d.last = it; d.q = buildOne(it, seed(), d.s);
+  }
+  d.sel = d.q && d.q.kind === "B" ? [null, null, null, null, null] : null;
+}
+function topBar(s, act) {
+  return `<div class="dr-top"><button class="btn sm" data-act="subj" data-s="${s}">戻る</button>
+    <div class="seg" role="group" aria-label="科目">${SUBJ_ORDER.filter(x => SUBJ[x].ready).map(x => `<button class="segbtn" data-act="${act}" data-s="${x}" aria-pressed="${x === s}">${SUBJ[x].short}</button>`).join("")}</div></div>`;
+}
+function gradeDrill() {
+  const d = S.dr, sc = qScore(d.q, d.sel); d.done = true; d.n++; d.c += sc / 5;
+  recordMany(d.s, [{ q: d.q, score: sc }]);
+  if (d.mode === "review" && sc === 5) { clearWrong(d.s, qid(d.q)); d.cleared++; }
+  d.lastScore = sc;
+}
+function drill() {
+  const d = S.dr, Sb = SUBJ[d.s], su = sUnit(jget(SKEY), d.s);
+  let sub = d.mode === "review" ? `残り${su.wrong.length}問${d.cleared ? `　今回克服 ${d.cleared}問` : ""}` : d.mode === "marks" ? `ブックマーク ${su.marks.length}問` : d.mode === "focus" ? "正答率の低いテーマほど多く出題します" : "";
+  const empty = d.mode === "review" ? "復習する問題はありません。模擬試験やドリルで満点でなかった問題が、ここに自動で入ります。" : d.mode === "marks" ? "ブックマークした問題はありません。問題の右上の「☆ ブックマーク」で追加できます。" : "出題する分野を1つ以上選んでください。";
+  const q = d.q, isB = q && q.kind === "B";
+  const res = d.done ? (d.lastScore === 5 ? "◯ 正解" : isB ? `△ ${d.lastScore}／5点` : `✕ 不正解　正解は ${q.ans + 1}`) : "";
+  const extra = d.mode === "review" && d.done ? (d.lastScore === 5 ? "　復習リストから外しました" : "　復習リストに残します") : "";
+  return `<div class="drill s-${d.s}">
+  ${topBar(d.s, "dunit")}
+  <div class="dr-head"><h1 class="dr-title">${DTITLE[d.mode]}</h1><span class="tally">得点率 ${d.n ? pct(d.c / d.n) : 0}%(${d.n}問)</span></div>
+  ${sub ? `<p class="small dr-sub">${esc(sub)}</p>` : ""}
+  ${d.mode === "drill" ? `<div class="chips" role="group" aria-label="出題する分野">${Object.keys(Sb.areas).map(p => `<button class="chipbtn" data-act="dpart" data-p="${p}" aria-pressed="${d.parts.includes(p)}">${esc(Sb.areas[p])}</button>`).join("")}</div>` : ""}
+  ${q ? `<article class="card">
+    <div class="qhead"><span class="qno">${q.kind}問題</span><span class="qpart">${esc(Sb.areas[q.p] || "")}</span>${star(isMarked(d.s, q), "drill")}</div>
+    ${qBody(q, d.sel, { reveal: d.done, lock: d.done, act: "dpick", bact: "dbpick" })}
+    ${d.done ? `<div class="dr-res ${d.lastScore === 5 ? "pass" : "fail"}"><b>${res}<span class="small">${extra}</span></b><button class="btn primary" data-act="dnext">次の問題</button></div>`
+      : isB ? `<div class="dr-res"><span class="small">ア〜オをすべて選んでから答え合わせをしてください。</span><button class="btn primary" data-act="dcheck"${d.sel.every(x => x != null) ? "" : " disabled"}>答え合わせ</button></div>`
+      : `<p class="small">解答を選ぶと、すぐに正誤と解説が表示されます。</p>`}
+  </article>` : `<p class="card">${empty}</p>`}
+</div>`;
+}
+function marks() {
+  const s = S.mk.s, Sb = SUBJ[s], list = sUnit(jget(SKEY), s).marks.slice().reverse();
+  return `<div class="drill s-${s}">${topBar(s, "vunit")}
+  <div class="dr-head"><h1 class="dr-title">ブックマーク</h1><span class="tally">${list.length}問</span></div>
+  ${list.length ? `<div class="row"><button class="btn primary" data-act="mpractice" data-s="${s}">ブックマークした問題を解く</button></div>
+  <div class="review">${list.map(m => `<details class="rv mark" data-k="m${m.id}"><summary><span class="mk" aria-hidden="true">★</span><span class="rv-no">${m.q.kind}問題</span><span class="rv-t">${esc(m.q.t)}</span><span class="rv-a">${esc(Sb.areas[m.q.p] || "")}</span></summary><div class="rv-body">${qBody(m.q, m.q.kind === "B" ? m.q.ans : m.q.ans, { reveal: true, lock: true })}<div class="row"><button class="btn sm" data-act="unmark" data-id="${m.id}">ブックマークを外す</button></div></div></details>`).join("")}</div>`
+  : `<p class="card">ブックマークした問題はありません。模擬試験・ドリル・結果画面で、問題の右上の「☆ ブックマーク」を押すと保存されます。</p>`}
+</div>`;
+}
+function weak() {
+  const s = S.wk.s, Sb = SUBJ[s], an = analysis(s);
+  const topics = an.topics.filter(x => x.a >= 2).sort((x, y) => x.acc - y.acc).slice(0, 8);
+  return `<div class="drill s-${s}">${topBar(s, "vunit")}
+  <div class="dr-head"><h1 class="dr-title">苦手分野の分析</h1></div>
+  ${an.a ? `<section class="score-card"><p class="rs-title">これまでの得点率(${Sb.name})</p><p class="score"><b>${pct(an.avg)}</b><span>%</span></p><p class="meta">解いた問題 ${an.a}問(模擬試験・ドリル・復習の合計。B問題は部分点を反映)</p>
+    <div class="row"><button class="btn primary" data-act="focus" data-s="${s}">苦手分野を重点練習</button></div></section>
+  <section class="breakdown"><h2>分野別の得点率</h2>${an.parts.map(x => `<div class="bd"><span class="bd-n">${esc(Sb.areas[x.p])}${an.weak.includes(x.p) ? `<span class="tag">苦手</span>` : ""}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.a ? x.c / x.a * 100 : 0}%"></i></span><span class="bd-v">${x.a ? pct(x.c / x.a) + "%" : "—"}<small>${x.a ? `${x.a}問` : "未解答"}</small></span></div>`).join("")}</section>
+  <section class="breakdown"><h2>特に苦手なテーマ</h2>${topics.length ? topics.map(x => `<div class="bd"><span class="bd-n"><small class="pn">${esc(Sb.areas[x.p])}</small>${esc(x.t)}</span><span class="bd-bar" aria-hidden="true"><i style="width:${x.c / x.a * 100}%"></i></span><span class="bd-v">${pct(x.c / x.a)}%<small>${x.a}回</small></span></div>`).join("") : `<p class="small">2回以上解いたテーマがまだありません。もう少し解くと表示されます。</p>`}</section>
+  <p class="small">解いた数が少ないテーマは控えめに評価しています。重点練習では、得点率の低いテーマと、まだ解いていないテーマが多めに出ます。</p>
+  <div class="row"><button class="btn ghost" data-act="wreset">${S.wk.arm ? "もう一度押すと分析の記録をリセットします" : "分析の記録をリセット"}</button></div>`
+  : `<p class="card">まだデータがありません。模擬試験やドリルを解くと、分野別の得点率と苦手なテーマが表示されます。</p><div class="row"><button class="btn primary" data-act="focus" data-s="${s}">重点練習を始める</button></div>`}
+</div>`;
+}
+
+// ---------- 描画・イベント ----------
+function render(top) {
+  const open = top ? [] : [...document.querySelectorAll("details[data-k][open]")].map(x => x.dataset.k);
+  const v = S.view;
+  $app.innerHTML = v === "exam" ? exam() : v === "result" ? result() : v === "drill" ? drill() : v === "marks" ? marks() : v === "weak" ? weak() : v === "subj" ? subj() : home();
+  open.forEach(k => { const el = $app.querySelector(`details[data-k="${k}"]`); if (el) el.open = true; });
+  if (top) window.scrollTo(0, 0);
+}
+function setB(arr, j, i) { const a = (arr || [null, null, null, null, null]).slice(); a[j] = i; return a; }
+$app.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  const act = b.dataset.act; if (act === "close" && e.target !== b) return;
+  const ex = S.ex, d = S.dr;
+  switch (act) {
+    case "home": clearInterval(tick); S = { view: "home" }; render(true); break;
+    case "subj": clearInterval(tick); S = { view: "subj", sb: { s: b.dataset.s } }; render(true); break;
+    case "soon": break;
+    case "start": startExam(b.dataset.s, b.dataset.set); break;
+    case "drill": startDrill(b.dataset.s, "drill"); break;
+    case "review": startDrill(b.dataset.s, "review"); break;
+    case "focus": startDrill(b.dataset.s, "focus"); break;
+    case "mpractice": startDrill(b.dataset.s, "marks"); break;
+    case "marks": S = { view: "marks", mk: { s: b.dataset.s } }; render(true); break;
+    case "weak": S = { view: "weak", wk: { s: b.dataset.s, arm: false } }; render(true); break;
+    case "vunit": if (S.view === "marks") S.mk.s = b.dataset.s; else { S.wk.s = b.dataset.s; S.wk.arm = false; } render(); break;
+    case "wreset": if (S.wk.arm) { const dd = jget(SKEY); sUnit(dd, S.wk.s).stats = {}; jset(SKEY, dd); S.wk.arm = false; } else S.wk.arm = true; render(); break;
+    case "pick": ex.a[ex.cur] = +b.dataset.i; render(); break;
+    case "bpick": ex.a[ex.cur] = setB(ex.a[ex.cur], +b.dataset.j, +b.dataset.i); render(); break;
+    case "prev": if (ex.cur > 0) { ex.cur--; render(true); } break;
+    case "next": if (ex.cur < ex.qs.length - 1) { ex.cur++; render(true); } break;
+    case "flag": ex.fl[ex.cur] = !ex.fl[ex.cur]; render(); break;
+    case "sheet": ex.sheet = b.dataset.v; ex.quitArm = false; render(); break;
+    case "close": ex.sheet = null; ex.quitArm = false; render(); break;
+    case "jump": ex.cur = +b.dataset.i; ex.sheet = null; render(true); break;
+    case "finish": finish(false); break;
+    case "quit": if (ex.quitArm) { const s = ex.s; clearInterval(tick); S = { view: "subj", sb: { s } }; render(true); } else { ex.quitArm = true; render(); } break;
+    case "mark": { const src = b.dataset.src; const s = src === "exam" ? ex.s : src === "rs" ? S.rs.s : d.s; const q = src === "exam" ? ex.qs[ex.cur] : src === "rs" ? S.rs.qs[+b.dataset.i] : d.q; toggleMark(s, q); render(); break; }
+    case "unmark": removeMark(S.mk.s, b.dataset.id); render(); break;
+    case "dpick": if (d.done) break; d.sel = +b.dataset.i; gradeDrill(); render(); break;
+    case "dbpick": if (d.done) break; d.sel = setB(d.sel, +b.dataset.j, +b.dataset.i); render(); break;
+    case "dcheck": if (!d.done) { gradeDrill(); render(); } break;
+    case "dnext": nextDrill(); render(true); break;
+    case "dunit": if (b.dataset.s !== d.s) startDrill(b.dataset.s, d.mode); break;
+    case "dpart": { const p = b.dataset.p; d.parts = d.parts.includes(p) ? d.parts.filter(x => x !== p) : [...d.parts, p]; nextDrill(); render(); break; }
+  }
+});
+$app.addEventListener("change", e => { if (e.target.id === "onlywrong") { S.rs.onlyWrong = e.target.checked; render(); } });
+document.addEventListener("keydown", e => {
+  if (S.view !== "exam" || e.altKey || e.ctrlKey || e.metaKey) return;
+  const ex = S.ex;
+  if (e.key === "Escape" && ex.sheet) { ex.sheet = null; render(); return; }
+  if (ex.sheet) return;
+  if (e.key === "ArrowRight" && ex.cur < ex.qs.length - 1) { ex.cur++; render(true); }
+  else if (e.key === "ArrowLeft" && ex.cur > 0) { ex.cur--; render(true); }
+  else { const q = ex.qs[ex.cur], i = "12345".indexOf(e.key); if (q.kind === "A" && i >= 0 && i < SUBJ[ex.s].opt) { ex.a[ex.cur] = i; render(); } }
+});
+render();
+
+</script>
+</body>
+</html>
