@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>共通テスト模試</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDPMincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EEF0F4;--paper:#FFFFFF;--ink:#1D2129;--muted:#5B6270;--line:#CED3DC;
+  --sheet:#B0306A;--sheet-soft:#F7E6EE;--lead:#2E3138;--math:#34418F;--ok:#1F6E52;--ng:#B42318}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14161B;--paper:#1C1F26;--ink:#E6E8EC;--muted:#A2A9B5;--line:#343A45;--sheet:#E07FAA;--sheet-soft:#3A2230;--lead:#E6E8EC;--math:#9FA9EA;--ok:#7FD1AE;--ng:#F2A39A}}
+:root[data-theme="dark"]{--bg:#14161B;--paper:#1C1F26;--ink:#E6E8EC;--muted:#A2A9B5;--line:#343A45;--sheet:#E07FAA;--sheet-soft:#3A2230;--lead:#E6E8EC;--math:#9FA9EA;--ok:#7FD1AE;--ng:#F2A39A}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"BIZ UDPGothic","Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif;font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%}
+h1,h2,h3,p{margin:0} button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--math);outline-offset:2px}
+.btn{appearance:none;font-weight:700;border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:.5em 1.1em;min-height:44px;cursor:pointer}
+.btn:hover{border-color:var(--math)} .btn.primary{background:var(--math);border-color:var(--math);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#14161B}}
+.btn.sm{min-height:38px;padding:.3em .8em;font-size:.9rem} .btn.ghost{background:transparent;color:var(--muted);border-color:transparent}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px} .small{font-size:.85rem;color:var(--muted);margin-top:8px}
+/* home */
+.home,.page{max-width:920px;margin:0 auto;padding:28px 18px 56px}
+.mast{padding:26px 22px;background:var(--paper);border:1px solid var(--line);border-radius:8px;position:relative;overflow:hidden}
+.mast::after{content:"";position:absolute;right:-18px;top:18px;width:140px;height:120px;background:radial-gradient(ellipse 9px 13px at center,var(--sheet) 96%,transparent 100%) 0 0/28px 34px;opacity:.13;pointer-events:none}
+.mast-sub{color:var(--muted);font-weight:700;font-size:.92rem}
+.mast h1{font-family:"BIZ UDPMincho",serif;font-size:clamp(2rem,6vw,2.8rem);letter-spacing:.08em;margin:.1em 0 .4em;font-weight:700}
+.lead{max-width:38em;color:var(--muted)}
+.subjects{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
+@media (min-width:640px){.subjects{grid-template-columns:1fr 1fr}}
+.scard{appearance:none;text-align:left;display:grid;gap:2px;padding:14px 18px;background:var(--paper);border:1px solid var(--line);border-radius:8px;cursor:pointer;min-height:96px}
+.scard:hover{border-color:var(--math)} .scard.soon{cursor:default;opacity:.6}
+.sc-name{font-size:1.3rem;font-weight:700} .sc-spec{font-size:.86rem;color:var(--muted)} .sc-stat{font-size:.9rem;font-weight:700;color:var(--math);margin-top:4px}
+.note{margin-top:26px;font-size:.85rem;color:var(--muted)}
+.shead{margin:14px 0;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.shead h1{font-family:"BIZ UDPMincho",serif;font-size:1.9rem;letter-spacing:.06em} .shead p{color:var(--muted);font-size:.9rem;margin-top:6px}
+.panel{margin-top:12px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:8px} .ph{font-weight:700;margin-bottom:10px}
+.sets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px} @media (min-width:520px){.sets{grid-template-columns:repeat(10,1fr)}}
+.set{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:6px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-variant-numeric:tabular-nums}
+.set .n{font-weight:700} .set .b{font-size:.7rem;color:var(--muted);min-height:1.2em} .set.tried{border:2px solid var(--math)} .set:hover{border-color:var(--math)}
+/* exam */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px}
+.chip{font-weight:700;background:var(--math);color:#fff;padding:.1em .6em;border-radius:4px;font-size:.9rem}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip{color:#14161B}}
+.timer{margin-left:auto;font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums} .timer.low{color:var(--ng)}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;width:100%}
+.tab{appearance:none;flex:1 1 11%;min-width:40px;border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:.2em 0;font-weight:700;font-size:.85rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.tab.opt{border-style:dashed} .tab.picked small{color:var(--math);font-weight:700}
+.pickbar{font-family:"BIZ UDPGothic",sans-serif;border:1.5px dashed var(--line);border-radius:6px;padding:10px 12px;margin:0 0 12px;display:grid;gap:8px;font-size:.92rem} .pickbar.on{border:1.5px solid var(--math)} .pickbar .warn{color:var(--ng);font-weight:700}
+.bd-r.skip{color:var(--muted)}
+.tab small{font-weight:400;color:var(--muted);font-size:.72rem;font-variant-numeric:tabular-nums} .tab.cur{border:2px solid var(--math);color:var(--math)}
+.booklet{max-width:44rem;margin:0 auto;padding:18px 16px 60px;font-family:"BIZ UDPMincho","Hiragino Mincho ProN","Yu Mincho",serif}
+.booklet.in{padding:6px 2px 10px}
+.dm-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:6px}
+.dm-head h2{font-size:1.35rem;letter-spacing:.08em} .dm-pts{color:var(--muted);font-family:"BIZ UDPGothic",sans-serif;font-size:.9rem}
+.part{margin-top:18px} .part-h{font-size:1.05rem;margin-bottom:4px}
+.q{line-height:2.05;margin:.6em 0;text-indent:1em}
+.bx{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:1.7em;height:1.75em;border:1.5px solid var(--ink);margin:0 1px;vertical-align:-.45em;position:relative;font-family:"BIZ UDPGothic",sans-serif;line-height:1;text-indent:0;background:var(--paper)}
+.bx i{font-style:normal;font-size:.8em} .bx b{display:none}
+.bx.on i,.bx.ok i,.bx.ng i{position:absolute;top:-1.15em;font-size:.62em;color:var(--muted)} .bx.on b,.bx.ok b,.bx.ng b{display:block;font-size:.95em}
+.bx.on{border-color:var(--lead);background:var(--sheet-soft)} .bx.ok{border-color:var(--ok);color:var(--ok)} .bx.ng{border-color:var(--ng);color:var(--ng)} .bx.plain{vertical-align:-.3em}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;text-indent:0;line-height:1.5}
+.fr .nu{border-bottom:1.2px solid currentColor;padding:0 .2em .1em} .fr .de{padding:.1em .2em 0}
+.rt{white-space:nowrap} .rt .ov{border-top:1.2px solid currentColor;padding:0 .1em;margin-left:.05em}
+.tbl{overflow-x:auto;margin:.6em 0} .tbl table{border-collapse:collapse;font-family:"BIZ UDPGothic",sans-serif;font-size:.9rem;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{border:1px solid var(--line);padding:4px 9px;text-align:center;white-space:nowrap} .tbl thead th{background:var(--bg)} .tbl tbody th{background:var(--bg);font-weight:700}
+.choices{margin:.4em 0 .8em 1em;padding:.5em .8em;border:1px solid var(--line);border-radius:4px}
+.ch-h{font-family:"BIZ UDPGothic",sans-serif;font-size:.9rem;margin-bottom:4px} .choices ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.choices li{display:grid;grid-template-columns:1.6em 1fr} .cn{font-family:"BIZ UDPGothic",sans-serif}
+/* マークシート */
+.sheet-strip{margin:12px -6px 4px;padding:8px 6px 6px;border:1.5px solid var(--sheet);border-radius:6px;background:var(--paper);font-family:"BIZ UDPGothic",sans-serif}
+.mrow{display:grid;grid-template-columns:1.6em 1fr;align-items:center;gap:4px;padding:3px 0;border-bottom:1px dashed color-mix(in srgb,var(--sheet) 35%,transparent)}
+.mrow:last-child{border-bottom:0}
+.msym{font-weight:700;color:var(--sheet);text-align:center}
+.marks{display:flex;gap:2px;flex-wrap:wrap}
+.mk{appearance:none;border:0;background:none;padding:0;width:23px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mk span{display:flex;align-items:center;justify-content:center;width:19px;height:29px;border:1.4px solid var(--sheet);border-radius:50%;color:var(--sheet);font-size:.78rem;font-weight:700;transition:background .12s}
+.mk:hover span{background:var(--sheet-soft)}
+.mk.on span{background:var(--lead);border-color:var(--lead);color:var(--paper)}
+.mk.right span{outline:2px solid var(--ok);outline-offset:1px} .mk.right.on span{background:var(--ok);border-color:var(--ok)}
+.mk.miss span{background:var(--ng);border-color:var(--ng);color:#fff} .mk:disabled{cursor:default}
+.nav{justify-content:space-between;font-family:"BIZ UDPGothic",sans-serif}
+.overlay{position:fixed;inset:0;z-index:20;background:rgba(15,18,24,.55);display:flex;align-items:flex-end;justify-content:center}
+.dialog{background:var(--paper);width:100%;max-width:34rem;border-radius:10px 10px 0 0;padding:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:10px}
+@media (min-width:640px){.overlay{align-items:center}.dialog{border-radius:10px}} .dialog h2{font-size:1.1rem}
+/* 結果 */
+.result{max-width:46rem;margin:0 auto;padding:22px 16px 56px}
+.score-card{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px}
+.rs-t{color:var(--muted);font-weight:700} .score b{font-size:3.6rem;font-family:"BIZ UDPMincho",serif;line-height:1.1} .score span{color:var(--muted)}
+.gifu{font-weight:700} .gifu b{color:var(--math);font-size:1.3rem} .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
+.bd{margin-top:12px} .bd-r{display:grid;grid-template-columns:4.5em 1fr 4.5em;gap:10px;align-items:center;padding:4px 0;font-size:.92rem;font-variant-numeric:tabular-nums} .bd-r span:last-child{text-align:right;font-weight:700}
+.bar-o{height:8px;background:var(--line);border-radius:4px;overflow:hidden} .bar-o i{display:block;height:100%;background:var(--math)}
+.review{margin-top:24px} .review h2{font-size:1.1rem;margin-bottom:8px}
+.rv{background:var(--paper);border:1px solid var(--line);border-radius:8px;margin:8px 0}
+.rv summary{padding:12px 14px;cursor:pointer;font-weight:700;display:flex;justify-content:space-between;gap:10px} .rv summary span{color:var(--math);white-space:nowrap}
+.rv[open] summary{border-bottom:1px solid var(--line)} .rv .booklet{padding:6px 14px 14px}
+.expl{margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:6px;font-family:"BIZ UDPGothic",sans-serif;font-size:.92rem;display:grid;gap:6px}
+.ex-score{font-weight:700}
+table.ans{border-collapse:collapse;font-size:.88rem;font-variant-numeric:tabular-nums} table.ans th,table.ans td{border:1px solid var(--line);padding:2px 8px;text-align:center}
+table.ans tr.ok td{color:var(--ok)} table.ans tr.ng td{color:var(--ng)}
+.code{font-family:"BIZ UDPGothic",ui-monospace,monospace;font-size:.88rem;line-height:2.1;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.code .bx{vertical-align:-.5em}
+.figw{margin:.6em 0;text-align:center} .figw .fig{width:100%;max-width:360px;height:auto;color:var(--ink)}
+.booklet.en{font-family:Georgia,"Times New Roman","BIZ UDPMincho",serif}
+.booklet.en .q{text-indent:0;line-height:1.85}
+.doc{border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:.8em 0;background:var(--paper);line-height:1.75}
+.doc h4{margin:0 0 .4em;font-size:1.02rem} .doc p{margin:.35em 0}
+.booklet.en .choices li{grid-template-columns:1.8em 1fr}
+.audio{margin:.5em 0 .8em;font-family:"BIZ UDPGothic",sans-serif}
+.audio .btn{min-height:42px} .script{margin-top:6px;font-size:.9rem;background:var(--bg);border-radius:6px;padding:6px 10px} .script p{margin:.2em 0}
+u.bs{text-decoration-thickness:1.5px;text-underline-offset:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ===== 共通ユーティリティ =====
+function rngFrom(seed) { let a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const pick = (r, a) => a[Math.floor(r() * a.length)];
+const randInt = (r, lo, hi) => lo + Math.floor(r() * (hi - lo + 1));
+function shuffle(r, a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; };
+const lcm = (a, b) => a / gcd(a, b) * b;
+// 有理数 [分子, 分母]
+const F = (n, d) => { if (d < 0) { n = -n; d = -d; } const g = gcd(n, d); return [n / g, d / g]; };
+const Fadd = (a, b) => F(a[0] * b[1] + b[0] * a[1], a[1] * b[1]);
+const Fsub = (a, b) => F(a[0] * b[1] - b[0] * a[1], a[1] * b[1]);
+const Fmul = (a, b) => F(a[0] * b[0], a[1] * b[1]);
+const Fdiv = (a, b) => F(a[0] * b[1], a[1] * b[0]);
+const Fstr = f => f[1] === 1 ? `${f[0]}` : `${f[0]}/${f[1]}`;
+// 平方因子の分離 n = k²·m
+function sqf(n) { let k = 1, m = n; for (let i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; } return [k, m]; }
+// (num/den)·√root を p√q/d に正規化
+function rad(num, den, root) { const [k, m] = sqf(root); let p = num * k, d = den; const g = gcd(p, d); p /= g; d /= g; if (d < 0) { p = -p; d = -d; } return { p, q: m, d }; }
+const radStr = v => `${v.q === 1 ? v.p : (v.p === 1 ? "" : v.p === -1 ? "−" : v.p) + "√" + v.q}${v.d === 1 ? "" : "/" + v.d}`.replace("-", "−");
+const mstr = s => String(s).replace(/-/g, "−");
+const fixSign = s => String(s).replace(/＋ [-−](\d)/g, "− $1").replace(/− [-−](\d)/g, "＋ $1").replace(/·-(\d+)/g, "·(−$1)").replace(/(^|[^\w\[])-(\d)/g, "$1−$2");
+
+// ===== 大問の組み立て =====
+const SYMS = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ";
+const PUA = Array.from({ length: 120 }, (_, i) => String.fromCharCode(0xE001 + i)).join("");
+const SL = s => { const c = s.charCodeAt(0); return c >= 0xE000 && c < 0xF000 ? String(c - 0xE000) : s; };
+class Daimon {
+  constructor(no, pts, start, sy) { this.no = no; this.pts = pts; this.i = start || 0; this.SY = sy || SYMS; this.blocks = []; this.groups = []; this.parts = []; this.pending = []; }
+  _box(v, acc) { const c = mstr(v).split(""); const s = this.SY.slice(this.i, this.i + c.length); this.i += c.length; acc.syms += s; acc.ans.push(...c); return `［${s}］`; }
+  _push(acc, pts, kind, opts) { this.groups.push({ syms: acc.syms, ans: acc.ans, pts, kind, opts, part: this.parts.length - 1 }); }
+  part(label, title, pts) { this.parts.push({ label, title, pts, ex: [] }); this.blocks.push({ t: "h", label, title, part: this.parts.length - 1 }); }
+  p(s) { this.blocks.push({ t: "p", s: fixSign(s), part: this.parts.length - 1 }); this.blocks.push(...this.pending); this.pending = []; }
+  table(head, rows) { this.blocks.push({ t: "tb", head, rows, part: this.parts.length - 1 }); }
+  ex(s) { this.parts[this.parts.length - 1].ex.push(fixSign(s)); }
+  // 数値(複数可)を一つの採点グループにする
+  num(vals, pts) { const acc = { syms: "", ans: [] }; const out = [].concat(vals).map(v => this._box(v, acc)); this._push(acc, pts, "num"); return out.length === 1 ? out[0] : out; }
+  // p√q/d または 分数 n/d
+  rv(v, pts) { const acc = { syms: "", ans: [] }; let num; if (v.q === 1) num = this._box(v.p, acc); else num = (v.p === 1 ? "" : v.p === -1 ? "−" : this._box(v.p, acc)) + `√{${this._box(v.q, acc)}}`; const out = v.d === 1 ? num : `{{${num}|${this._box(v.d, acc)}}}`; this._push(acc, pts, "num"); return out; }
+  fr(f, pts) { return this.rv({ p: f[0], q: 1, d: f[1] }, pts); }
+  ratio(a, b, pts) { const g = gcd(a, b); const acc = { syms: "", ans: [] }; const s = `${this._box(a / g, acc)}：${this._box(b / g, acc)}`; this._push(acc, pts, "num"); return s; }
+  ch(idx, opts, pts) { const acc = { syms: "", ans: [String(idx)] }; const s = this.SY[this.i]; this.i++; acc.syms = s; this._push(acc, pts, "ch", opts); this.pending.push({ t: "ch", sym: s, opts, part: this.parts.length - 1 }); return `［${s}］`; }
+}
+const NS = ["必要条件であるが，十分条件ではない", "十分条件であるが，必要条件ではない", "必要十分条件である", "必要条件でも十分条件でもない"];
+
+// ===== 第1問〔1〕 数と式・集合と命題・整数 (10点) =====
+function g1_rad(r, D) {
+  const k = pick(r, [2, 3, 4]); let d; do { d = pick(r, [2, 3, 5, 6, 7]); } while (Number.isInteger(Math.sqrt(k * k + d)));
+  const n = k * k + d, X = (Math.sqrt(n) + k) / d, a = Math.floor(X);
+  D.part("〔1〕", "無理数の有理化と整数部分", 10);
+  D.p(`k，n は n ＞ k² を満たす自然数とする。実数 X ＝ {{1|√{n} − k}} の整数部分を a で表す。`);
+  const [bn, bk, bd] = D.num([n, k, d], 3);
+  D.p(`(1) k ＝ ${k}，n ＝ ${n} の場合を考える。X の分母を有理化すると X ＝ {{√{${bn}} ＋ ${bk}|${bd}}} となる。したがって，a ＝ ${D.num(a, 3)} である。`);
+  D.p(`(2) n ＝ k² ＋ 1 の場合を考える。このとき a ＝ ${D.ch(2, ["k", "k ＋ 1", "2k", "2k ＋ 1", "k²", "k² ＋ 1"], 4)} である。`);
+  D.ex(`(1) 分母・分子に √${n} ＋ ${k} を掛けると，分母は ${n} − ${k * k} ＝ ${d} になる。√${n} ≒ ${Math.sqrt(n).toFixed(3)} なので X ≒ ${X.toFixed(3)}、整数部分は ${a}。`);
+  D.ex(`(2) X ＝ √(k²＋1) ＋ k。k ＜ √(k²＋1) ＜ k ＋ 1 より 2k ＜ X ＜ 2k ＋ 1 なので a ＝ 2k。`);
+}
+function g1_set(r, D) {
+  const N = pick(r, [30, 40, 50, 60]); const a = pick(r, [2, 3, 4, 5, 6]); let b; do { b = pick(r, [3, 4, 5, 6, 8, 9, 10]); } while (b === a || b % a === 0 || a % b === 0);
+  const L = lcm(a, b), nA = Math.floor(N / a), nB = Math.floor(N / b), nAB = Math.floor(N / L), nU = nA + nB - nAB, nNot = N - nU;
+  const P = pick(r, [["x は 4 の倍数", "x は 2 の倍数", 1], ["x は 2 の倍数", "x は 4 の倍数", 0], ["x は 6 の倍数", "x は 2 の倍数かつ 3 の倍数", 2], ["x は 2 の倍数", "x は 3 の倍数", 3], ["x は 3 の倍数かつ 5 の倍数", "x は 15 の倍数", 2], ["x は 12 の倍数", "x は 4 の倍数", 1]]);
+  D.part("〔1〕", "集合と命題", 10);
+  D.p(`全体集合 U を 1 以上 ${N} 以下の自然数全体の集合とし，U の部分集合 A，B を A ＝｛x｜x は ${a} の倍数｝，B ＝｛x｜x は ${b} の倍数｝ とする。また，集合 P の要素の個数を n(P) で表し，Ā は A の補集合を表す。`);
+  D.p(`n(A∩B) ＝ ${D.num(nAB, 2)}，n(A∪B) ＝ ${D.num(nU, 3)}，n(Ā∩B̄) ＝ ${D.num(nNot, 2)} である。`);
+  D.p(`U の要素 x について，「${P[0]}」は「${P[1]}」であるための ${D.ch(P[2], NS, 3)}。`);
+  D.ex(`A∩B は ${L}（${a} と ${b} の最小公倍数）の倍数の集合で ${nAB} 個。n(A) ＝ ${nA}，n(B) ＝ ${nB} より n(A∪B) ＝ ${nA} ＋ ${nB} − ${nAB} ＝ ${nU}。ド・モルガンの法則より Ā∩B̄ は A∪B の補集合なので ${N} − ${nU} ＝ ${nNot}。`);
+  D.ex(`命題「p ⇒ q」が真なら p は q であるための十分条件、「q ⇒ p」が真なら必要条件。ここでは ${NS[P[2]]}。`);
+}
+function g1_dec(r, D) {
+  const n = pick(r, [7, 13, 27, 37]); let m; do { m = randInt(r, 1, n - 1); } while (gcd(m, n) !== 1);
+  const dg = [], seen = {}; let rem = m, i = 0; while (!(rem in seen)) { seen[rem] = i; rem *= 10; dg.push(Math.floor(rem / n)); rem %= n; i++; }
+  const per = dg.length, K = pick(r, [50, 100, 2026]), dK = dg[(K - 1) % per];
+  D.part("〔1〕", "分数と循環小数", 10);
+  D.p(`{{${m}|${n}}} を小数で表すことを考える。${m} を ${n} で割る筆算を続けると，各回の割り算の余りは 1 から ${n - 1} までの整数のいずれかであり，同じ余りが再び現れると，そこから先は同じ数字の並びが繰り返される。`);
+  const [x1, x2, x3] = D.num([dg[0], dg[1], dg[2]], 3);
+  D.p(`{{${m}|${n}}} を小数で表すと，小数第1位，第2位，第3位の数字はそれぞれ ${x1}，${x2}，${x3} である。`);
+  D.p(`また，循環する部分の桁数は ${D.num(per, 3)} であり，小数第 ${K} 位の数字は ${D.num(dK, 4)} である。`);
+  D.ex(`${m}÷${n} ＝ 0.${dg.join("")}${dg.join("")}…。余りが ${m} に戻るまでに ${per} 回の割り算をするので、${per} 桁ごとに繰り返す。`);
+  D.ex(`${K} を ${per} で割った余りは ${K % per === 0 ? per : K % per}（割り切れるときは ${per} 番目）なので、繰り返しの ${(K - 1) % per + 1} 番目の数字 ${dK}。`);
+}
+
+// ===== 第1問〔2〕 図形と計量 (20点) =====
+function g2_tri(r, D) {
+  const [a, b, c] = pick(r, [[7, 5, 8], [7, 3, 5], [13, 7, 15], [4, 5, 6], [5, 6, 7], [8, 5, 7], [6, 4, 5], [3, 5, 7]]);
+  const cosA = F(b * b + c * c - a * a, 2 * b * c), N = 4 * b * b * c * c - Math.pow(b * b + c * c - a * a, 2);
+  const sinA = rad(1, 2 * b * c, N), S = rad(1, 4, N), R = rad(a * b * c, N, N), ri = rad(1, 2 * (a + b + c), N);
+  D.part("〔2〕", "三角比と三角形の計量", 20);
+  D.p(`△ABC において，BC ＝ ${a}，CA ＝ ${b}，AB ＝ ${c} とする。`);
+  D.p(`このとき cos∠BAC ＝ ${D.fr(cosA, 4)}，sin∠BAC ＝ ${D.rv(sinA, 4)} である。`);
+  D.p(`△ABC の面積は ${D.rv(S, 4)} であり，△ABC の外接円の半径は ${D.rv(R, 4)}，内接円の半径は ${D.rv(ri, 4)} である。`);
+  D.ex(`余弦定理より cos∠BAC ＝ (${b}² ＋ ${c}² − ${a}²)/(2·${b}·${c}) ＝ ${mstr(Fstr(cosA))}。sin∠BAC ＝ √(1 − cos²∠BAC) ＝ ${radStr(sinA)}。`);
+  D.ex(`面積 ＝ (1/2)·${b}·${c}·sin∠BAC ＝ ${radStr(S)}。正弦定理 ${a}/sin∠BAC ＝ 2R より R ＝ ${radStr(R)}。面積 ＝ (1/2)r(a＋b＋c) より r ＝ ${radStr(ri)}。`);
+}
+function g2_quad(r, D) {
+  let a, b, c, d, cosA, BD2, t = 0;
+  do { a = randInt(r, 1, 7); b = randInt(r, 1, 7); c = randInt(r, 1, 7); d = randInt(r, 1, 7); cosA = F(a * a + d * d - b * b - c * c, 2 * (a * d + b * c)); BD2 = a * a + d * d - 2 * a * d * cosA[0] / cosA[1]; t++; }
+  while ((cosA[0] === 0 || Math.abs(cosA[0]) >= cosA[1] || cosA[1] > 8 || Math.abs(BD2 - Math.round(BD2)) > 1e-9 || new Set([a, b, c, d]).size < 3) && t < 5000);
+  BD2 = Math.round(BD2);
+  const sinA = rad(1, cosA[1], cosA[1] * cosA[1] - cosA[0] * cosA[0]), S = rad(a * d + b * c, 2 * cosA[1], cosA[1] * cosA[1] - cosA[0] * cosA[0]), BD = rad(1, 1, BD2);
+  D.part("〔2〕", "円に内接する四角形", 20);
+  D.p(`円に内接する四角形 ABCD において，AB ＝ ${a}，BC ＝ ${b}，CD ＝ ${c}，DA ＝ ${d} とする。四角形の内角 ∠DAB，∠BCD の大きさをそれぞれ A，C で表す。`);
+  D.p(`四角形 ABCD は円に内接するので，cos C を cos A で表すと cos C ＝ ${D.ch(1, ["cos A", "−cos A", "sin A", "−sin A", "1 − cos A"], 4)} である。`);
+  D.p(`△ABD と △BCD に余弦定理を用いて BD² を二通りに表すことにより，cos A ＝ ${D.fr(cosA, 5)} であり，BD ＝ ${D.rv(BD, 5)} である。`);
+  D.p(`また，四角形 ABCD の面積は ${D.rv(S, 6)} である。`);
+  D.ex(`A ＋ C ＝ 180° より cos C ＝ −cos A。BD² ＝ ${a}² ＋ ${d}² − 2·${a}·${d}cos A ＝ ${b}² ＋ ${c}² ＋ 2·${b}·${c}cos A を解いて cos A ＝ ${mstr(Fstr(cosA))}、BD² ＝ ${BD2}。`);
+  D.ex(`sin A ＝ sin C ＝ ${radStr(sinA)}。面積 ＝ (1/2)·${a}·${d}·sin A ＋ (1/2)·${b}·${c}·sin C ＝ ${radStr(S)}。`);
+}
+
+// ===== 第2問〔1〕 2次関数 (15点) =====
+function g3_price(r, D) {
+  let p0, s0, A, c, B, xs, Pm;
+  for (; ;) { p0 = pick(r, [100, 120, 150, 200]); s0 = pick(r, [160, 200, 240, 300]); A = pick(r, [1, 2, 3]); c = pick(r, [40, 50, 60, 80]); B = s0 + A * p0; xs = (B / A + c) / 2; if (!Number.isInteger(xs) || xs <= c || B - A * xs <= 0 || xs % 5) continue; Pm = (xs - c) * (B - A * xs); break; }
+  D.part("〔1〕", "価格と利益(2次関数の最大)", 15);
+  D.p(`花子さんと太郎さんは，ある店のパン1個の価格と1日あたりの売り上げ数について話している。次の表は，価格とその価格で販売した期間の1日あたりの売り上げ数である。`);
+  D.table(["価格(円)", `${p0}`, `${p0 + 10}`, `${p0 + 30}`], [["売り上げ数(個)", `${s0}`, `${s0 - 10 * A}`, `${s0 - 30 * A}`]]);
+  D.p(`太郎：価格が 10 円上がると売り上げ数が ${10 * A} 個減っているね。売り上げ数は価格の1次関数だと仮定してみよう。`);
+  const [bA, bB] = D.num([A, B], 4);
+  D.p(`価格を x 円，1日あたりの売り上げ数を y 個とすると，y ＝ −${bA}x ＋ ${bB} と表される。`);
+  D.p(`パン1個あたりの原価を ${c} 円とすると，1日あたりの利益は (x − ${c})y 円である。利益が最大となる価格は ${D.num(xs, 4)} 円で，そのときの利益は ${D.num(Pm, 4)} 円である。`);
+  D.p(`原価が 20 円上がったとき，利益が最大となる価格は ${D.ch(2, ["変わらない", "5 円上がる", "10 円上がる", "20 円上がる", "40 円上がる"], 3)}。`);
+  D.ex(`傾き −${10 * A}/10 ＝ −${A}、x ＝ ${p0} で y ＝ ${s0} を通るので y ＝ −${A}x ＋ ${B}。`);
+  D.ex(`利益 ＝ (x − ${c})(${B} − ${A}x) は x ＝ ${c} と x ＝ ${B / A} で 0 になる上に凸の放物線。軸は中点 x ＝ ${xs}、最大値 ${xs - c}×${B - A * xs} ＝ ${Pm}。原価が 20 円上がると軸は 20/2 ＝ 10 円右へ移る。`);
+}
+function g3_minmax(r, D) {
+  let a, h, m, p, q, t = 0, f, vals;
+  do { a = pick(r, [1, 2]); h = randInt(r, 1, 3); m = randInt(r, -5, 5); p = randInt(r, -1, h); q = randInt(r, h + 1, h + 4); f = x => a * (x - h) * (x - h) + m; vals = [f(p), f(q)]; t++; } while (vals[0] === vals[1] && t < 100);
+  const b = -2 * a * h, c0 = a * h * h + m;
+  const xmax = f(p) > f(q) ? p : q, ymax = f(xmax), xmin = (p <= h && h <= q) ? h : (f(p) < f(q) ? p : q), ymin = f(xmin);
+  const al = pick(r, [2, 4]), L = pick(r, [al / 2 + 1, al / 2 + 2]), be = randInt(r, -3, 4), kM = al / 2, mM = al * al / 4 + be;
+  D.part("〔1〕", "2次関数の最大・最小", 15);
+  const [bx1, by1] = D.num([xmax, ymax], 4), [bx2, by2] = D.num([xmin, ymin], 4);
+  D.p(`(1) 2次関数 y ＝ ${a === 1 ? "" : a}x² ${b < 0 ? "−" : "＋"} ${Math.abs(b)}x ${c0 < 0 ? "−" : "＋"} ${Math.abs(c0)} は ${mstr(p)} ≦ x ≦ ${q} において，x ＝ ${bx1} で最大値 ${by1} をとり，x ＝ ${bx2} で最小値 ${by2} をとる。`);
+  D.p(`(2) k を定数とし，2次関数 f(x) ＝ x² − 2kx ＋ ${al}k ${be < 0 ? "−" : "＋"} ${Math.abs(be)} の 0 ≦ x ≦ ${L} における最小値を m とする。m は k の関数であり，m が最大となるのは k ＝ ${D.num(kM, 3)} のときで，m の最大値は ${D.num(mM, 4)} である。`);
+  D.ex(`(1) y ＝ ${a === 1 ? "" : a}(x − ${h})² ${m < 0 ? "−" : "＋"} ${Math.abs(m)}。軸 x ＝ ${h} ${p <= h && h <= q ? "は区間内なので最小は頂点" : "は区間外"}。最大は軸から遠い端 x ＝ ${xmax}。`);
+  D.ex(`(2) 軸 x ＝ k が 0 ≦ k ≦ ${L} のとき m ＝ f(k) ＝ −k² ＋ ${al}k ${be < 0 ? "−" : "＋"} ${Math.abs(be)} ＝ −(k − ${kM})² ＋ ${mM}。区間外では m は k から離れるほど小さくなるので、k ＝ ${kM} で最大値 ${mM}。`);
+}
+function g3_points(r, D) {
+  let p1, p2, s, t0, av, vx;
+  do { p1 = pick(r, [1, 2]); p2 = p1 + pick(r, [1, 2, 3]); s = pick(r, [1, 2, 3, -1, -2]); t0 = randInt(r, -3, 4); av = pick(r, [1, 2, 3]); vx = F(av * (p1 + p2) - s, 2 * av); } while (t0 === 0);
+  const q1 = s * p1 + t0, q2 = s * p2 + t0;
+  D.part("〔1〕", "2点を通る放物線", 15);
+  D.p(`花子さんと太郎さんは，コンピュータで関数 y ＝ ax² ＋ bx ＋ c のグラフを表示させている。a，b，c の値をいろいろ変えたところ，次のことに気づいた。`);
+  D.p(`花子：a の値をいくつにしても，b と c の値をうまく選べば，グラフが 2 点 P(${p1}，${mstr(q1)})，Q(${p2}，${mstr(q2)}) を通るようにできるね。`);
+  const [bs, bp] = D.num([s, p1 + p2], 4), [bt, bq] = D.num([t0, p1 * p2], 4);
+  D.p(`0 でない実数 a に対して，b ＝ ${bs} − ${bp}a，c ＝ ${bt} ＋ ${bq}a とすれば，グラフは 2 点 P，Q を通る。`);
+  D.p(`a ＝ ${av} のとき，グラフの頂点の x 座標は ${D.fr(vx, 4)} である。`);
+  D.p(`a の値を大きくしていくと，頂点の x 座標は ${D.ch(0, [`限りなく ${Fstr(F(p1 + p2, 2))} に近づく`, "限りなく大きくなる", "限りなく 0 に近づく", "一定である"], 3)}。`);
+  D.ex(`ax² ＋ bx ＋ c − (${s}x ${t0 < 0 ? "−" : "＋"} ${Math.abs(t0)}) ＝ a(x − ${p1})(x − ${p2}) とおける（直線 PQ との差が x ＝ ${p1}，${p2} で 0）。展開して b ＝ ${s} − ${p1 + p2}a、c ＝ ${t0} ＋ ${p1 * p2}a。`);
+  D.ex(`頂点の x 座標 −b/(2a) ＝ (${p1 + p2}a − ${s})/(2a) ＝ ${Fstr(F(p1 + p2, 2))} − ${s}/(2a)。a ＝ ${av} で ${mstr(Fstr(vx))}。a → ∞ で ${Fstr(F(p1 + p2, 2))} に近づく。`);
+}
+
+// ===== 第2問〔2〕 データの分析 (15点) =====
+function g4_box(r, D) {
+  let xs, Q1, Q2, Q3, iqr, out;
+  for (; ;) { xs = []; for (let i = 0; i < 10; i++) xs.push(randInt(r, 12, 40)); xs.push(r() < 0.6 ? randInt(r, 58, 75) : randInt(r, 20, 45)); xs.sort((a, b) => a - b); Q1 = xs[2]; Q2 = xs[5]; Q3 = xs[8]; iqr = Q3 - Q1; if (iqr < 4) continue; out = xs.filter(v => v <= Q1 - 1.5 * iqr || v >= Q3 + 1.5 * iqr).length; break; }
+  const shown = shuffle(r, xs);
+  D.part("〔2〕", "四分位数と外れ値", 15);
+  D.p(`次のデータは，あるクラスの生徒 11 人の1日の家庭学習時間（単位：分）である。`);
+  D.table(["生徒", ...shown.map((_, i) => `${i + 1}`)], [["時間", ...shown.map(String)]]);
+  D.p(`このデータの第1四分位数は ${D.num(Q1, 3)}，中央値は ${D.num(Q2, 3)}，第3四分位数は ${D.num(Q3, 3)} であり，四分位範囲は ${D.num(iqr, 3)} である。`);
+  D.p(`「(第1四分位数) − 1.5×(四分位範囲)」以下の値，または「(第3四分位数) ＋ 1.5×(四分位範囲)」以上の値を外れ値とするとき，このデータの外れ値の個数は ${D.num(out, 3)} である。`);
+  D.ex(`小さい順に並べると ${xs.join(", ")}。11 個なので中央値は 6 番目、第1四分位数は下位 5 個の中央（3 番目）、第3四分位数は上位 5 個の中央（9 番目）。`);
+  D.ex(`四分位範囲 ${Q3} − ${Q1} ＝ ${iqr}。外れ値の基準は ${Q1 - 1.5 * iqr} 以下、${Q3 + 1.5 * iqr} 以上。該当するのは ${out} 個。`);
+}
+function g4_var(r, D) {
+  const dv = pick(r, [[[-2, -1, 0, 1, 2], 2], [[-3, -1, 0, 1, 3], 4], [[-4, -2, 0, 2, 4], 8], [[-6, -2, 0, 2, 6], 16]]), m = randInt(r, 50, 70), xs = shuffle(r, dv[0].map(d => m + d));
+  const cc = pick(r, [2, 3, -2]), dd = pick(r, [-10, 5, 10]), mu = cc * m + dd, vu = cc * cc * dv[1], sdu = rad(Math.abs(cc), 1, dv[1]);
+  D.part("〔2〕", "平均値・分散と変量の変換", 15);
+  D.p(`5 人の生徒の小テストの得点 x は次のとおりである。`);
+  D.table(["生徒", "A", "B", "C", "D", "E"], [["x", ...xs.map(String)]]);
+  D.p(`x の平均値は ${D.num(m, 3)}，分散は ${D.num(dv[1], 3)} である。`);
+  D.p(`新しい変量 u を u ＝ ${cc}x ${dd < 0 ? "−" : "＋"} ${Math.abs(dd)} で定めると，u の平均値は ${D.num(mu, 3)}，分散は ${D.num(vu, 3)}，標準偏差は ${D.rv(sdu, 3)} である。`);
+  D.ex(`偏差は ${dv[0].join(", ")}、2乗の平均が分散 ${dv[1]}。`);
+  D.ex(`u ＝ ax ＋ b のとき、平均は a×(平均) ＋ b、分散は a²×(分散)、標準偏差は |a|×(標準偏差)。よって ${mu}、${vu}、${radStr(sdu)}。`);
+}
+function g4_test(r, D) {
+  const k = pick(r, [14, 15, 16]); const cnt = Array(21).fill(0);
+  for (let t = 0; t < 1000; t++) { let h = 0; for (let j = 0; j < 20; j++) if (r() < 0.5) h++; cnt[h]++; }
+  const tail = cnt.slice(k).reduce((a, b) => a + b, 0), pct10 = tail; // tail/1000*100 = tail/10 [%]
+  const p1 = Math.floor(pct10 / 10), p2 = pct10 % 10;
+  const rej5 = tail < 50, rej1 = tail < 10;
+  D.part("〔2〕", "仮説検定の考え方", 15);
+  D.p(`ある学校で，新しい給食メニュー A と従来のメニュー B のどちらを好むかを 20 人に尋ねたところ，${k} 人が A を好むと答えた。この結果から「A の方が好まれる」と判断してよいかを，次の方針で考える。`);
+  D.p(`方針：「A と B は同じくらい好まれる」という仮説のもとで，20 人中 ${k} 人以上が A を選ぶ確率が 5％ 未満であれば，その仮説は誤っていると判断し，「A の方が好まれる」と判断する。5％ 以上であれば，そのようには判断しない。`);
+  D.p(`この確率を，公正なコイン 20 枚を投げて表の出た枚数を記録する実験を 1000 回行った結果で代用する。`);
+  D.table(["表の枚数", "9以下", "10", "11", "12", "13", "14", "15", "16", "17", "18以上"], [["回数", String(cnt.slice(0, 10).reduce((a, b) => a + b, 0)), ...[10, 11, 12, 13, 14, 15, 16, 17].map(i => String(cnt[i])), String(cnt.slice(18).reduce((a, b) => a + b, 0))]]);
+  const [b1, b2] = D.num([p1, p2], 5);
+  D.p(`実験結果から，表が ${k} 枚以上出た割合は ${b1}.${b2}％ である。`);
+  D.p(`方針に従うと，${D.ch(rej5 ? 0 : 1, ["「A の方が好まれる」と判断する", "「A の方が好まれる」とは判断しない"], 5)}。また，判断の基準を 5％ から 1％ に変えると，${D.ch(rej1 ? 0 : 1, ["「A の方が好まれる」と判断する", "「A の方が好まれる」とは判断しない"], 5)}。`);
+  D.ex(`表が ${k} 枚以上の回数は ${cnt.slice(k).join(" ＋ ")} ＝ ${tail} 回で、${tail}/1000 ＝ ${p1}.${p2}％。`);
+  D.ex(`5％ 基準：${p1}.${p2}％ ${rej5 ? "＜ 5％ なので仮説は誤りと判断し、A の方が好まれると判断する" : "≧ 5％ なので判断しない"}。1％ 基準：${rej1 ? "1％ 未満なので判断する" : "1％ 以上なので判断しない"}。`);
+}
+
+// ===== 第3問 図形の性質 (20点) =====
+function g5_bis(r, D) {
+  const [a, b, c] = pick(r, [[6, 4, 5], [7, 5, 8], [5, 4, 6], [8, 5, 7], [9, 6, 8], [7, 6, 8], [6, 5, 7]]);
+  const BD = F(a * c, b + c), AD = rad(1, b + c, b * c * ((b + c) * (b + c) - a * a)), AI = rad(1, a + b + c, b * c * ((b + c) * (b + c) - a * a));
+  D.part("", "角の二等分線と内心", 20);
+  D.p(`△ABC において，AB ＝ ${c}，BC ＝ ${a}，CA ＝ ${b} とする。∠BAC の二等分線と辺 BC の交点を D とし，△ABC の内心を I とする。なお，以下の問題において比を解答する場合は，最も簡単な整数の比で答えよ。`);
+  D.p(`BD ＝ ${D.fr(BD, 4)} である。また，点 I は線分 AD 上にあり，BI は ∠ABD の二等分線であるから，AI：ID ＝ ${D.ratio(b + c, a, 4)} である。`);
+  D.p(`さらに，AD ＝ ${D.rv(AD, 6)} であり，AI ＝ ${D.rv(AI, 6)} である。`);
+  D.ex(`角の二等分線の性質より BD：DC ＝ AB：AC ＝ ${c}：${b}、BD ＝ ${a}×${c}/${b + c} ＝ ${Fstr(BD)}。`);
+  D.ex(`△ABD で BI は ∠B の二等分線なので AI：ID ＝ BA：BD ＝ ${c}：${Fstr(BD)} ＝ ${b + c}：${a}（＝ (AB＋AC)：BC）。`);
+  D.ex(`AD² ＝ AB·AC − BD·DC（または余弦定理）より AD ＝ ${radStr(AD)}。AI ＝ AD × ${b + c}/${a + b + c} ＝ ${radStr(AI)}。`);
+}
+function g5_pow(r, D) {
+  let pa, ab, pc, pd; do { pa = randInt(r, 2, 6); ab = randInt(r, 2, 8); pc = randInt(r, 2, 9); } while (pc === pa || pc * pc >= pa * (pa + ab) || pa * (pa + ab) % pc !== 0);
+  const pb = pa + ab; pd = pa * pb / pc; const cd = pd - pc, PT = rad(1, 1, pa * pb);
+  D.part("", "方べきの定理", 20);
+  D.p(`円 O の外部の点 P から引いた 2 本の直線が，円 O とそれぞれ 2 点 A，B および 2 点 C，D で交わっている（PA ＜ PB，PC ＜ PD）。また，点 P から円 O に引いた接線の接点を T とする。PA ＝ ${pa}，AB ＝ ${ab}，PC ＝ ${pc} とする。`);
+  D.p(`PA·PB ＝ PC·PD が成り立つので PD ＝ ${D.num(pd, 5)} であり，CD ＝ ${D.num(cd, 5)} である。`);
+  D.p(`また，PT ＝ ${D.rv(PT, 5)} である。PA·PB ＝ PT² が成り立つことは ${D.ch(0, ["方べきの定理", "接弦定理", "メネラウスの定理", "チェバの定理", "三平方の定理"], 5)} による。`);
+  D.ex(`PB ＝ ${pa} ＋ ${ab} ＝ ${pb}。方べきの定理 PA·PB ＝ PC·PD より PD ＝ ${pa}×${pb}/${pc} ＝ ${pd}、CD ＝ ${pd} − ${pc} ＝ ${cd}。`);
+  D.ex(`接線の場合も方べきの定理 PT² ＝ PA·PB ＝ ${pa * pb} が成り立つので PT ＝ ${radStr(PT)}。`);
+}
+function g5_men(r, D) {
+  let m, n, p, q; do { m = randInt(r, 1, 4); n = randInt(r, 1, 4); p = randInt(r, 1, 4); q = randInt(r, 1, 4); } while (gcd(m, n) !== 1 || gcd(p, q) !== 1 || (m === n && p === q));
+  const area = F(n * q, n * (p + q) + m * q);
+  D.part("", "メネラウスの定理と面積比", 20);
+  D.p(`△ABC において，辺 AB を ${m}：${n} に内分する点を D，辺 AC を ${p}：${q} に内分する点を E とし，線分 BE と CD の交点を P とする。なお，以下の問題において比を解答する場合は，最も簡単な整数の比で答えよ。`);
+  D.p(`△ABE と直線 DC にメネラウスの定理を用いると BP：PE ＝ ${D.ratio(n * (p + q), m * q, 6)} であり，同様に CP：PD ＝ ${D.ratio(q * (m + n), p * n, 6)} である。`);
+  D.p(`△PBC の面積は △ABC の面積の ${D.fr(area, 8)} 倍である。`);
+  D.ex(`メネラウスの定理 (AD/DB)(BP/PE)(EC/CA) ＝ 1 より BP/PE ＝ (${n}/${m})×(${p + q}/${q})。同様に (AE/EC)(CP/PD)(DB/BA) ＝ 1 より CP/PD ＝ (${q}/${p})×(${m + n}/${n})。`);
+  D.ex(`△EBC ＝ △ABC × ${q}/${p + q}、△PBC ＝ △EBC × BP/BE。よって ${q}/${p + q} × ${n * (p + q)}/${n * (p + q) + m * q} ＝ ${Fstr(area)}。`);
+}
+
+// ===== 第4問 場合の数と確率 (20点) =====
+function g6_lot(r, D) {
+  const W = pick(r, [[[1, 4], [1, 3], [1, 2]], [[1, 5], [1, 4], [1, 3]], [[1, 3], [1, 2], [1, 2]], [[1, 6], [1, 5], [1, 4]]]), V = pick(r, [600, 1200, 1800]);
+  const q1 = Fsub([1, 1], W[0]), q2 = Fsub([1, 1], W[1]), q3 = Fsub([1, 1], W[2]);
+  const none = Fmul(Fmul(q1, q2), q3), by2 = Fadd(W[0], Fmul(q1, W[1])), Ed = Fadd(Fadd([1, 1], q1), Fmul(q1, q2)), Eprize = Fmul([V, 1], Fsub([1, 1], none));
+  const feeA = pick(r, [300, 400, 500]), per = pick(r, [150, 200, 250]), Eb = Fmul([per, 1], Ed);
+  const gA = feeA - Eprize[0] / Eprize[1], gB = Eb[0] / Eb[1] - Eprize[0] / Eprize[1];
+  D.part("", "くじ引きと期待値", 20);
+  D.p(`ある行事で，参加者はくじを最大 3 回引き，当たりが出たら ${V} 円相当の景品を受け取り，以降はくじを引かない。1 回目，2 回目，3 回目に引くくじが当たりである確率は，それぞれ ${Fstr(W[0])}，${Fstr(W[1])}，${Fstr(W[2])} であり，各回の結果は互いに影響を与えないものとする。`);
+  D.p(`3 回とも当たりが出ない確率は ${D.fr(none, 4)} であり，2 回目までに当たりが出る確率は ${D.fr(by2, 4)} である。`);
+  D.p(`参加者1人がくじを引く回数の期待値は ${D.fr(Ed, 4)} 回であり，参加者1人が受け取る景品の金額の期待値は ${D.num(Eprize[0] / Eprize[1], 4)} 円である。`);
+  D.p(`参加料について，「参加者は最初に ${feeA} 円を支払う」方法 X と，「くじを1回引くごとに ${per} 円を支払う」方法 Y を考える。主催者が受け取る金額から景品の金額を引いた額の期待値が大きいのは ${D.ch(gA > gB ? 0 : 1, ["方法 X", "方法 Y"], 4)} である。`);
+  D.ex(`3 回とも外れ ${Fstr(q1)}×${Fstr(q2)}×${Fstr(q3)} ＝ ${Fstr(none)}。2 回目までに当たり ${Fstr(W[0])} ＋ ${Fstr(q1)}×${Fstr(W[1])} ＝ ${Fstr(by2)}。`);
+  D.ex(`引く回数は、1 回目は必ず、2 回目は 1 回目が外れのとき、3 回目は 2 回続けて外れのとき引くので、期待値 1 ＋ ${Fstr(q1)} ＋ ${Fstr(Fmul(q1, q2))} ＝ ${Fstr(Ed)}。景品の期待値 ${V}×(1 − ${Fstr(none)}) ＝ ${Eprize[0] / Eprize[1]} 円。`);
+  D.ex(`方法 X：${feeA} − ${Eprize[0] / Eprize[1]} ＝ ${gA}。方法 Y：${per}×${Fstr(Ed)} − ${Eprize[0] / Eprize[1]} ＝ ${Math.round(gB * 100) / 100}。`);
+}
+function g6_league(r, D) {
+  const p = pick(r, [[2, 3], [3, 4], [3, 5], [1, 3], [2, 5]]), q = Fsub([1, 1], p);
+  const all = Fmul(p, p), one = Fmul(p, q), win = Fadd(all, Fmul(one, [1, 3])), E = Fmul([2, 1], p);
+  D.part("", "リーグ戦の優勝確率", 20);
+  D.p(`A，B，C の 3 人が，それぞれ他の 2 人と 1 回ずつ対戦するリーグ戦を行う。引き分けはなく，A が B，C のそれぞれに勝つ確率は ${Fstr(p)}，B と C の対戦でそれぞれが勝つ確率は 1/2 であり，各対戦の結果は互いに影響を与えないものとする。`);
+  D.p(`勝ち数が最も多い人が 1 人であればその人を優勝者とし，最も多い人が複数いれば，その中から抽選で等しい確率で 1 人を優勝者とする。`);
+  D.p(`A が 2 勝する確率は ${D.fr(all, 4)} である。3 人の勝ち数がすべて 1 となる確率は ${D.fr(one, 5)} であり，A が優勝する確率は ${D.fr(win, 6)} である。また，A の勝ち数の期待値は ${D.fr(E, 5)} である。`);
+  D.ex(`A が 2 勝：${Fstr(p)}² ＝ ${Fstr(all)}（このとき B，C は A に負けているので A が単独優勝）。`);
+  D.ex(`全員 1 勝になるのは「A が B に勝ち C に負け、B が C に勝つ」か「A が C に勝ち B に負け、C が B に勝つ」で、2×${Fstr(p)}×${Fstr(q)}×1/2 ＝ ${Fstr(one)}。このとき A は抽選で 1/3。`);
+  D.ex(`A が 0 勝なら優勝できないので、優勝確率 ${Fstr(all)} ＋ ${Fstr(one)}×1/3 ＝ ${Fstr(win)}。勝ち数の期待値は 2 試合 × ${Fstr(p)} ＝ ${Fstr(E)}。`);
+}
+function g6_dice(r, D) {
+  const S = pick(r, [{ x: [3, 3, 3, 3, 3, 3], y: [2, 2, 2, 2, 6, 6], z: [1, 1, 5, 5, 5, 5] }, { x: [1, 4, 4, 4, 4, 4], y: [3, 3, 3, 3, 6, 6], z: [2, 2, 2, 5, 5, 5] }]);
+  const E = a => F(a.reduce((s, v) => s + v, 0), 6), P = (a, b) => { let c = 0; for (const u of a) for (const v of b) if (u > v) c++; return F(c, 36); };
+  const ey = E(S.y), pxy = P(S.x, S.y), pyz = P(S.y, S.z), pzx = P(S.z, S.x);
+  D.part("", "サイコロの比較と期待値", 20);
+  D.p(`各面の目が次の表で与えられる三つのサイコロ x，y，z がある。いずれのサイコロも，各面の出る確率は 1/6 である。サイコロ x，y，z を投げたときに出た目をそれぞれ X，Y，Z とする。`);
+  D.table(["サイコロ", "各面の目"], [["x", S.x.join("，")], ["y", S.y.join("，")], ["z", S.z.join("，")]]);
+  D.p(`Y の期待値は ${D.fr(ey, 4)} である。X ＞ Y となる確率は ${D.fr(pxy, 4)}，Y ＞ Z となる確率は ${D.fr(pyz, 4)}，Z ＞ X となる確率は ${D.fr(pzx, 4)} である。`);
+  D.p(`これらのことから，${D.ch(1, ["期待値が最も大きいサイコロは，他の二つのどちらに対しても大きい目が出る確率が 1/2 より大きい", "他の二つのどちらに対しても大きい目が出る確率が 1/2 より大きいサイコロはない", "x は y と z のどちらに対しても大きい目が出る確率が 1/2 より大きい", "三つのサイコロの期待値はすべて等しい"], 4)}。`);
+  D.ex(`期待値は目の合計 ÷ 6。Y：${S.y.join("＋")} ＝ ${S.y.reduce((s, v) => s + v, 0)} より ${Fstr(ey)}。`);
+  D.ex(`36 通りの組を数える。X＞Y は ${pxy[0] * 36 / pxy[1]} 通り → ${Fstr(pxy)}、Y＞Z は ${Fstr(pyz)}、Z＞X は ${Fstr(pzx)}。どれも 1/2 より大きく、x は y に、y は z に、z は x に強い「じゃんけん」の関係になっている。`);
+}
+function g6_cond(r, D) {
+  const r1 = randInt(r, 2, 5), w1 = randInt(r, 1, 4), r2 = randInt(r, 1, 4), w2 = randInt(r, 2, 5), pb = pick(r, [[1, 3], [1, 2]]);
+  const n1 = r1 + w1, n2 = r2 + w2, a = Fmul(pb, F(r1, n1)), b = Fmul(Fsub([1, 1], pb), F(r2, n2)), pr = Fadd(a, b), cond = Fdiv(a, pr), two = F(r1 * (r1 - 1), n1 * (n1 - 1));
+  D.part("", "条件付き確率", 20);
+  D.p(`袋 1 には赤玉 ${r1} 個と白玉 ${w1} 個，袋 2 には赤玉 ${r2} 個と白玉 ${w2} 個が入っている。${pb[1] === 3 ? "さいころを1回投げて，1 または 2 の目が出たら袋 1 を，それ以外の目が出たら袋 2 を選ぶ" : "硬貨を1回投げて，表が出たら袋 1 を，裏が出たら袋 2 を選ぶ"}。選んだ袋から玉を 1 個取り出す。`);
+  D.p(`取り出した玉が赤玉である確率は ${D.fr(pr, 6)} である。取り出した玉が赤玉であったとき，それが袋 1 から取り出されたものである条件付き確率は ${D.fr(cond, 8)} である。`);
+  D.p(`また，袋 1 から玉を同時に 2 個取り出すとき，2 個とも赤玉である確率は ${D.fr(two, 6)} である。`);
+  D.ex(`赤玉の確率 ＝ ${Fstr(pb)}×${r1}/${n1} ＋ ${Fstr(Fsub([1, 1], pb))}×${r2}/${n2} ＝ ${Fstr(pr)}。`);
+  D.ex(`条件付き確率 ＝ (袋 1 かつ赤玉の確率)/(赤玉の確率) ＝ ${Fstr(a)} ÷ ${Fstr(pr)} ＝ ${Fstr(cond)}。2 個とも赤 ${r1}C2/${n1}C2 ＝ ${Fstr(two)}。`);
+}
+
+// ===== 出題構成 =====
+const M1A = {
+  name: "数学ⅠA", min: 70, full: 100,
+  slots: [
+    { no: 1, pts: 30, parts: [[g1_rad, g1_set, g1_dec], [g2_tri, g2_quad]] },
+    { no: 2, pts: 30, parts: [[g3_price, g3_minmax, g3_points], [g4_box, g4_var, g4_test]] },
+    { no: 3, pts: 20, parts: [[g5_bis, g5_pow, g5_men]] },
+    { no: 4, pts: 20, parts: [[g6_lot, g6_league, g6_dice, g6_cond]] }
+  ]
+};
+function buildDaimon(slot, r, start, sy) { const D = new Daimon(slot.no, slot.pts, start, sy); slot.parts.forEach(list => pick(r, list)(r, D)); return D; }
+function buildM1A(seed) { const r = rngFrom(seed); return M1A.slots.map(s => buildDaimon(s, r)); }
+
+
+// ===== 情報Ⅰ =====
+Daimon.prototype.code = function (lines) { this.blocks.push({ t: "code", lines, part: this.parts.length - 1 }); this.blocks.push(...this.pending); this.pending = []; };
+Daimon.prototype.svg = function (svg, cap) { this.blocks.push({ t: "svg", svg, cap, part: this.parts.length - 1 }); };
+Daimon.prototype.hex = function (str, pts) { const acc = { syms: "", ans: [] }; const out = this._box(str, acc); this._push(acc, pts, "hex"); return out; };
+const SV = (w, h, inner, lab) => `<svg viewBox="0 0 ${w} ${h}" class="fig" role="img" aria-label="${lab}" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="1.4">${inner}</g></svg>`;
+const T = (x, y, s, a, sz) => `<text x="${x}" y="${y}" text-anchor="${a || "middle"}" font-size="${sz || 12}" fill="currentColor" stroke="none">${s}</text>`;
+
+// ---------- 第1問 小問集合 ----------
+const KNOW = [
+  { q: "コンピュータの記憶装置について，主記憶装置に比べ，補助記憶装置はデータを読み書きする速度が［］。", o: ["低速である", "同程度である", "高速である"], a: 0 },
+  { q: "インターネットで情報をやり取りする際にデジタル署名を用いると，発信者が本人であることに加え，その情報が［］を確認できる。", o: ["複製されていないか", "暗号化されているか", "改ざんされていないか", "どのような経路で届いたか", "盗聴されていないか"], a: 2 },
+  { q: "128 ビットで構成される IP アドレス(IPv6)が利用されるようになった理由の一つは，［］ためである。", o: ["無線 LAN に対応する", "大容量データの送受信に対応する", "インターネットに直接接続する機器の増加に対応する", "漢字のドメイン名に対応する"], a: 2 },
+  { q: "保有するデータをバックアップしておくことで，情報セキュリティの要素のうち［］を高めることができる。", o: ["機密性", "完全性", "可用性"], a: 2 },
+  { q: "公開鍵暗号方式で A さんが B さんに暗号文を送るとき，A さんは［］を用いて暗号化する。", o: ["A さんの公開鍵", "A さんの秘密鍵", "B さんの公開鍵", "B さんの秘密鍵"], a: 2 },
+  { q: "著作権は，著作物を創作した時点で［］発生する。", o: ["申請や登録をしなくても", "文化庁に登録したときに", "出版されたときに", "著作権表示をしたときに"], a: 0 },
+  { q: "JPEG のように，人間が気づきにくい情報を省いてデータ量を減らし，元のデータに完全には戻せない圧縮方式を［］圧縮という。", o: ["可逆", "非可逆", "ランレングス", "ハフマン"], a: 1 },
+  { q: "ドメイン名を IP アドレスに対応づける仕組みを［］という。", o: ["DNS", "DHCP", "HTTP", "SMTP", "NAT"], a: 0 },
+  { q: "パケット交換方式の特徴として最も適当なのは，［］ことである。", o: ["一つの回線を複数の通信で共有できる", "通信中は回線を占有する", "データを分割せずに送る", "すべてのデータが必ず同じ経路を通る"], a: 0 },
+  { q: "年齢や障害の有無などにかかわらず，できるだけ多くの人が利用しやすいように最初から設計する考え方を［］という。", o: ["ユニバーサルデザイン", "バリアフリー", "ユーザビリティ", "アイコン"], a: 0 },
+  { q: "実在する企業などを装った偽のメールや Web サイトで，ID やパスワードを盗み取る手口を［］という。", o: ["フィッシング", "DoS 攻撃", "ランサムウェア", "スパイウェア"], a: 0 },
+  { q: "パスワードに加えて，スマートフォンに届く確認コードの入力を求める認証は［］の一例である。", o: ["多要素認証", "生体認証", "シングルサインオン", "共通鍵暗号"], a: 0 }
+];
+function jq_know(r, D) {
+  const [k1, k2] = shuffle(r, KNOW).slice(0, 2);
+  D.part("問1", "情報社会と情報技術の知識", 5);
+  [k1, k2].forEach((k, i) => { const idx = shuffle(r, k.o.map((_, j) => j)), opts = idx.map(j => k.o[j]); D.p(`${i ? "b" : "a"}　${k.q.replace("［］", D.ch(idx.indexOf(k.a), opts, i ? 2 : 3))}`); });
+  D.ex(`a：${k1.o[k1.a]}。b：${k2.o[k2.a]}。`);
+}
+function gridSvg(rows) { let s = ""; rows.forEach((row, i) => [...row].forEach((c, j) => { s += `<rect x="${20 + j * 26}" y="${10 + i * 26}" width="26" height="26" ${c === "1" ? 'fill="currentColor"' : ""}/>`; })); return SV(144, 124, s, "図案"); }
+function jq_hex(r, D) {
+  const rows = Array.from({ length: 4 }, () => { let b; do { b = randInt(r, 1, 15).toString(2).padStart(4, "0"); } while (b === "0000"); return b; });
+  const hx = rows.map(b => parseInt(b, 2).toString(16));
+  D.part("問2", "2進法と16進法", 5);
+  D.p(`4×4 マスの図案を，縫うマスを 1，縫わないマスを 0 で表す。1 行(4 マス)を 2 進法の 4 桁とみて 16 進法の 1 桁で表し，上の行から順に並べて図案全体を 16 進法の 4 桁で表す。例えば，1 行目が 1000 であれば 16 進法で 8 になる。なお，当てはまる文字が A〜F の場合には，a〜f をマークすること。`);
+  D.svg(gridSvg(rows), "図案");
+  const g1 = D.hex(hx[0] + hx[1], 3), g2 = D.hex(hx[2] + hx[3], 2);
+  D.p(`上の図案を 16 進法で表すと ${g1}${g2} となる。`);
+  D.ex(`各行：${rows.map((b, i) => `${b}(2) ＝ ${parseInt(b, 2)} ＝ ${hx[i].toUpperCase()}(16)`).join("、")}。`);
+}
+function jq_count(r, D) {
+  const n = pick(r, [5, 6, 7, 8]), N = pick(r, [300, 1000, 2000, 5000]), bits = Math.ceil(Math.log2(N));
+  D.part("問2", "情報の量と組合せ", 5);
+  D.p(`点灯・消灯を切り替えられる ${n} 個のランプを並べた表示器がある。すべてのランプが消灯している状態も含めると，表示できる点灯の組合せは全部で ${D.num(2 ** n, 2)} 通りである。`);
+  D.p(`また，${N} 種類の商品を区別する番号を 2 進法で表すには，少なくとも ${D.num(bits, 3)} ビットが必要である。`);
+  D.ex(`各ランプは 2 通りなので 2^${n} ＝ ${2 ** n}。2^${bits - 1} ＝ ${2 ** (bits - 1)} ＜ ${N} ≦ 2^${bits} ＝ ${2 ** bits} より ${bits} ビット。`);
+}
+const CIR = [
+  { e: "X ＝ (A OR B) AND NOT (A AND B)", t: "0110", g: 4 }, { e: "X ＝ NOT (NOT A AND NOT B)", t: "0111", g: 1 },
+  { e: "X ＝ NOT (NOT A OR NOT B)", t: "0001", g: 0 }, { e: "X ＝ NOT (A OR B)", t: "1000", g: 3 },
+  { e: "X ＝ NOT A OR NOT B", t: "1110", g: 2 }, { e: "X ＝ (A AND NOT B) OR (NOT A AND B)", t: "0110", g: 4 }
+];
+function jq_logic(r, D) {
+  const c = pick(r, CIR);
+  D.part("問3", "論理回路", 5);
+  D.p(`入力 A，B と出力 X をもつ次の論理回路を考える。AND は論理積，OR は論理和，NOT は否定を表す。`);
+  D.p(`　${c.e}`);
+  D.table(["A", "0", "0", "1", "1"], [["B", "0", "1", "0", "1"]]);
+  const [x1, x2, x3, x4] = D.num([+c.t[0], +c.t[1], +c.t[2], +c.t[3]], 3);
+  D.p(`上の表の左から順に，入力 (A，B) ＝ (0，0)，(0，1)，(1，0)，(1，1) のときの X の値はそれぞれ ${x1}，${x2}，${x3}，${x4} である。この回路は ${D.ch(c.g, ["AND 回路", "OR 回路", "NAND 回路", "NOR 回路", "XOR 回路"], 2)} と同じ働きをする。`);
+  D.ex(`4 通りの入力を順に代入すると ${[...c.t].join("，")}。この真理値表は ${["AND", "OR", "NAND", "NOR", "XOR"][c.g]} と同じ。`);
+}
+function jq_size(r, D) {
+  const [w, h] = pick(r, [[800, 600], [1000, 500], [400, 250], [1200, 800], [600, 500]]), img = w * h * 3 / 1000;
+  const hz = pick(r, [8000, 16000]), sec = pick(r, [5, 10, 20]), ch = pick(r, [1, 2]), snd = hz * sec * ch / 1000;
+  D.part("問4", "データ量の計算", 5);
+  D.p(`1 画素を 24 ビットで表す横 ${w} 画素，縦 ${h} 画素の画像のデータ量は ${D.num(img, 2)} キロバイトである。`);
+  D.p(`標本化周波数 ${hz} Hz，量子化ビット数 8 ビット，${ch === 1 ? "モノラル(1 チャンネル)" : "ステレオ(2 チャンネル)"}で ${sec} 秒間録音した音声のデータ量は ${D.num(snd, 3)} キロバイトである。ただし，1 キロバイトは 1000 バイトとし，圧縮は行わないものとする。`);
+  D.ex(`画像：${w}×${h}×24 ビット ＝ ${w}×${h}×3 バイト ＝ ${w * h * 3} バイト ＝ ${img} キロバイト。`);
+  D.ex(`音声：${hz}×8 ビット×${ch}×${sec} 秒 ＝ ${hz * ch * sec} バイト ＝ ${snd} キロバイト。`);
+}
+
+// ---------- 第2問A 情報の仕組み ----------
+function j2_check(r, D) {
+  const d = Array.from({ length: 12 }, () => randInt(r, 0, 9)); d[0] = randInt(r, 1, 9);
+  const S = d.reduce((t, v, i) => t + v * (i % 2 ? 3 : 1), 0), cd = (10 - S % 10) % 10;
+  D.part("A", "チェックディジット", 15);
+  D.p(`商品のバーコードに使われる 13 桁の番号は，最後の 1 桁がチェックディジットになっている。チェックディジットは，左から 1 桁目〜12 桁目の数字について，奇数桁の数字はそのまま，偶数桁の数字は 3 倍して合計し，その合計の一の位を 10 から引いた数(一の位が 0 のときは 0)とする。`);
+  D.p(`12 桁の番号が ${d.join(" ")} のとき，上の合計は ${D.num(S, 4)} であり，チェックディジットは ${D.num(cd, 5)} である。`);
+  D.p(`この方式では，1 桁だけ数字を読み誤った場合は ${D.ch(0, ["必ず誤りを検出できる", "誤りを検出できない場合がある"], 3)}。また，隣り合う 2 桁の数字を入れ替えて読み誤った場合は ${D.ch(1, ["必ず誤りを検出できる", "誤りを検出できない場合がある"], 3)}。`);
+  D.ex(`奇数桁の和 ${d.filter((_, i) => i % 2 === 0).join("＋")}、偶数桁の和×3 ＝ (${d.filter((_, i) => i % 2).join("＋")})×3。合計 ${S}、一の位 ${S % 10} → ${cd}。`);
+  D.ex(`1 桁の誤りでは重み 1 または 3 を掛けた値が変わるので合計の一の位も必ず変わる。隣り合う 2 桁 a，b の入れ替えでは合計が 2(a − b) 変わり、a と b の差が 5 のとき一の位が変わらないので検出できない。`);
+}
+function j2_rle(r, D) {
+  let s; do { s = ""; let cur = r() < 0.5 ? "0" : "1"; while (s.length < 16) { const run = randInt(r, 1, 6); s += cur.repeat(Math.min(run, 16 - s.length)); cur = cur === "0" ? "1" : "0"; } } while (s[0] !== "0");
+  const runs = s.match(/(0+|1+)/g).map(x => x.length), enc = runs.join(""), ok = runs.every(x => x < 10);
+  D.part("A", "ランレングス圧縮", 15);
+  D.p(`白(0)と黒(1)の画素が並んだ 16 画素の画像 ${s} を，「0 から始めて，同じ色が続く個数を順に並べる」方法で数字の列に変換する。例えば 0001100000111111 は 3，2，5，6 となる。`);
+  const nb = D.num(runs.length, 4);
+  D.p(`上の画像を変換すると，数字は ${nb} 個になる。1 個目の数字は ${D.num(runs[0], 3)}，最後の数字は ${D.num(runs[runs.length - 1], 3)} である。`);
+  D.p(`この方法は，同じ色が長く続く画像ほど，変換後の数字の個数が ${D.ch(1, ["多くなる", "少なくなる", "変わらない"], 5)}。`);
+  D.ex(`連続する部分に区切ると ${s.match(/(0+|1+)/g).join(" | ")} で、${runs.join("，")} の ${runs.length} 個。`);
+  D.ex(`同じ色が長く続くほど区切りが少なくなり、数字の個数が少なくなる(圧縮の効果が大きい)。`);
+}
+// ---------- 第2問B シミュレーション ----------
+function j2_queue(r, D) {
+  const n = 6, s = pick(r, [3, 4, 5]); let arr = [0]; while (arr.length < n) arr.push(arr[arr.length - 1] + randInt(r, 1, 5));
+  const sim = sv => { let end = 0; return arr.map(a => { const st = Math.max(a, end); end = st + sv; return st - a; }); };
+  const W = sim(s), W2 = sim(s - 1), k = randInt(r, 3, 6), mx = Math.max(...W), tot = W.reduce((a, b) => a + b, 0), mx2 = Math.max(...W2);
+  D.part("B", "待ち行列のシミュレーション", 15);
+  D.p(`レジが 1 台の店で，6 人の客の到着時刻(1 人目の到着を 0 分とする)が次の表のようであった。レジでの会計時間は 1 人 ${s} 分で，客は到着順に会計し，前の客の会計が終わっていなければ待つ。`);
+  D.table(["客", "1", "2", "3", "4", "5", "6"], [["到着時刻(分)", ...arr.map(String)]]);
+  D.p(`${k} 人目の客の待ち時間は ${D.num(W[k - 1], 4)} 分である。6 人のうち最も長い待ち時間は ${D.num(mx, 4)} 分であり，6 人の待ち時間の合計は ${D.num(tot, 4)} 分である。`);
+  D.p(`会計時間を 1 人 ${s - 1} 分に短縮できたとすると，最も長い待ち時間は ${D.num(mx2, 3)} 分になる。`);
+  let end = 0; const rows = arr.map((a, i) => { const st = Math.max(a, end); end = st + s; return `${i + 1}人目：開始 ${st} 分、終了 ${end} 分、待ち ${st - a} 分`; });
+  D.ex(`開始時刻 ＝ 最大値(到着時刻，前の客の終了時刻)。${rows.join("。")}。`);
+}
+function j2_dice(r, D) {
+  const cnt = Array(13).fill(0); for (let t = 0; t < 1000; t++) cnt[randInt(r, 1, 6) + randInt(r, 1, 6)]++;
+  const tgt = pick(r, [6, 7, 8]), th = F(6 - Math.abs(7 - tgt), 36), rel = cnt[tgt];
+  D.part("B", "乱数を使ったシミュレーション", 15);
+  D.p(`2 個のさいころを投げて出た目の和を記録する試行を，表計算ソフトウェアの乱数を使って 1000 回シミュレーションしたところ，次の結果になった。`);
+  D.table(["目の和", ...Array.from({ length: 11 }, (_, i) => String(i + 2))], [["回数", ...cnt.slice(2).map(String)]]);
+  const [a1, a2, a3] = D.num([Math.floor(rel / 100), Math.floor(rel / 10) % 10, rel % 10], 5);
+  D.p(`目の和が ${tgt} になった相対度数は 0.${a1}${a2}${a3} である。一方，理論上の確率は ${D.fr(th, 5)} である。`);
+  D.p(`試行の回数を 1000 回からさらに増やしていくと，相対度数は ${D.ch(0, ["理論上の確率に近づいていく", "理論上の確率から離れていく", "毎回必ず理論上の確率に一致する"], 5)}。`);
+  D.ex(`相対度数 ＝ ${rel}/1000 ＝ ${(rel / 1000).toFixed(3)}。和が ${tgt} になる組は ${6 - Math.abs(7 - tgt)} 通りなので理論値 ${Fstr(th)}。試行回数を増やすと理論値に近づく(大数の法則)。`);
+}
+
+// ---------- 第3問 プログラミング ----------
+const ARROPT = ["Touchaku[i − 1]", "Shuryou[i − 1]", "Touchaku[i]", "Shuryou[i]", "Kaishi[i]", "Kaishi[i] + taiken"];
+function j3_wait(r, D) {
+  const n = 6; let arr = [0]; while (arr.length < n) arr.push(arr[arr.length - 1] + randInt(r, 1, 6)); const tk = pick(r, [3, 4, 5]);
+  const sim = t => { let end = 0; return arr.map(a => { const st = Math.max(a, end); end = st + t; return [st, end, st - a]; }); };
+  const R = sim(tk), lim = pick(r, [6, 8, 10]); let best = 0; for (let t = 1; t <= 15; t++) if (Math.max(...sim(t).map(x => x[2])) < lim) best = t;
+  D.part("", "待ち時間を求めるプログラム", 25);
+  D.p(`文化祭のゲーム展示で，来訪者が体験を開始するまでの待ち時間を調べる。来訪者は到着順に 1 人ずつ体験し，体験時間はだれでも同じとする。配列の添字は 1 から始まる。`);
+  D.p(`問1　到着時刻(1 人目の到着を 0 分とする)が [${arr.join(", ")}] で体験時間が ${tk} 分のとき，3 人目の開始時刻は ${D.num(R[2][0], 3)} 分，終了時刻は ${D.num(R[2][1], 3)} 分であり，6 人目の待ち時間は ${D.num(R[5][2], 2)} 分である。`);
+  D.p(`問2　2 人目以降の待ち時間を表示する次のプログラムの空欄に入る最も適当なものを，解答群から一つずつ選べ。`);
+  const c1 = D.ch(1, ARROPT, 3), c2 = D.ch(5, ARROPT, 3), c3 = D.ch(4, ARROPT, 2);
+  D.code([`(01) taiken = ${tk}`, `(02) Touchaku = [${arr.join(", ")}]`, `(03) kyakusu = 要素数(Touchaku)`, `(04) Kaishi = [${arr.map(() => 0).join(", ")}]`, `(05) Shuryou = [${arr.map(() => 0).join(", ")}]`, `(06) Shuryou[1] = taiken`, `(07) i を 2 から kyakusu まで 1 ずつ増やしながら繰り返す:`, `(08) │ Kaishi[i] = 最大値(Touchaku[i], ${c1})`, `(09) │ Shuryou[i] = ${c2}`, `(10) └ 表示する(i, "人目の待ち時間:", ${c3} − Touchaku[i], "分間")`]);
+  D.p(`問3　(01) 行目の体験時間を 1 から 15 まで変えて実行したとき，最も長い待ち時間が ${lim} 分未満になる体験時間のうち，最も長いものは ${D.num(best, 9)} 分である。`);
+  D.ex(`開始時刻は「自分の到着時刻」と「前の人の終了時刻」の遅い方、終了時刻は 開始時刻 ＋ 体験時間、待ち時間は 開始時刻 − 到着時刻。`);
+  D.ex(`体験時間 ${tk} 分：${R.map((x, i) => `${i + 1}人目 開始${x[0]}・終了${x[1]}・待ち${x[2]}`).join("、")}。`);
+  D.ex(`体験時間ごとに最長待ち時間を計算すると、${lim} 分未満になる最大の体験時間は ${best} 分。`);
+}
+function j3_gomi(r, D) {
+  const n = 6, bw = pick(r, [400, 500]), fw = pick(r, [20, 30]);
+  const rows = Array.from({ length: n }, () => ({ i: pick(r, ["バケツ", "袋"]), s: pick(r, ["可燃", "不燃"]), w: 0 }));
+  rows.forEach(x => x.w = (x.i === "バケツ" ? bw : fw) + randInt(r, 3, 30) * 10);
+  const net = x => x.w - (x.i === "バケツ" ? bw : fw), K = rows.filter(x => x.s === "可燃").reduce((t, x) => t + net(x), 0), Fu = rows.filter(x => x.s === "不燃").reduce((t, x) => t + net(x), 0);
+  const OPT = [`${bw}`, `${fw}`, "Keiryou[i]", "kanen", "funen", "omosa"];
+  D.part("", "集計を自動化するプログラム", 25);
+  D.p(`クラスのごみ拾いで，各生徒は入れ物(バケツ ${bw} g または ごみ袋 ${fw} g)ごとごみの重さを量り，記録する。配列 Iremono，Shurui，Keiryou に入れ物，ごみの種類，量った重さ(g)を出席番号順に格納する(添字は 1 から)。`);
+  D.table(["出席番号", ...rows.map((_, i) => String(i + 1))], [["Iremono", ...rows.map(x => x.i)], ["Shurui", ...rows.map(x => x.s)], ["Keiryou", ...rows.map(x => String(x.w))]]);
+  D.p(`問1　出席番号 1 の生徒が集めたごみだけの重さは ${D.num(net(rows[0]), 4)} g である。`);
+  D.p(`問2　ごみの種類ごとに，入れ物の重さを除いた合計を求める次のプログラムの空欄に入る最も適当なものを，解答群から一つずつ選べ。`);
+  const c1 = D.ch(0, OPT, 4), c2 = D.ch(3, OPT, 4), c3 = D.ch(5, OPT, 4);
+  D.code([`(01) kanen = 0`, `(02) funen = 0`, `(03) i を 1 から 要素数(Keiryou) まで 1 ずつ増やしながら繰り返す:`, `(04) │ もし Iremono[i] == "バケツ" ならば:`, `(05) │ │ omosa = Keiryou[i] − ${c1}`, `(06) │ そうでなければ:`, `(07) │ └ omosa = Keiryou[i] − ${fw}`, `(08) │ もし Shurui[i] == "可燃" ならば:`, `(09) │ │ kanen = ${c2} ＋ ${c3}`, `(10) │ そうでなければ:`, `(11) └ └ funen = funen ＋ omosa`, `(12) 表示する(kanen, funen)`]);
+  D.p(`問3　上の表のデータでプログラムを実行すると，表示される kanen の値は ${D.num(K, 5)}，funen の値は ${D.num(Fu, 4)} である。`);
+  D.ex(`バケツなら ${bw} g、袋なら ${fw} g を引く。出席番号 1：${rows[0].w} − ${rows[0].i === "バケツ" ? bw : fw} ＝ ${net(rows[0])} g。`);
+  D.ex(`可燃：${rows.filter(x => x.s === "可燃").map(net).join(" ＋ ") || "0"} ＝ ${K}。不燃：${rows.filter(x => x.s === "不燃").map(net).join(" ＋ ") || "0"} ＝ ${Fu}。`);
+}
+function j3_assign(r, D) {
+  const m = pick(r, [2, 3]), N = pick(r, [6, 7]), nis = Array.from({ length: N }, () => randInt(r, 1, 4));
+  const free = Array(m).fill(0), who = [];
+  nis.forEach(d => { let j = 0; for (let k = 1; k < m; k++) if (free[k] < free[j]) j = k; who.push(j + 1); free[j] += d; });
+  const done = Math.max(...free), OPT = ["Akibi[j]", "Akibi[busuu]", "Nissu[i]", "Akibi[j] ＋ Nissu[i]", "Akibi[tantou] ＋ Nissu[i]", "tantou"];
+  D.part("", "担当を割り当てるプログラム", 25);
+  D.p(`部員 ${m} 名で ${N} 個の工芸品を製作する。工芸品は番号順に，その時点で最も早く手が空く部員(同じなら番号の小さい部員)に割り当てる。配列 Nissu に各工芸品の製作日数，配列 Akibi に各部員の手が空くまでの日数(最初はすべて 0)を格納する。添字は 1 から始まる。`);
+  D.table(["工芸品", ...nis.map((_, i) => String(i + 1))], [["製作日数", ...nis.map(String)]]);
+  D.p(`問1　工芸品 ${N} を担当するのは部員 ${D.num(who[N - 1], 4)} であり，すべての工芸品の製作が終わるのは合宿開始から ${D.num(done, 4)} 日後である。`);
+  D.p(`問2　次のプログラムの空欄に入る最も適当なものを，解答群から一つずつ選べ。`);
+  const c1 = D.ch(0, OPT, 4), c2 = D.ch(4, OPT, 4);
+  D.code([`(01) Nissu = [${nis.join(", ")}]`, `(02) busuu = ${m}`, `(03) Akibi = [${Array(m).fill(0).join(", ")}]`, `(04) i を 1 から 要素数(Nissu) まで 1 ずつ増やしながら繰り返す:`, `(05) │ tantou = 1`, `(06) │ j を 2 から busuu まで 1 ずつ増やしながら繰り返す:`, `(07) │ │ もし ${c1} ＜ Akibi[tantou] ならば:`, `(08) │ └ └ tantou = j`, `(09) │ Akibi[tantou] = ${c2}`, `(10) └ 表示する("工芸品", i, "→部員", tantou)`]);
+  D.p(`問3　部員を 1 名増やして ${m + 1} 名にすると，すべての製作が終わるのは ${D.num((() => { const f = Array(m + 1).fill(0); nis.forEach(d => { let j = 0; for (let k = 1; k <= m; k++) if (f[k] < f[j]) j = k; f[j] += d; }); return Math.max(...f); })(), 9)} 日後になる。`);
+  D.ex(`割当て：${nis.map((d, i) => `工芸品${i + 1}(${d}日)→部員${who[i]}`).join("、")}。最後に手が空くのは ${done} 日後。`);
+  D.ex(`(07) 行目は、部員 j の空く日が今の候補 tantou より早ければ候補を j に替える処理。(09) 行目で担当者の空く日を製作日数だけ遅らせる。`);
+}
+
+// ---------- 第4問 データの活用 ----------
+function scatterSvg(pts, xl, yl) {
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]), x0 = Math.min(...xs) - 1, x1 = Math.max(...xs) + 1, y0 = Math.min(...ys) - 2, y1 = Math.max(...ys) + 2;
+  const X = x => 40 + (x - x0) / (x1 - x0) * 230, Y = y => 170 - (y - y0) / (y1 - y0) * 150;
+  let s = `<line x1="40" y1="170" x2="275" y2="170"/><line x1="40" y1="170" x2="40" y2="15"/>`;
+  for (let x = Math.ceil(x0); x <= x1; x++) s += `<line x1="${X(x)}" y1="170" x2="${X(x)}" y2="174"/>` + T(X(x), 186, x, "middle", 10);
+  for (let y = Math.ceil(y0 / 5) * 5; y <= y1; y += 5) s += `<line x1="36" y1="${Y(y)}" x2="40" y2="${Y(y)}"/>` + T(33, Y(y) + 4, y, "end", 10);
+  pts.forEach(p => s += `<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="3.5" fill="currentColor"/>`);
+  return SV(285, 205, s + T(275, 200, xl, "end", 10) + T(42, 11, yl, "start", 10), "散布図");
+}
+function j4_corr(r, D) {
+  let pts, rr, a, b;
+  for (; ;) { a = pick(r, [2, 3, 4]); b = randInt(r, 60, 80); const noise = pick(r, [1, 6]); pts = Array.from({ length: 10 }, () => { const x = randInt(r, 4, 13); return [x, b - a * x + randInt(r, -noise, noise)]; });
+    const n = pts.length, mx = pts.reduce((t, p) => t + p[0], 0) / n, my = pts.reduce((t, p) => t + p[1], 0) / n; let sxy = 0, sxx = 0, syy = 0; pts.forEach(p => { sxy += (p[0] - mx) * (p[1] - my); sxx += (p[0] - mx) ** 2; syy += (p[1] - my) ** 2; });
+    rr = sxy / Math.sqrt(sxx * syy); if (sxx === 0) continue; if (rr < -0.78 || (rr > -0.62 && rr < -0.28)) break; }
+  const lab = rr <= -0.7 ? 4 : 3, x0 = randInt(r, 5, 12), pred = b - a * x0, k = randInt(r, 0, 9), res = pts[k][1] - (b - a * pts[k][0]);
+  const SC = pick(r, [["観測点の名前", 0], ["開花が早い順の順位", 1], ["3 月の平均気温(℃)", 2], ["3 月の降水量(mm)", 3]]);
+  D.part("", "データの分析(散布図と回帰直線)", 25);
+  D.p(`T さんは，桜の開花日を分析するため，10 か所の観測点について 3 月の平均気温 x(℃)と開花日 y(3 月 1 日を 1 日目とした日数)のデータを集め，散布図にした。`);
+  D.svg(scatterSvg(pts, "x(℃)", "y(日目)"), "散布図");
+  D.table(["観測点", ...pts.map((_, i) => String(i + 1))], [["x", ...pts.map(p => String(p[0]))], ["y", ...pts.map(p => String(p[1]))]]);
+  D.p(`問1　データの尺度水準について，「${SC[0]}」は ${D.ch(SC[1], ["名義尺度", "順序尺度", "間隔尺度", "比例尺度"], 5)} である。`);
+  D.p(`問2　散布図から，x と y の間には ${D.ch(lab, ["強い正の相関がある", "弱い正の相関がある", "ほとんど相関がない", "弱い負の相関がある", "強い負の相関がある"], 5)} と読み取れる。`);
+  D.p(`問3　回帰直線を y ＝ −${a}x ＋ ${b} とすると，3 月の平均気温が ${x0} ℃ の観測点の開花日は ${D.num(pred, 5)} 日目と予測できる。`);
+  D.p(`問4　観測点 ${k + 1} の実際の値と回帰直線による予測値との差(実際の値 − 予測値)は ${D.num(res, 5)} 日である。`);
+  D.p(`問5　この回帰直線を，データの範囲から大きく外れた気温(例えば 30 ℃)の予測に用いることは ${D.ch(1, ["適切である", "適切とは限らない"], 5)}。`);
+  D.ex(`尺度水準：名前は名義、順位は順序、気温(℃)は差に意味があるが 0 ℃ が「無」ではないので間隔、降水量は 0 が「無」で比にも意味があるので比例。ここでは「${SC[0]}」→${["名義", "順序", "間隔", "比例"][SC[1]]}尺度。`);
+  D.ex(`相関係数は約 ${rr.toFixed(2)}。予測値 ${b} − ${a}×${x0} ＝ ${pred}。観測点 ${k + 1}：${pts[k][1]} − (${b} − ${a}×${pts[k][0]}) ＝ ${res}。データの範囲外の予測(外挿)は当てはまる保証がない。`);
+}
+function boxSvg(groups) {
+  const all = groups.flatMap(g => g.v), lo = Math.floor(Math.min(...all) / 10) * 10, hi = Math.ceil(Math.max(...all) / 10) * 10, Y = v => 170 - (v - lo) / (hi - lo) * 150;
+  let s = `<line x1="40" y1="170" x2="290" y2="170"/><line x1="40" y1="170" x2="40" y2="15"/>`;
+  for (let v = lo; v <= hi; v += 10) s += `<line x1="36" y1="${Y(v)}" x2="40" y2="${Y(v)}"/>` + T(33, Y(v) + 4, v, "end", 10);
+  groups.forEach((g, i) => { const x = 75 + i * 60, [mn, q1, md, q3, mx] = g.f; s += `<line x1="${x}" y1="${Y(mx)}" x2="${x}" y2="${Y(q3)}"/><line x1="${x}" y1="${Y(q1)}" x2="${x}" y2="${Y(mn)}"/><line x1="${x - 10}" y1="${Y(mx)}" x2="${x + 10}" y2="${Y(mx)}"/><line x1="${x - 10}" y1="${Y(mn)}" x2="${x + 10}" y2="${Y(mn)}"/><rect x="${x - 18}" y="${Y(q3)}" width="36" height="${Y(q1) - Y(q3)}" style="fill:var(--paper)"/><line x1="${x - 18}" y1="${Y(md)}" x2="${x + 18}" y2="${Y(md)}" stroke-width="2.4"/>` + T(x, 186, g.n, "middle", 11); });
+  return SV(300, 195, s, "箱ひげ図");
+}
+const five = v => { const s = v.slice().sort((a, b) => a - b), n = s.length, med = a => a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2; return [s[0], med(s.slice(0, Math.floor(n / 2))), med(s), med(s.slice(Math.ceil(n / 2))), s[n - 1]]; };
+function j4_box(r, D) {
+  const names = ["A", "B", "C", "D"], groups = names.map(n => { const base = randInt(r, 20, 50), sp = randInt(r, 4, 14); const v = Array.from({ length: 11 }, () => base + randInt(r, -sp, sp)); return { n, v, f: five(v) }; });
+  const iq = groups.map(g => g.f[3] - g.f[1]), maxIQ = iq.indexOf(Math.max(...iq)), medHi = groups.map(g => g.f[2]).indexOf(Math.max(...groups.map(g => g.f[2])));
+  if (new Set(iq).size < 4 || groups.filter(g => g.f[2] === groups[medHi].f[2]).length > 1) return j4_box(r, D);
+  const k = randInt(r, 0, 3), g = groups[k];
+  D.part("", "データの分析(箱ひげ図)", 25);
+  D.p(`M さんは，4 地点 A〜D で 11 年分の観測値を集め，地点ごとの箱ひげ図を作成した。`);
+  D.svg(boxSvg(groups), "箱ひげ図");
+  D.table(["地点", "最小値", "第1四分位数", "中央値", "第3四分位数", "最大値"], groups.map(x => [x.n, ...x.f.map(String)]));
+  D.p(`問1　地点 ${g.n} の四分位範囲は ${D.num(g.f[3] - g.f[1], 5)} であり，範囲(最大値 − 最小値)は ${D.num(g.f[4] - g.f[0], 5)} である。`);
+  D.p(`問2　四分位範囲が最も大きい地点は ${D.ch(maxIQ, names, 5)} であり，中央値が最も大きい地点は ${D.ch(medHi, names, 5)} である。`);
+  D.p(`問3　箱ひげ図からは，各地点の ${D.ch(2, ["平均値", "最頻値", "データのおおよその散らばり", "各年の値の変化"], 5)} を読み取ることができる。`);
+  D.ex(`四分位範囲 ＝ 第3四分位数 − 第1四分位数。地点 ${g.n}：${g.f[3]} − ${g.f[1]} ＝ ${g.f[3] - g.f[1]}、範囲 ${g.f[4]} − ${g.f[0]} ＝ ${g.f[4] - g.f[0]}。`);
+  D.ex(`四分位範囲は ${groups.map((x, i) => `${x.n}:${iq[i]}`).join("、")}。箱ひげ図は五数要約を表すので、平均値や時系列の変化は読み取れない(平均値は別に印を付けた場合のみ)。`);
+}
+
+const JOHO = {
+  name: "情報Ⅰ", min: 60, full: 100,
+  slots: [
+    { no: 1, pts: 20, parts: [[jq_know], [jq_hex, jq_count], [jq_logic], [jq_size]] },
+    { no: 2, pts: 30, parts: [[j2_check, j2_rle], [j2_queue, j2_dice]] },
+    { no: 3, pts: 25, parts: [[j3_wait, j3_gomi, j3_assign]] },
+    { no: 4, pts: 25, parts: [[j4_corr, j4_box]] }
+  ]
+};
+
+// ===== 数学ⅡBC =====
+const SUP = { 2: "²", 3: "³", 4: "⁴" };
+function poly(cs, v) { v = v || "x"; let s = ""; cs.forEach(([c, p]) => { if (!c) return; const neg = c < 0, a = Math.abs(c); const term = p === 0 ? String(a) : (a === 1 ? "" : String(a)) + v + (p > 1 ? SUP[p] : ""); s += s === "" ? (neg ? "−" : "") + term : (neg ? " − " : " ＋ ") + term; }); return s || "0"; }
+const sgn = (v, t) => v < 0 ? ` − ${t === undefined ? -v : t}` : ` ＋ ${t === undefined ? v : t}`;
+const NT = { "0.50": 0.1915, "1.00": 0.3413, "1.50": 0.4332, "1.96": 0.4750, "2.00": 0.4772, "2.50": 0.4938 };
+const NTtxt = "必要に応じて，次の正規分布表の値を用いてよい。";
+const ntab = D => D.table(["z", "0.5", "1.0", "1.5", "1.96", "2.0", "2.5"], [["P(0 ≦ Z ≦ z)", "0.1915", "0.3413", "0.4332", "0.4750", "0.4772", "0.4938"]]);
+const dec4 = v => { const n = Math.round(v * 10000); return [Math.floor(n / 1000), Math.floor(n / 100) % 10, Math.floor(n / 10) % 10, n % 10]; };
+
+// ---------- 第1問 (15点) ----------
+function k1_circle(r, D) {
+  let p, q, R2, A, B, C, N, M, chord2;
+  do { p = randInt(r, -3, 3); q = randInt(r, -3, 3); R2 = pick(r, [10, 13, 16, 20, 25]); A = pick(r, [1, 2, 3]); B = pick(r, [-1, 1, 2, -2]); C = randInt(r, -6, 6); N = Math.abs(A * p + B * q + C); M = A * A + B * B; chord2 = R2 * M - N * N; } while (chord2 <= 0 || N === 0 || p === 0 || q === 0);
+  const a = -2 * p, b = -2 * q, c = p * p + q * q - R2, d = rad(N, M, M), ch = rad(2, M, chord2 * M), rr = rad(1, 1, R2);
+  const k = pick(r, [q + Math.round(Math.sqrt(R2)) + 1, q + Math.round(Math.sqrt(R2)), q, q + 1]), dist = Math.abs(k - q), rel = Number.isInteger(Math.sqrt(R2)) && dist === Math.sqrt(R2) ? 1 : dist < Math.sqrt(R2) ? 0 : 2;
+  D.part("", "円と直線", 15);
+  D.p(`座標平面上で，方程式 x² ＋ y²${sgn(a, Math.abs(a) + "x")}${sgn(b, Math.abs(b) + "y")}${c ? sgn(c) : ""} ＝ 0 が表す円を C とする。`.replace("＋ 1x", "＋ x").replace("− 1x", "− x").replace("＋ 1y", "＋ y").replace("− 1y", "− y"));
+  const [bp, bq] = D.num([p, q], 3);
+  D.p(`C の中心の座標は (${bp}，${bq})，半径は ${D.rv(rr, 3)} である。`);
+  D.p(`直線 ℓ：${poly([[A, 1]])}${sgn(B, Math.abs(B) === 1 ? "y" : Math.abs(B) + "y")}${sgn(C)} ＝ 0 と C の中心との距離は ${D.rv(d, 3)} であり，ℓ が C から切り取る線分の長さは ${D.rv(ch, 3)} である。`.replace(/ ＋ 0 ＝/, " ＝"));
+  D.p(`また，直線 y ＝ ${k} と C は ${D.ch(rel, ["異なる 2 点で交わる", "接する", "共有点をもたない"], 3)}。`);
+  D.ex(`平方完成すると (x ${p < 0 ? "＋" : "−"} ${Math.abs(p)})² ＋ (y ${q < 0 ? "＋" : "−"} ${Math.abs(q)})² ＝ ${R2}。中心 (${p}，${q})、半径 √${R2}。`);
+  D.ex(`点と直線の距離 |${A}·(${p}) ＋ ${B}·(${q}) ＋ ${C}|/√(${A}² ＋ ${B}²) ＝ ${N}/√${M}。弦の長さ ＝ 2√(半径² − 距離²) ＝ ${radStr(ch)}。直線 y ＝ ${k} と中心の距離は ${dist}。`);
+}
+function k1_remainder(r, D) {
+  let a, b, p, q; do { a = pick(r, [1, 2]); b = pick(r, [-1, -2, -3]); p = randInt(r, -5, 5); q = randInt(r, -6, 6); } while (a === -b || p === 0);
+  const P = x => x ** 3 + p * x + q, R1 = P(a), R2 = P(b), rr = (R1 - R2) / (a - b), ss = R1 - rr * a;
+  D.part("", "剰余の定理", 15);
+  D.p(`p，q を定数とし，整式 P(x) ＝ x³ ＋ px ＋ q を考える。P(x) を x − ${a} で割ると余りは ${R1} であり，x ＋ ${-b} で割ると余りは ${R2} である。`);
+  D.p(`このとき p ＝ ${D.num(p, 3)}，q ＝ ${D.num(q, 3)} である。`);
+  const [br, bs] = D.num([rr, ss], 6);
+  D.p(`また，P(x) を (x − ${a})(x ＋ ${-b}) で割ったときの余りは ${br}x ＋ ${bs} である。`);
+  D.p(`一般に，整式 Q(x) が x − c で割り切れるための必要十分条件は ${D.ch(1, ["Q(0) ＝ c", "Q(c) ＝ 0", "Q(−c) ＝ 0", "Q(c) ＝ c"], 3)} である。`);
+  D.ex(`剰余の定理より P(${a}) ＝ ${a ** 3} ＋ ${a}p ＋ q ＝ ${R1}、P(${b}) ＝ ${b ** 3} − ${-b}p ＋ q ＝ ${R2}。連立して p ＝ ${p}、q ＝ ${q}。`);
+  D.ex(`余りを rx ＋ s とおくと、P(${a}) ＝ ${a}r ＋ s ＝ ${R1}、P(${b}) ＝ ${b}r ＋ s ＝ ${R2}。よって r ＝ ${rr}、s ＝ ${ss}。因数定理：Q(c) ＝ 0。`);
+}
+function k1_complex(r, D) {
+  let m, n; do { m = randInt(r, 1, 4); n = randInt(r, m * m + 1, m * m + 12); } while (Number.isInteger(Math.sqrt(n - m * m)) && r() < 0.5);
+  const im = rad(1, 1, n - m * m), s2 = 4 * m * m - 2 * n;
+  D.part("", "2次方程式と複素数", 15);
+  D.p(`2 次方程式 x² − ${2 * m}x ＋ ${n} ＝ 0 の解を α，β とする。`);
+  const acc = { syms: "", ans: [] }; const b1 = D._box(m, acc); const coef = im.p === 1 ? "" : D._box(im.p, acc); const b3 = im.q === 1 ? "" : `√{${D._box(im.q, acc)}}`; D._push(acc, 4, "num");
+  D.p(`この方程式の解は x ＝ ${b1} ± ${coef}${b3}i である。`);
+  const [bs, bp] = D.num([2 * m, n], 4);
+  D.p(`解と係数の関係から α ＋ β ＝ ${bs}，αβ ＝ ${bp} であり，α² ＋ β² ＝ ${D.num(s2, 4)} である。`);
+  D.p(`また，この 2 つの解は ${D.ch(0, ["互いに共役な複素数である", "どちらも実数である", "一方が実数で他方が虚数である", "互いに逆数である"], 3)}。`);
+  D.ex(`判別式 D/4 ＝ ${m}² − ${n} ＝ ${m * m - n} ＜ 0 なので虚数解。x ＝ ${m} ± √(${m * m - n}) ＝ ${m} ± ${radStr(im)}i。`);
+  D.ex(`α ＋ β ＝ ${2 * m}、αβ ＝ ${n}。α² ＋ β² ＝ (α ＋ β)² − 2αβ ＝ ${4 * m * m} − ${2 * n} ＝ ${s2}。実数係数の 2 次方程式の虚数解は共役な組になる。`);
+}
+
+// ---------- 第2問 (15点) ----------
+function k2_explog(r, D) {
+  const f = pick(r, [["1.2", "12/10", 2 * 0.3010 + 0.4771 - 1, "2log₁₀2 ＋ log₁₀3 − 1"], ["1.5", "3/2", 0.4771 - 0.3010, "log₁₀3 − log₁₀2"], ["1.8", "18/10", 0.3010 + 2 * 0.4771 - 1, "log₁₀2 ＋ 2log₁₀3 − 1"]]);
+  const lf = Math.round(f[2] * 10000) / 10000, M = pick(r, [10, 100]), need = Math.ceil(Math.log10(M) / lf - 1e-9), N = pick(r, [20, 30]), dg = Math.floor(N * lf) + 1;
+  D.part("", "指数関数・対数関数の活用", 15);
+  D.p(`池の水草の量は，1 日ごとに ${f[0]} 倍に増えるとする。必要に応じて，log₁₀2 ＝ 0.3010，log₁₀3 ＝ 0.4771 を用いてよい。`);
+  const [a1, a2, a3, a4] = D.num(dec4(lf), 5);
+  D.p(`${f[0]} ＝ ${f[1]} と考えると，log₁₀${f[0]} ＝ 0.${a1}${a2}${a3}${a4} である。`);
+  D.p(`水草の量が初めて最初の ${M} 倍以上になるのは ${D.num(need, 5)} 日後である。また，${f[0]}^${N} の整数部分は ${D.num(dg, 5)} 桁の数である。`);
+  D.ex(`log₁₀${f[0]} ＝ ${f[3]} ＝ ${lf.toFixed(4)}。`);
+  D.ex(`${f[0]}ⁿ ≧ ${M} ⇔ n·${lf.toFixed(4)} ≧ ${Math.log10(M)} ⇔ n ≧ ${(Math.log10(M) / lf).toFixed(2)}…なので ${need} 日後。log₁₀(${f[0]}^${N}) ＝ ${(N * lf).toFixed(3)} より ${dg} 桁。`);
+}
+function k2_trig(r, D) {
+  const c = pick(r, [{ p: "", q: "√3", R: { p: 2, q: 1, d: 1 }, a: 2, qv: { p: 1, q: 3, d: 1 } }, { p: "√3", q: "", R: { p: 2, q: 1, d: 1 }, a: 0, qv: { p: 1, q: 1, d: 1 } }, { p: "", q: "", R: { p: 1, q: 2, d: 1 }, a: 1, qv: { p: 1, q: 1, d: 1 } }]);
+  const A = ["π/6", "π/4", "π/3", "π/2"], th = ["π/3", "π/4", "π/6"][c.a === 2 ? 2 : c.a === 1 ? 1 : 0];
+  const thIdx = ["0", "π/6", "π/4", "π/3", "π/2", "2π/3"].indexOf(th);
+  D.part("", "三角関数の合成と最大・最小", 15);
+  D.p(`0 ≦ θ ≦ π のとき，関数 f(θ) ＝ ${c.p}sin θ ＋ ${c.q}cos θ の最大値と最小値を考える。`);
+  D.p(`三角関数の合成により f(θ) ＝ ${D.rv(c.R, 4)}sin(θ ＋ ${D.ch(c.a, A, 4)}) と表せる。`);
+  D.p(`f(θ) は θ ＝ ${D.ch(thIdx, ["0", "π/6", "π/4", "π/3", "π/2", "2π/3"], 4)} のとき最大値をとり，最小値は −${D.rv(c.qv, 3)} である。`);
+  D.ex(`係数 (${c.p || 1}，${c.q || 1}) の大きさ ${radStr(c.R)} で割ると、cos α ＝ ${c.p || 1}/${radStr(c.R)}、sin α ＝ ${c.q || 1}/${radStr(c.R)} を満たす α ＝ ${A[c.a]}。`);
+  D.ex(`θ ＋ ${A[c.a]} は ${A[c.a]} から π ＋ ${A[c.a]} まで動く。π/2 で最大（θ ＝ ${th}）、端の θ ＝ π で最小 f(π) ＝ −${c.q || 1}。`);
+}
+function k2_circles(r, D) {
+  const [s, t] = pick(r, [[3, 4], [6, 8], [5, 12], [8, 6], [4, 3]]), d = Math.hypot(s, t), r0 = randInt(r, 1, d - 2);
+  D.part("", "2つの円の位置関係", 15);
+  D.p(`O を原点とする座標平面上に，円 C₀：x² ＋ y² ＝ ${r0 * r0} と，中心 (${s}，${t})，半径 R(R ＞ 0) の円 C₁ がある。`);
+  D.p(`2 つの円の中心間の距離は ${D.num(d, 3)} である。C₀ と C₁ が外接するのは R ＝ ${D.num(d - r0, 4)} のときであり，C₁ が C₀ を内部に含んで内接するのは R ＝ ${D.num(d + r0, 4)} のときである。`);
+  D.p(`C₀ と C₁ が外接するとき，両方の円に接する直線(共通接線)は ${D.num(3, 4)} 本ある。`);
+  D.ex(`中心間の距離 √(${s}² ＋ ${t}²) ＝ ${d}。外接：距離 ＝ 半径の和 → R ＝ ${d} − ${r0}。内接：距離 ＝ 半径の差 → R − ${r0} ＝ ${d}。外接する 2 円の共通接線は 3 本(接点での接線 1 本と外側の 2 本)。`);
+}
+
+// ---------- 第3問 微分・積分 (22点) ----------
+function k3_cubic(r, D) {
+  let p, q, c, t0; do { p = randInt(r, -3, 1); q = p + pick(r, [2, 4]); c = randInt(r, -4, 4); t0 = pick(r, [0, 1, -1]); } while ((p + q) % 2);
+  const a = -3 * (p + q) / 2, b = 3 * p * q, f = x => x ** 3 + a * x * x + b * x + c, fp = x => 3 * x * x + 2 * a * x + b;
+  const m = fp(t0), n = f(t0) - m * t0, x3 = -a - 2 * t0, S = F(Math.pow(x3 - t0, 4), 12);
+  D.part("", "3次関数の極値・接線と面積", 22);
+  D.p(`関数 f(x) ＝ ${poly([[1, 3], [a, 2], [b, 1], [c, 0]])} を考える。`);
+  const [mx, my] = D.num([p, f(p)], 4), [nx, ny] = D.num([q, f(q)], 4);
+  D.p(`f(x) は x ＝ ${mx} で極大値 ${my} をとり，x ＝ ${nx} で極小値 ${ny} をとる。`);
+  const [tm, tn] = D.num([m, n], 4);
+  D.p(`曲線 y ＝ f(x) 上の点 (${t0}，${f(t0)}) における接線 ℓ の方程式は y ＝ ${tm}x ＋ ${tn} である。ℓ と曲線 y ＝ f(x) の，接点以外の共有点の x 座標は ${D.num(x3, 4)} であり，曲線 y ＝ f(x) と ℓ で囲まれた図形の面積は ${D.fr(S, 6)} である。`);
+  const xm = v => v < 0 ? `(x ＋ ${-v})` : v === 0 ? "x" : `(x − ${v})`;
+  D.ex(`f′(x) ＝ 3x²${a ? sgn(2 * a, Math.abs(2 * a) + "x") : ""}${b ? sgn(b) : ""} ＝ 3${xm(p)}${xm(q)}。増減表から x ＝ ${p} で極大 ${f(p)}、x ＝ ${q} で極小 ${f(q)}。`);
+  D.ex(`接線の傾き f′(${t0}) ＝ ${m}、y ＝ ${m}(x − ${t0}) ＋ ${f(t0)}。f(x) − (接線) ＝ (x − ${t0})²(x − ${x3})（3 次方程式の解の和 ＝ ${-a} を利用）。面積 ＝ |${x3} − ${t0}|⁴/12 ＝ ${Fstr(S)}。`);
+}
+function k3_intfunc(r, D) {
+  const m = pick(r, [2, 3, 4, 6]), Fm = F(-(m ** 3), 6), Gm = F(m ** 3, 6);
+  D.part("", "定積分で表された関数", 22);
+  D.p(`関数 F(x) ＝ ∫₀ˣ t(t − ${m}) dt について考える。`);
+  D.p(`F′(x) ＝ x² − ${D.num(m, 3)}x である。F(x) は x ＝ 0 で極大値 0 をとり，x ＝ ${D.num(m, 2)} で極小値 ${D.fr(Fm, 4)} をとる。`);
+  D.p(`次に，x ≧ 0 のとき，関数 G(x) ＝ ∫₀ˣ |t(t − ${m})| dt を考える。G(${m}) ＝ ${D.fr(Gm, 5)}，G(${2 * m}) ＝ ${D.num(m ** 3, 4)} である。`);
+  D.p(`また，x ≧ 0 において G(x) は ${D.ch(0, ["つねに増加する", "x ＝ " + m + " で極大になる", "x ＝ " + m + " で極小になる", "つねに減少する"], 4)}。`);
+  D.ex(`微分積分学の基本定理より F′(x) ＝ x(x − ${m})。F(x) ＝ x³/3 − ${m}x²/2 より F(${m}) ＝ ${Fstr(Fm)}。`);
+  D.ex(`0 ≦ t ≦ ${m} では |t(t − ${m})| ＝ −t(t − ${m}) なので G(${m}) ＝ −F(${m}) ＝ ${Fstr(Gm)}。x ≧ ${m} では G(x) ＝ F(x) − 2F(${m}) となり G(${2 * m}) ＝ ${m ** 3}。G′(x) ＝ |x(x − ${m})| ≧ 0 なので増加。`);
+}
+function k3_area(r, D) {
+  const m = pick(r, [1, 2, 3]), k = randInt(r, 1, 2 * m - 1), w = 2 * m - k, S = F(w ** 3, 6), S0 = F(8 * m ** 3, 6);
+  D.part("", "放物線と直線で囲まれた図形の面積", 22);
+  D.p(`放物線 C：y ＝ −x² ＋ ${2 * m}x と直線 ℓ：y ＝ ${k === 1 ? "" : k}x を考える。`);
+  D.p(`C と ℓ の共有点の x 座標は 0 と ${D.num(w, 4)} であり，C と ℓ で囲まれた図形の面積は ${D.fr(S, 6)} である。`);
+  D.p(`C 上の原点における接線の方程式は y ＝ ${D.num(2 * m, 4)}x であり，C と x 軸で囲まれた図形の面積は ${D.fr(S0, 4)} である。`);
+  D.p(`直線 ℓ の傾き ${k} を 0 ＜ (傾き) ＜ ${2 * m} の範囲で大きくしていくと，C と ℓ で囲まれた図形の面積は ${D.ch(1, ["大きくなる", "小さくなる", "変わらない"], 4)}。`);
+  D.ex(`−x² ＋ ${2 * m}x ＝ ${k}x より x(x − ${w}) ＝ 0。面積 ＝ ∫₀^${w} {−x² ＋ ${w}x} dx ＝ ${w}³/6 ＝ ${Fstr(S)}。`);
+  D.ex(`y′ ＝ −2x ＋ ${2 * m} より原点での傾き ${2 * m}。x 軸との面積 ＝ ${2 * m}³/6 ＝ ${Fstr(S0)}。傾きを大きくすると交点 ${2 * m} − (傾き) が 0 に近づき面積は小さくなる。`);
+}
+
+// ---------- 第4問 数列 (16点) ----------
+function k4_diff(r, D) {
+  const A = randInt(r, -3, 5), c = pick(r, [2, 4, 6]), d = randInt(r, -5, 3), an = n => A + c * (n - 1) * n / 2 + d * (n - 1);
+  D.part("", "階差数列", 16);
+  D.p(`数列 {aₙ} の初項は ${A} であり，{aₙ} の階差数列 {bₙ}(bₙ ＝ aₙ₊₁ − aₙ) の一般項は bₙ ＝ ${poly([[c, 1], [d, 0]], "n")} である。`);
+  const [x2, x3] = D.num([an(2), an(3)], 3);
+  D.p(`a₂ ＝ ${x2}，a₃ ＝ ${x3} である。`);
+  const [g1, g2, g3] = D.num([c / 2, d - c / 2, A - d], 6);
+  D.p(`n ≧ 2 のとき aₙ ＝ a₁ ＋ Σ(k＝1〜n−1) bₖ であるから，aₙ ＝ ${g1}n² ＋ ${g2}n ＋ ${g3} であり，これは n ＝ 1 のときも成り立つ。`);
+  D.p(`したがって a₁₀ ＝ ${D.num(an(10), 4)}，また aₙ ＞ 100 となる最小の自然数 n は ${D.num((() => { let n = 1; while (an(n) <= 100) n++; return n; })(), 3)} である。`);
+  D.ex(`a₂ ＝ ${A} ＋ b₁ ＝ ${an(2)}、a₃ ＝ a₂ ＋ b₂ ＝ ${an(3)}。Σ(k＝1〜n−1)(${c}k ${d < 0 ? "−" : "＋"} ${Math.abs(d)}) ＝ ${c}·(n−1)n/2 ${d < 0 ? "−" : "＋"} ${Math.abs(d)}(n − 1)。`);
+  D.ex(`整理して aₙ ＝ ${poly([[c / 2, 2], [d - c / 2, 1], [A - d, 0]], "n")}。a₁₀ ＝ ${an(10)}。`);
+}
+function k4_rec(r, D) {
+  let p, al, a1; do { p = pick(r, [2, 3]); al = randInt(r, -4, 4); a1 = randInt(r, -2, 6); } while (a1 === al || al === 0);
+  const q = al * (1 - p), an = n => (a1 - al) * p ** (n - 1) + al; let nn = 1; while (an(nn) <= 1000 && nn < 40) nn++;
+  const ok = a1 - al > 0; let nn2 = 1; while (an(nn2) >= -1000 && nn2 < 40) nn2++;
+  D.part("", "漸化式", 16);
+  D.p(`数列 {aₙ} を a₁ ＝ ${a1}，aₙ₊₁ ＝ ${p}aₙ${sgn(q)} (n ＝ 1，2，3，…) で定める。`.replace(" ＋ 0 ", " "));
+  D.p(`α ＝ ${p}α${sgn(q)} を満たす α は α ＝ ${D.num(al, 3)} であり，aₙ₊₁ − α ＝ ${p}(aₙ − α) と変形できる。`);
+  const [c1, c2] = D.num([a1 - al, p], 5);
+  D.p(`よって aₙ ＝ ${c1}·${c2}ⁿ⁻¹ ＋ α と表され，a₅ ＝ ${D.num(an(5), 4)} である。`);
+  if (ok) D.p(`aₙ ＞ 1000 となる最小の自然数 n は ${D.num(nn, 4)} である。`); else D.p(`aₙ ＜ −1000 となる最小の自然数 n は ${D.num(nn2, 4)} である。`);
+  D.ex(`α ＝ ${p}α ${q < 0 ? "−" : "＋"} ${Math.abs(q)} より α ＝ ${al}。aₙ − ${al} は初項 ${a1 - al}、公比 ${p} の等比数列。`);
+  D.ex(`aₙ ＝ ${a1 - al}·${p}ⁿ⁻¹ ＋ ${al}、a₅ ＝ ${an(5)}。${ok ? `n ＝ ${nn - 1} で ${an(nn - 1)}、n ＝ ${nn} で ${an(nn)}。` : `n ＝ ${nn2 - 1} で ${an(nn2 - 1)}、n ＝ ${nn2} で ${an(nn2)}。`}`);
+}
+function k4_arith(r, D) {
+  let a1, dd; do { a1 = randInt(r, 30, 60); dd = pick(r, [3, 4, 5, 6]); } while (a1 % dd === 0);
+  const an = n => a1 - (n - 1) * dd, Sn = n => n * (2 * a1 - (n - 1) * dd) / 2; let nmax = 1; while (an(nmax + 1) > 0) nmax++;
+  D.part("", "等差数列とその和", 16);
+  D.p(`初項 ${a1}，公差 −${dd} の等差数列 {aₙ} の初項から第 n 項までの和を Sₙ とする。`);
+  const [g1, g2] = D.num([a1 + dd, dd], 4);
+  D.p(`一般項は aₙ ＝ ${g1} − ${g2}n である。aₙ ＞ 0 となる最大の n は ${D.num(nmax, 4)} であり，Sₙ の最大値は ${D.num(Sn(nmax), 4)} である。また，S₂₀ ＝ ${D.num(Sn(20), 4)} である。`);
+  D.ex(`aₙ ＝ ${a1} − ${dd}(n − 1) ＝ ${a1 + dd} − ${dd}n。aₙ ＞ 0 ⇔ n ＜ ${((a1 + dd) / dd).toFixed(2)} より n ≦ ${nmax}。正の項だけを足したところで和が最大：S${nmax} ＝ ${Sn(nmax)}。`);
+  D.ex(`S₂₀ ＝ 20{2·${a1} − 19·${dd}}/2 ＝ ${Sn(20)}。`);
+}
+
+// ---------- 第5問 統計的な推測 (16点) ----------
+function k5_normal(r, D) {
+  const mu = pick(r, [50, 110, 116, 400]), sg = pick(r, [5, 10, 20, 25]), k1 = pick(r, ["0.50", "1.00", "1.50", "2.00"]), k2 = pick(r, ["0.50", "1.00", "1.50"]), N = pick(r, [200, 500, 1000]);
+  const x1 = mu + (+k1) * sg, x2 = mu - (+k2) * sg, P1 = 0.5 - NT[k1], P2 = NT[k1] + NT[k2];
+  D.part("", "正規分布", 16);
+  D.p(`ある製品の重さ X(g) は，正規分布 N(${mu}，${sg}²) に従うとする。Z ＝ (X − ${mu})/${sg} とおくと，Z は標準正規分布に従う。${NTtxt}`); ntab(D);
+  const z = [Math.floor(+k1), Math.round((+k1 % 1) * 10)];
+  const [zb1, zb2] = D.num(z, 4);
+  D.p(`X ＝ ${x1} に対応する Z の値は ${zb1}.${zb2} である。`);
+  const [p1, p2, p3, p4] = D.num(dec4(P1), 4), [q1, q2, q3, q4] = D.num(dec4(P2), 4);
+  D.p(`P(X ≧ ${x1}) ＝ 0.${p1}${p2}${p3}${p4}，P(${x2} ≦ X ≦ ${x1}) ＝ 0.${q1}${q2}${q3}${q4} である。`);
+  D.p(`この製品を ${N} 個作るとき，重さが ${x1} g 以上になる個数の期待値は ${D.num(Math.round(N * P1), 4)} 個である（小数第 1 位を四捨五入）。`);
+  D.ex(`Z ＝ (${x1} − ${mu})/${sg} ＝ ${k1}。P(X ≧ ${x1}) ＝ 0.5 − P(0 ≦ Z ≦ ${k1}) ＝ 0.5 − ${NT[k1]} ＝ ${P1.toFixed(4)}。`);
+  D.ex(`${x2} は Z ＝ −${k2} に対応。P ＝ ${NT[k1]} ＋ ${NT[k2]} ＝ ${P2.toFixed(4)}。期待値 ${N}×${P1.toFixed(4)} ＝ ${(N * P1).toFixed(1)} → ${Math.round(N * P1)} 個。`);
+}
+function k5_binom(r, D) {
+  const [n, pn, pd, sd] = pick(r, [[400, 1, 2, 10], [100, 1, 5, 4], [900, 1, 10, 9], [1600, 1, 2, 20], [400, 1, 5, 8]]), E = n * pn / pd, k = pick(r, ["1.00", "1.50", "2.00"]), P = 0.5 - NT[k];
+  D.part("", "二項分布と正規分布による近似", 16);
+  D.p(`1 回の試行で事象 A が起こる確率が ${pn}/${pd} である試行を ${n} 回繰り返すとき，A が起こる回数を X とする。X は二項分布 B(${n}，${pn}/${pd}) に従う。${NTtxt}`); ntab(D);
+  D.p(`X の平均は ${D.num(E, 4)}，標準偏差は ${D.num(sd, 4)} である。`);
+  const chN = D.ch(0, [`N(${E}，${sd}²)`, `N(${E}，${sd})`, `N(${n}，${sd}²)`, `N(0，1)`], 4), [p1, p2, p3, p4] = D.num(dec4(P), 4);
+  D.p(`n が大きいので X は近似的に正規分布 ${chN} に従うとみなせる。これを用いると，P(X ≧ ${E + (+k) * sd}) は約 0.${p1}${p2}${p3}${p4} である。`);
+  D.ex(`平均 np ＝ ${n}×${pn}/${pd} ＝ ${E}、分散 np(1 − p) ＝ ${sd * sd}、標準偏差 ${sd}。`);
+  D.ex(`${E + (+k) * sd} は平均から ${k} 標準偏差離れた値なので P ≒ 0.5 − ${NT[k]} ＝ ${P.toFixed(4)}。`);
+}
+function k5_ci(r, D) {
+  const [n, sg] = pick(r, [[100, 10], [400, 20], [64, 8], [100, 20], [36, 12]]), se = sg / Math.sqrt(n), xb = randInt(r, 120, 180), h = 1.96 * se;
+  const lo = Math.round((xb - h) * 100) / 100, hi = Math.round((xb + h) * 100) / 100;
+  const sp = v => { const i = Math.floor(v), f = Math.round((v - i) * 100); return [i, Math.floor(f / 10), f % 10]; };
+  D.part("", "母平均の推定", 16);
+  D.p(`ある地域の高校生の通学時間(分)の母平均 m を推定する。無作為に ${n} 人を抽出したところ，標本平均は ${xb} 分であった。母標準偏差は ${sg} 分とする。${NTtxt}`); ntab(D);
+  D.p(`標本平均の標準偏差は ${D.num(se, 4)} 分である。`);
+  const [l1, l2, l3] = D.num(sp(lo), 4), [h1, h2, h3] = D.num(sp(hi), 4);
+  D.p(`m に対する信頼度 95％ の信頼区間は ${l1}.${l2}${l3} ≦ m ≦ ${h1}.${h2}${h3} である。`);
+  D.p(`標本の大きさを 4 倍にすると，信頼区間の幅は ${D.ch(2, ["4 倍になる", "2 倍になる", "1/2 倍になる", "1/4 倍になる"], 4)}。`);
+  D.ex(`標本平均の標準偏差 σ/√n ＝ ${sg}/√${n} ＝ ${se}。P(|Z| ≦ 1.96) ＝ 0.95 より ${xb} ± 1.96×${se} ＝ ${xb} ± ${h.toFixed(2)}。`);
+  D.ex(`幅は 1/√n に比例するので、n を 4 倍にすると幅は 1/2 倍。`);
+}
+
+// ---------- 第6問 ベクトル (16点) ----------
+function k6_plane(r, D) {
+  let m, n, p, q; do { m = randInt(r, 1, 3); n = randInt(r, 1, 3); p = randInt(r, 1, 3); q = randInt(r, 1, 3); } while (gcd(m, n) !== 1 || gcd(p, q) !== 1);
+  const c = F(m, m + n), d = F(p, p + q), one = [1, 1], v = Fdiv(Fsub(one, c), Fsub(one, Fmul(c, d))), s = Fsub(one, v), t = Fmul(v, d);
+  D.part("", "平面ベクトルと交点", 16);
+  D.p(`△OAB において，辺 OA を ${m}：${n} に内分する点を C，辺 OB を ${p}：${q} に内分する点を D とし，線分 AD と線分 BC の交点を P とする。OA→ ＝ a→，OB→ ＝ b→ とおく。なお，比は最も簡単な整数の比で答えよ。`);
+  D.p(`OP→ ＝ ${D.fr(s, 4)}a→ ＋ ${D.fr(t, 4)}b→ である。`);
+  D.p(`また，AP：PD ＝ ${D.ratio(v[0], v[1] - v[0], 4)} であり，△OAP の面積は △OAB の面積の ${D.fr(t, 4)} 倍である。`);
+  D.ex(`P は AD 上なので OP→ ＝ (1 − u)a→ ＋ u·(${Fstr(d)})b→、BC 上なので OP→ ＝ v·(${Fstr(c)})a→ ＋ (1 − v)b→。a→，b→ は 1 次独立なので係数を比べて解く。`);
+  D.ex(`AP：AD ＝ ${Fstr(v)} より AP：PD ＝ ${v[0]}：${v[1] - v[0]}。△OAP ＝ △OAB × (OP→ の b→ の係数) ＝ ${Fstr(t)} 倍。`);
+}
+function k6_inner(r, D) {
+  const [A, B] = pick(r, [[2, 3], [3, 4], [2, 5], [4, 3], [1, 2]]), th = pick(r, [[60, 1, "π/3"], [120, -1, "2π/3"], [90, 0, "π/2"]]), c = th[1] * A * B / 2;
+  const amb2 = A * A + B * B - 2 * c, apb2 = A * A + B * B + 2 * c, Sx = rad(1, 2, A * A * B * B - c * c);
+  if (!Number.isInteger(c)) return k6_inner(r, D);
+  D.part("", "ベクトルの内積", 16);
+  D.p(`|a→| ＝ ${A}，|b→| ＝ ${B}，|a→ − b→| ＝ √${amb2} を満たすベクトル a→，b→ がある。`);
+  const angOpts = ["π/6", "π/3", "π/2", "2π/3", "5π/6"];
+  D.p(`a→·b→ ＝ ${D.num(c, 4)} であり，a→ と b→ のなす角は ${D.ch(angOpts.indexOf(th[2]), angOpts, 4)} である。`);
+  D.p(`|a→ ＋ b→| ＝ ${D.rv(rad(1, 1, apb2), 4)} であり，a→ と b→ が作る三角形の面積は ${D.rv(Sx, 4)} である。`);
+  D.ex(`|a→ − b→|² ＝ |a→|² − 2a→·b→ ＋ |b→|² より ${amb2} ＝ ${A * A} − 2a→·b→ ＋ ${B * B}、a→·b→ ＝ ${c}。cos θ ＝ ${c}/(${A}×${B}) より θ ＝ ${th[2]}。`);
+  D.ex(`|a→ ＋ b→|² ＝ ${A * A} ＋ 2·${c} ＋ ${B * B} ＝ ${apb2}。面積 ＝ (1/2)√(|a→|²|b→|² − (a→·b→)²) ＝ ${radStr(Sx)}。`);
+}
+function k6_space(r, D) {
+  let P, Q, R0, ab, ac, dot, S2; do { P = [randInt(r, -2, 2), randInt(r, -2, 2), randInt(r, -2, 2)]; Q = P.map(x => x + randInt(r, -3, 3)); R0 = P.map(x => x + randInt(r, -3, 3)); ab = Q.map((x, i) => x - P[i]); ac = R0.map((x, i) => x - P[i]); dot = ab.reduce((t, x, i) => t + x * ac[i], 0); S2 = ab.reduce((t, x) => t + x * x, 0) * ac.reduce((t, x) => t + x * x, 0) - dot * dot; } while (S2 <= 0);
+  const L1 = ab.reduce((t, x) => t + x * x, 0), L2 = ac.reduce((t, x) => t + x * x, 0), S = rad(1, 2, S2), pt = a => `(${a.join("，")})`;
+  D.part("", "空間ベクトル", 16);
+  D.p(`座標空間に 3 点 A${pt(P)}，B${pt(Q)}，C${pt(R0)} がある。`);
+  D.p(`AB→·AC→ ＝ ${D.num(dot, 4)}，|AB→|² ＝ ${D.num(L1, 4)}，|AC→|² ＝ ${D.num(L2, 4)} であり，△ABC の面積は ${D.rv(S, 4)} である。`);
+  D.ex(`AB→ ＝ ${pt(ab)}、AC→ ＝ ${pt(ac)}。内積 ${ab.map((x, i) => `${x}·${ac[i]}`).join(" ＋ ")} ＝ ${dot}。`);
+  D.ex(`面積 ＝ (1/2)√(|AB→|²|AC→|² − (AB→·AC→)²) ＝ (1/2)√(${L1}×${L2} − ${dot * dot}) ＝ ${radStr(S)}。`);
+}
+
+// ---------- 第7問 複素数平面・平面上の曲線 (16点) ----------
+function k7_polar(r, D) {
+  const c = pick(r, [{ z: "1 ＋ √3i", R: { p: 2, q: 1, d: 1 }, a: 2, n: 3, val: -8, im: false, first: 6 }, { z: "√3 ＋ i", R: { p: 2, q: 1, d: 1 }, a: 0, n: 3, val: 8, im: true, first: 12 }, { z: "1 ＋ i", R: { p: 1, q: 2, d: 1 }, a: 1, n: 4, val: -4, im: false, first: 8 }, { z: "−1 ＋ √3i", R: { p: 2, q: 1, d: 1 }, a: 3, n: 3, val: 8, im: false, first: 3 }]);
+  const A = ["π/6", "π/4", "π/3", "2π/3", "3π/4", "5π/6"];
+  D.part("", "複素数の極形式とド・モアブルの定理", 16);
+  D.p(`複素数 z ＝ ${c.z} を考える。ただし，偏角 θ は 0 ≦ θ ＜ 2π とする。`);
+  D.p(`|z| ＝ ${D.rv(c.R, 4)}，arg z ＝ ${D.ch(c.a, A, 4)} である。`);
+  D.p(`ド・モアブルの定理より z${SUP[c.n]} ＝ ${D.num(c.val, 4)}${c.im ? "i" : ""} である。また，zⁿ が正の実数となる最小の自然数 n は ${D.num(c.first, 4)} である。`);
+  D.ex(`|z| ＝ ${radStr(c.R)}、z ＝ ${radStr(c.R)}(cos ${A[c.a]} ＋ i sin ${A[c.a]})。`);
+  D.ex(`zⁿ ＝ ${radStr(c.R)}ⁿ(cos n·${A[c.a]} ＋ i sin n·${A[c.a]})。n ＝ ${c.n} で ${c.val}${c.im ? "i" : ""}、n·${A[c.a]} が 2π の倍数になる最小の n は ${c.first}。`);
+}
+function k7_rot(r, D) {
+  const a = [randInt(r, -2, 3), randInt(r, -2, 3)], dv = [randInt(r, 1, 4), randInt(r, -3, 3)], b = [a[0] + dv[0], a[1] + dv[1]], sg = pick(r, [1, -1]);
+  const rot = sg === 1 ? [-dv[1], dv[0]] : [dv[1], -dv[0]], g = [a[0] + rot[0], a[1] + rot[1]];
+  const cs = (x, y) => `${x}${y < 0 ? " − " : " ＋ "}${Math.abs(y)}i`;
+  D.part("", "複素数平面上の回転", 16);
+  D.p(`複素数平面上に 2 点 A(α)，B(β) があり，α ＝ ${cs(a[0], a[1])}，β ＝ ${cs(b[0], b[1])} である。点 B を点 A を中心として ${sg === 1 ? "π/2" : "−π/2"} だけ回転した点を C(γ) とする。`);
+  const [d1, d2] = D.num(dv, 4), [g1, g2] = D.num(g, 4);
+  D.p(`β − α ＝ ${d1} ＋ (${d2})i であり，γ ＝ ${g1} ＋ (${g2})i である。`);
+  D.p(`|γ − α| ＝ ${D.rv(rad(1, 1, dv[0] ** 2 + dv[1] ** 2), 4)} であり，△ABC は ${D.ch(2, ["正三角形", "AB ＝ BC の二等辺三角形", "∠A ＝ π/2 の直角二等辺三角形", "∠B ＝ π/2 の直角三角形"], 4)} である。`);
+  D.ex(`β − α ＝ ${cs(dv[0], dv[1])}。${sg === 1 ? "π/2 回転は i を掛ける" : "−π/2 回転は −i を掛ける"}ので γ − α ＝ ${cs(rot[0], rot[1])}、γ ＝ ${cs(g[0], g[1])}。`);
+  D.ex(`|γ − α| ＝ |β − α| ＝ √${dv[0] ** 2 + dv[1] ** 2}。AB ＝ AC かつ ∠BAC ＝ π/2 なので直角二等辺三角形。`);
+}
+function k7_ellipse(r, D) {
+  const [a, c] = pick(r, [[5, 3], [5, 4], [13, 12], [10, 6], [10, 8], [17, 15]]), b2 = a * a - c * c, b = Math.sqrt(b2);
+  D.part("", "楕円(複素数平面と2次曲線)", 16);
+  D.p(`複素数平面上で，方程式 |z − ${c}| ＋ |z ＋ ${c}| ＝ ${2 * a} を満たす点 z 全体が表す図形を考える。z ＝ x ＋ yi(x，y は実数)とする。`);
+  D.p(`この方程式は，点 z から 2 点 ${c}，−${c} までの距離の和が一定であることを表すので，図形は ${D.ch(1, ["円", "楕円", "双曲線", "放物線"], 4)} である。`);
+  const [A2, B2] = D.num([a * a, b2], 4);
+  D.p(`x，y の方程式で表すと {{x²|${A2}}} ＋ {{y²|${B2}}} ＝ 1 であり，長軸の長さは ${D.num(2 * a, 4)}，短軸の長さは ${D.num(2 * b, 4)} である。`);
+  D.ex(`2 点(焦点)からの距離の和が一定 ${2 * a} の点の軌跡は楕円。長軸の長さ ＝ 距離の和 ＝ ${2 * a}、a ＝ ${a}。`);
+  D.ex(`焦点が ±${c} なので b² ＝ a² − c² ＝ ${a * a} − ${c * c} ＝ ${b2}、短軸の長さ 2b ＝ ${2 * b}。`);
+}
+
+const M2BC = {
+  name: "数学ⅡBC", min: 70, full: 100, pickN: 3,
+  slots: [
+    { no: 1, pts: 15, parts: [[k1_circle, k1_remainder, k1_complex]] },
+    { no: 2, pts: 15, parts: [[k2_explog, k2_trig, k2_circles]] },
+    { no: 3, pts: 22, parts: [[k3_cubic, k3_intfunc, k3_area]] },
+    { no: 4, pts: 16, opt: true, title: "数列", parts: [[k4_diff, k4_rec, k4_arith]] },
+    { no: 5, pts: 16, opt: true, title: "統計的な推測", parts: [[k5_normal, k5_binom, k5_ci]] },
+    { no: 6, pts: 16, opt: true, title: "ベクトル", parts: [[k6_plane, k6_inner, k6_space]] },
+    { no: 7, pts: 16, opt: true, title: "平面上の曲線と複素数平面", parts: [[k7_polar, k7_rot, k7_ellipse]] }
+  ]
+};
+
+// ===== 英語リーディング =====
+Daimon.prototype.doc = function (title, paras) { this.blocks.push({ t: "doc", title, paras, part: this.parts.length - 1 }); };
+// 選択肢を並べ替えて1問作る(stem中の［］に解答番号が入る)
+function EQ(D, r, stem, correct, wrongs, pts) { const opts = shuffle(r, [correct, ...wrongs]); D.p(stem.replace("［］", D.ch(opts.indexOf(correct), opts, pts))); }
+function orderQ(D, r, stem, labels, correct, pts) { const perm = a => a.join(" → "), set = new Set([perm(correct)]); while (set.size < 4) set.add(perm(shuffle(r, labels))); const opts = shuffle(r, [...set]); D.p(stem.replace("［］", D.ch(opts.indexOf(perm(correct)), opts, pts))); }
+
+// ---------- 第1問 お知らせ (6点) ----------
+function e1_garden(r, D) {
+  D.part("", "Notice: Volunteer Day", 6);
+  D.p("You are reading a notice on a community board.");
+  D.doc("Riverside Community Garden — Spring Volunteer Day", ["**Saturday, April 18, 9:00 a.m. – 12:00 p.m.** (rain date: Sunday, April 19)", "Help us get the garden ready for spring! No experience is needed.", "Tasks: • Planting tomato and bean seedlings • Painting the new tool shed • Making signs for each vegetable bed", "What to bring: Gloves, a water bottle, and clothes you don't mind getting dirty. Tools and paint will be provided.", "Volunteers who stay until noon will receive a free packet of seeds. Children under 12 must come with an adult.", "To join, send your name and preferred task to the garden office by April 14."]);
+  EQ(D, r, "問1 The main purpose of this notice is to ［］.", "ask people to help prepare the garden", ["sell vegetables grown in the garden", "teach children how to paint", "announce that the garden will close"], 2);
+  EQ(D, r, "問2 Volunteers do NOT need to bring ［］.", "tools", ["gloves", "a water bottle", "old clothes"], 2);
+  EQ(D, r, "問3 If it rains on April 18, the event will ［］.", "take place the next day", ["be canceled", "start at noon", "be held indoors"], 2);
+  D.ex("問1：Help us get the garden ready for spring! が目的。問2：Tools and paint will be provided.(道具は用意される)。問3：rain date: Sunday, April 19 なので翌日に行われる。");
+}
+function e1_library(r, D) {
+  D.part("", "Notice: Summer Study Room", 6);
+  D.p("You find this notice at your local library.");
+  D.doc("City Library — Summer Study Room", ["From July 20 to August 31, the second-floor meeting room will be open as a quiet study room for high school students.", "**Hours:** 10:00 a.m. – 6:00 p.m. (closed on Mondays)", "• Seats: 40 (first come, first served)", "• Free Wi-Fi is available. Please bring your own headphones if you watch videos.", "• Food is not allowed, but you may drink water or tea from bottles with lids.", "• Show your student ID at the front desk on your first visit to get a seat card.", "Every Friday at 3:00 p.m., university student volunteers will answer questions about math and English for 30 minutes."]);
+  EQ(D, r, "問1 This notice is mainly for ［］.", "high school students who want a place to study", ["university students looking for jobs", "parents of young children", "people who want to hold meetings"], 2);
+  EQ(D, r, "問2 On your first visit, you need to ［］.", "show your student ID", ["pay a small fee", "reserve a seat online", "bring your own Wi-Fi device"], 2);
+  EQ(D, r, "問3 Which is allowed in the study room? ［］", "Drinking tea from a bottle with a lid", ["Eating lunch at your seat", "Using the room on Mondays", "Watching videos without headphones"], 2);
+  D.ex("問1：for high school students。問2：Show your student ID … on your first visit。問3：ふた付きのボトルの飲み物は可。食べ物は不可、月曜は休み、動画はヘッドホンが必要。");
+}
+// ---------- 第2問 記事とコメント (12点) ----------
+function e2_app(r, D) {
+  D.part("", "Survey report and comments", 12);
+  D.p("You are reading a report on your school's website about a new lunch ordering app.");
+  D.doc("Lunch Ordering App: Survey Results", ["Posted by the Student Council, 10 March", "Last September, our school started using a smartphone app for ordering lunch from the cafeteria. In February, we asked all 600 students about it, and 450 answered.", "• 72% said they use the app at least three times a week.", "• 64% said the waiting time at the cafeteria has become shorter.", "• 30% said they sometimes forget to order before the 10:00 a.m. deadline.", "• The most requested improvement was a wider choice of vegetarian dishes (38%).", "**Comments**", "Ken (Year 2): The app is great. I no longer have to stand in a long line, so I have more time to talk with my friends at lunch.", "Mia (Year 1): I think the 10:00 deadline is too early. Most of us are in class then, and we can't use our phones.", "Leo (Year 3): Honestly, I prefer paying with cash. Using an app for everything is not good for students."]);
+  EQ(D, r, "問1 About how many students said they use the app at least three times a week? ［］", "About 320", ["About 430", "About 290", "About 600"], 3);
+  EQ(D, r, "問2 Which is a fact, not an opinion, from the report and comments? ［］", "More than half of the students who answered said the waiting time has become shorter.", ["The app is great.", "The 10:00 deadline is too early.", "Using an app for everything is not good for students."], 3);
+  EQ(D, r, "問3 Mia's comment suggests that ［］.", "it is difficult to order during class time", ["the app should include vegetarian dishes", "students should pay with cash", "the cafeteria lines are still long"], 3);
+  EQ(D, r, "問4 Which improvement did the largest number of students ask for? ［］", "More vegetarian dishes", ["A later deadline", "Cash payment", "A faster app"], 3);
+  D.ex("問1：回答者450人の72％ ＝ 324人。問2：64％(半数以上)という調査結果は事実。他は個人の意見。問3：授業中は携帯を使えないので締切が早すぎるという意味。問4：最も多い要望は vegetarian dishes(38％)。");
+}
+function e2_carfree(r, D) {
+  D.part("", "Blog and comments", 12);
+  D.p("You are reading a blog post about a town event.");
+  D.doc("Car-Free Sundays: One Year On (Emma Clarke, 14 May)", ["Last May, my town, Westbridge, started closing the main street to cars every Sunday from 10 a.m. to 4 p.m. According to the town office, the number of people visiting the street on Sundays rose from about 2,000 to 5,500 in the first year. Shop owners reported that their Sunday sales increased by 20% on average.", "I visited the street last weekend. Children were drawing with chalk on the road, and musicians were playing near the fountain. In my opinion, this is the best idea the town has had in years.", "However, not everyone is happy. Some people living nearby say it takes them longer to drive home, and the bus route has to change every Sunday.", "**Comments**", "Tom: I run a café on the main street. Sundays are now our busiest days.", "Rina: I live on a side street. The traffic jams on my street are terrible on Sundays!"]);
+  EQ(D, r, "問1 By about how many did the number of Sunday visitors increase? ［］", "About 3,500", ["About 2,000", "About 5,500", "About 7,500"], 3);
+  EQ(D, r, "問2 Which is an opinion, not a fact? ［］", "This is the best idea the town has had in years.", ["The street is closed to cars from 10 a.m. to 4 p.m.", "Sunday sales increased by 20% on average.", "The bus route has to change every Sunday."], 3);
+  EQ(D, r, "問3 Tom and Rina ［］.", "have different experiences of Car-Free Sundays", ["both live on the main street", "both want the event to stop", "both work at a café"], 3);
+  EQ(D, r, "問4 The writer's main purpose is to ［］.", "report on the results and reactions after one year", ["ask readers to stop driving", "advertise a café", "explain how to change bus routes"], 3);
+  D.ex("問1：2,000 → 5,500 なので約3,500人増。問2：In my opinion で始まる文は意見。問3：Tom は客が増えて喜び、Rina は渋滞に困っている。問4：1年後の結果と賛否の反応を報告している。");
+}
+// ---------- 第3問 出来事の順序 (9点) ----------
+function e3_marathon(r, D) {
+  D.part("", "Blog: My First Marathon", 9);
+  D.p("You are reading a blog written by a university student.");
+  D.doc("My First Marathon", ["Last November, I ran my first full marathon. I had started training in June by running five kilometers three times a week. In August, I hurt my knee and had to stop running for a month, which made me worried. My coach suggested swimming instead, so I swam every morning until my knee got better. In October, I ran 30 kilometers for the first time.", "On race day, it was cold and windy. At the 35-kilometer point, I wanted to give up, but my sister was waiting there with a sign that said \"Only 7 km to go!\" I finished in 4 hours and 52 minutes. Next year, I want to finish in under four and a half hours."]);
+  D.p("(A) The writer hurt her knee.　(B) The writer ran 30 kilometers for the first time.　(C) The writer started swimming every morning.　(D) The writer began running five kilometers three times a week.");
+  orderQ(D, r, "問1 Put the events in the order they happened. ［］", ["A", "B", "C", "D"], ["D", "A", "C", "B"], 3);
+  EQ(D, r, "問2 What helped the writer at the 35-kilometer point? ［］", "Her sister's message", ["Her coach's advice to swim", "The cold and windy weather", "Running together with friends"], 3);
+  EQ(D, r, "問3 The writer's goal for next year is to ［］.", "finish the marathon in less than 4 hours and 30 minutes", ["finish the marathon in less than 4 hours", "run 30 kilometers without stopping", "become a swimming coach"], 3);
+  D.ex("問1：6月に5kmの練習開始 → 8月にけが → 水泳 → 10月に初めて30km。問2：姉の Only 7 km to go! のサイン。問3：four and a half hours ＝ 4時間30分より速く。");
+}
+function e3_bakesale(r, D) {
+  D.part("", "School newsletter: Bake Sale", 9);
+  D.p("You are reading an article in your school newsletter.");
+  D.doc("Cooking Club's Charity Bake Sale", ["In October, our Cooking Club held a bake sale to raise money for a local animal shelter. First, the members visited the shelter to learn what it needed most. They found out that the shelter needed blankets and dog food. Next, they tested recipes for two weeks and chose cookies and banana bread.", "On the day before the sale, they baked 300 cookies and 20 loaves of banana bread. The sale started at noon, and everything was sold out in two hours. The club raised 45,000 yen and used it to buy 30 blankets and 50 kilograms of dog food. When the members delivered them, a shelter worker said, \"The dogs will be warm this winter thanks to you.\""]);
+  D.p("(A) The members tested recipes.　(B) The members delivered blankets and dog food.　(C) The members visited the shelter.　(D) The members baked 300 cookies.");
+  orderQ(D, r, "問1 Put the events in the order they happened. ［］", ["A", "B", "C", "D"], ["C", "A", "D", "B"], 3);
+  EQ(D, r, "問2 The club decided what to buy ［］.", "after learning what the shelter needed", ["by asking customers at the sale", "before visiting the shelter", "based on the price of cookies"], 3);
+  EQ(D, r, "問3 What is true about the sale? ［］", "Everything was sold out in two hours.", ["It started in the morning.", "Only cookies were sold.", "It raised 30,000 yen."], 3);
+  D.ex("問1：保護施設を訪問 → レシピを試す → 前日に焼く → 品物を届ける。問2：First, … to learn what it needed most。問3：sold out in two hours。売上は45,000円で、正午開始。");
+}
+// ---------- 第4問 英作文の推敲 (12点) ----------
+function e4_cook(r, D) {
+  D.part("", "Essay draft with comments", 12);
+  D.p("In English class, you are writing an essay. This is your draft with comments from your teacher.");
+  D.doc("Why Students Should Learn to Cook", ["Many high school students rarely cook for themselves. (1) ∧ However, learning to cook has several benefits.", "First, cooking helps us eat more healthily. When we cook, we can choose fresh ingredients and control the amount of salt and sugar. (2) Fast food tastes good.", "Second, cooking is a useful life skill. Many students will live alone after graduation. If they can cook, they can save money (3) ∧ .", "In conclusion, cooking is (4) a good thing for students to learn.", "**Comments:** (1) Add something here to explain why students rarely cook. (2) This sentence does not support your point. Replace it. (3) Add a reason that shows how cooking saves money. (4) This expression is vague. Use a more specific phrase."]);
+  EQ(D, r, "問1 Which is the best addition for (1)? ［］", "This is often because they are busy with club activities and homework.", ["Cooking is popular among many adults.", "Some restaurants are very expensive.", "My favorite food is curry."], 3);
+  EQ(D, r, "問2 Which is the best replacement for (2)? ［］", "For example, home-made meals usually contain more vegetables than fast food.", ["Many people enjoy eating at restaurants.", "Some students do not like vegetables.", "Fast food restaurants are open late."], 3);
+  EQ(D, r, "問3 Which is the best addition for (3)? ［］", "because buying ingredients is often cheaper than eating out every day", ["and they can make new friends", "because restaurants are always crowded", "and they will have more free time"], 3);
+  EQ(D, r, "問4 Which is the best replacement for (4)? ［］", "a practical skill that supports a healthy and independent life", ["something fun", "an interesting hobby for some people", "very nice"], 3);
+  D.ex("(1) 理由(部活と宿題で忙しい)を補う。(2) 健康的な食事という論点を支える具体例に替える。(3) お金の節約の理由。(4) 本文の2つの論点(健康・自立)をまとめた具体的な表現に。");
+}
+function e4_books(r, D) {
+  D.part("", "Essay draft with comments", 12);
+  D.p("You are writing an essay for your English class. Here is your draft with your teacher's comments.");
+  D.doc("Paper Books Still Matter", ["Today, many people read on smartphones and tablets. (1) ∧ In this essay, I will argue that paper books still have important advantages.", "To begin with, reading paper books may be easier on our eyes. Screens give off strong light, (2) and many people use screens at night.", "In addition, paper books can help us concentrate. (3) Smartphones are very convenient.", "(4) ∧ Paper books will continue to have a place in our lives.", "**Comments:** (1) Add a sentence that connects this fact to your topic. (2) Explain why the strong light is a problem. (3) This sentence weakens your argument. Replace it with one that supports your point. (4) Add a sentence that summarizes your two main points."]);
+  EQ(D, r, "問1 Which is the best addition for (1)? ［］", "However, paper books are still sold in many bookstores, and many readers prefer them.", ["Tablets are becoming cheaper every year.", "Smartphones were first sold many years ago.", "I like reading comics on my phone."], 3);
+  EQ(D, r, "問2 Which is the best replacement for (2)? ［］", "which can make our eyes feel tired after reading for a long time", ["and they are used by many students", "because screens are very bright and colorful", "so we should buy new smartphones"], 3);
+  EQ(D, r, "問3 Which is the best replacement for (3)? ［］", "With a paper book, we are not interrupted by messages or notifications.", ["Many people own more than one device.", "Paper books are sometimes heavy.", "Some e-books are free."], 3);
+  EQ(D, r, "問4 Which is the best addition for (4)? ［］", "In short, paper books are gentler on our eyes and help us focus.", ["In short, tablets are useful for many purposes.", "In short, I want to buy more books.", "In short, screens are not used at night."], 3);
+  D.ex("(1) 電子機器の普及という事実を「それでも紙の本」という主題につなぐ。(2) 強い光の問題点(目の疲れ)を説明。(3) 集中できる理由に替える。(4) 目にやさしい・集中できるの2点をまとめる。");
+}
+// ---------- 第5問 チラシとメール (16点) ----------
+function e5_camp(r, D) {
+  D.part("", "Leaflet and email", 16);
+  D.p("You found this leaflet and applied. Then you received an email.");
+  D.doc("Maple Town Summer English Camp (for students aged 13–18)", ["**Course A:** July 22–24 (3 days) — ¥15,000 / games and speech practice", "**Course B:** August 5–9 (5 days) — ¥24,000 / games, speech practice, and a one-day trip to a farm with international volunteers", "Lunch is included in both courses.", "Discounts: ¥2,000 off for each student who signs up with a friend. Early sign-up (before June 30): an extra ¥1,000 off.", "How to apply: Fill in the online form. We will email you within three days."]);
+  D.doc("Email from the Camp Office", ["Dear Haruka,", "Thank you for applying for Course B. We received your form on July 2. Unfortunately, the farm trip will be on August 8 instead of August 7 because of a local festival. Please bring a hat and a water bottle for the trip. Your friend Yui has also signed up, so you will receive the friend discount.", "Best regards, Camp Office"]);
+  EQ(D, r, "問1 How much will Haruka pay? ［］", "¥22,000", ["¥21,000", "¥23,000", "¥24,000"], 4);
+  EQ(D, r, "問2 What has changed about Course B? ［］", "The day of the farm trip", ["The fee for the course", "The length of the course", "The lunch menu"], 4);
+  EQ(D, r, "問3 What should Haruka bring for the trip? ［］", "A hat and a water bottle", ["Her own lunch", "A form for the farm", "Gloves and boots"], 4);
+  EQ(D, r, "問4 Which is true about Course A? ［］", "It does not include the farm trip.", ["It lasts five days.", "It costs more than Course B.", "It is only for students over 15."], 4);
+  D.ex("問1：Course B ¥24,000 − 友人割引 ¥2,000 ＝ ¥22,000(7月2日の申込なので早期割引はなし)。問2：農場への日帰り旅行が8日に変更。問3：帽子と水筒。問4：Course A は games and speech practice のみ。");
+}
+function e5_museum(r, D) {
+  D.part("", "Leaflet and email", 16);
+  D.p("You are interested in volunteering at a museum. You read the leaflet and sent a message. Then you received a reply.");
+  D.doc("Westfield Museum — Volunteer Guides Wanted", ["We are looking for volunteer guides for our new exhibition, \"Life in the Edo Period\" (October 1 – December 20).", "**Requirements:** • At least 16 years old • Able to work at least two days a month • Attend one training session (September 14 or September 21, 10:00–15:00)", "**Guides will:** • Lead 30-minute tours for visitors • Help at the hands-on corner, where visitors can try on kimonos", "**Benefits:** • Free entry to all exhibitions for a year • A ¥1,000 gift card for every five days of work"]);
+  D.doc("Reply from the Museum", ["Dear Ryo,", "Thank you for your interest. Because you are 15, you cannot be a guide this year, but you can join our \"Junior Helper\" program on weekends. Junior Helpers help only at the hands-on corner. Your training will be on September 21. You will also get free entry to all exhibitions.", "Regards, Museum Staff"]);
+  EQ(D, r, "問1 Why can't Ryo be a guide this year? ［］", "He is not old enough.", ["He cannot work two days a month.", "He missed the training session.", "The exhibition has already ended."], 4);
+  EQ(D, r, "問2 As a Junior Helper, Ryo will ［］.", "help visitors try on kimonos", ["lead 30-minute tours", "work mainly on weekdays", "receive a gift card every five days"], 4);
+  EQ(D, r, "問3 When will Ryo attend his training? ［］", "September 21", ["September 14", "October 1", "December 20"], 4);
+  EQ(D, r, "問4 If an adult guide works ten days, they will receive ［］.", "¥2,000 in gift cards", ["¥1,000 in gift cards", "¥5,000 in gift cards", "¥10,000 in gift cards"], 4);
+  D.ex("問1：ガイドは16歳以上。問2：Junior Helper は hands-on corner(着物の試着)のみ。問3：September 21。問4：5日ごとに¥1,000なので10日で¥2,000。");
+}
+// ---------- 第6問 物語 (12点) ----------
+function e6_piano(r, D) {
+  D.part("", "Story: The Station Piano", 12);
+  D.p("In English class, you are preparing an outline of the following story for a presentation.");
+  D.doc("The Station Piano", ["Every morning, Aoi passed the old piano in the station on her way to school. The city had placed it there so that anyone could play it. Aoi had taken piano lessons for eight years, but she had stopped after failing an important competition in junior high school. Since then, she had not touched a piano.", "One rainy day in June, her train was delayed. While she was waiting, an elderly man sat down at the piano and began to play a simple song very slowly. He made many mistakes, but he was smiling. When he finished, a few people clapped. He turned to Aoi and said, \"I started learning last year, at seventy-five. It's never too late, is it?\"", "Aoi felt something warm in her chest. She remembered how much she had enjoyed playing before she started worrying about winning.", "The next morning, she arrived at the station ten minutes early. Her hands were shaking as she sat down. She played a piece her grandmother had loved. A small girl stood beside her and listened until the end. \"Can you teach me?\" the girl asked.", "Now Aoi plays at the station once a week, and sometimes she teaches children a few notes. She has decided that music is not something to win; it is something to share."]);
+  D.p("(A) An elderly man played the piano.　(B) Aoi stopped playing the piano.　(C) A girl asked Aoi to teach her.　(D) Aoi arrived early and played the piano.");
+  orderQ(D, r, "問1 Put the events in the order they happened. ［］", ["A", "B", "C", "D"], ["B", "A", "D", "C"], 3);
+  EQ(D, r, "問2 Aoi's feelings changed from ［］.", "being afraid to play to enjoying sharing music", ["being excited to being bored", "being proud to being jealous", "being lonely to being angry"], 3);
+  EQ(D, r, "問3 Why did the elderly man's words affect Aoi? ［］", "They reminded her that age and mistakes did not matter when enjoying music.", ["He offered to give her free lessons.", "He was a friend of her grandmother.", "He told her to enter another competition."], 3);
+  EQ(D, r, "問4 Which is the best message of the story? ［］", "Music is something to share, not only something to win.", ["Practice makes perfect.", "Trains are often late on rainy days.", "Children learn faster than adults."], 3);
+  D.ex("問1：中学で演奏をやめる → 老人が演奏 → 翌朝早く来て演奏 → 少女に頼まれる。問2：怖くて弾けなかった → 分かち合う楽しさへ。問3：間違えても笑顔で弾く75歳の姿と言葉。問4：最後の文が主題。");
+}
+function e6_garden(r, D) {
+  D.part("", "Story: The Garden Next Door", 12);
+  D.p("Your teacher has asked you to prepare presentation notes on the following story.");
+  D.doc("The Garden Next Door", ["When Daichi's family moved to a new town, he didn't know anyone. Next door lived Mrs. Kato, an old woman who spent every afternoon in her vegetable garden. At first, Daichi thought she was strict because she often told him not to kick his soccer ball near her plants.", "One day in July, Daichi's ball flew over the fence and broke some tomato plants. He was too scared to tell her, so he went home without saying anything. That night, he couldn't sleep.", "The next morning, he knocked on her door and apologized. To his surprise, Mrs. Kato smiled. \"Thank you for being honest,\" she said. \"Why don't you help me plant new ones?\" For the rest of the summer, Daichi visited her garden every weekend, and she taught him how to grow tomatoes, cucumbers, and beans.", "In September, Mrs. Kato hurt her leg and couldn't go into the garden. This time, Daichi took care of the plants by himself and brought her vegetables every day. When she tasted the first tomato he had grown, she said, \"This is the best tomato I've had in years.\"", "Daichi still plays soccer, but now he kicks the ball in the park."]);
+  D.p("(A) Daichi's ball broke some tomato plants.　(B) Daichi apologized to Mrs. Kato.　(C) Mrs. Kato hurt her leg.　(D) Daichi learned how to grow vegetables.");
+  orderQ(D, r, "問1 Put the events in the order they happened. ［］", ["A", "B", "C", "D"], ["A", "B", "D", "C"], 3);
+  EQ(D, r, "問2 Daichi's feelings toward Mrs. Kato changed from ［］.", "feeling nervous around her to feeling close to her", ["feeling close to her to feeling angry", "feeling bored to feeling excited", "feeling proud to feeling sorry"], 3);
+  EQ(D, r, "問3 Why did Mrs. Kato smile when Daichi apologized? ［］", "She appreciated that he was honest.", ["She wanted him to pay for the plants.", "She had not noticed the broken plants.", "She liked soccer very much."], 3);
+  EQ(D, r, "問4 What does the last sentence of the story show? ［］", "Daichi now cares about Mrs. Kato's garden.", ["Daichi has stopped playing soccer.", "Mrs. Kato has moved to a new town.", "The park is closer than the garden."], 3);
+  D.ex("問1：ボールでトマトを折る → 謝る → 夏の間に野菜作りを習う → 9月に加藤さんがけが。問2：厳しい人だと思って緊張 → 親しくなる。問3：Thank you for being honest。問4：今は公園でボールを蹴る＝庭を大切にしている。");
+}
+// ---------- 第7問 説明文とスライド (16点) ----------
+function e7_zebra(r, D) {
+  D.part("", "Article and presentation slides", 16);
+  D.p("You are preparing a presentation for science class using the following article.");
+  D.doc("Why Do Zebras Have Stripes?", ["For a long time, scientists have wondered why zebras have black and white stripes. One popular idea was that stripes help zebras hide from lions in tall grass. However, lions are mostly active at dusk and at night, when stripes are hard to see from a distance, so this idea has become less popular.", "Another idea is that stripes help zebras stay cool. Black stripes absorb more heat than white ones, which may cause small air movements over the skin. Some studies found that zebras living in hotter areas have clearer stripes, but other experiments showed little difference in body temperature.", "The idea with the strongest evidence today is that stripes protect zebras from biting flies. In one experiment, researchers put striped coats on horses and watched flies approach. The flies flew toward the horses as usual, but far fewer of them landed on the striped coats. The researchers believe that stripes confuse the flies' vision as they slow down to land. This matters because some flies carry diseases that can be dangerous for zebras.", "Of course, stripes may have more than one function. Zebras also seem to use their unique stripe patterns to recognize each other, just as humans recognize faces."]);
+  EQ(D, r, "Slide 1: The hiding idea became less popular because ［］.", "lions hunt mainly when stripes are hard to see", ["zebras do not live in tall grass", "lions cannot see black and white", "stripes make zebras easier to find"], 4);
+  EQ(D, r, "Slide 2: The evidence for the cooling idea is ［］.", "mixed: some studies support it, but others do not", ["strong: all experiments support it", "missing: no studies have been done", "clear: zebras in cold areas have no stripes"], 4);
+  EQ(D, r, "Slide 3: In the experiment with horses, the flies ［］.", "approached the horses but landed less often on striped coats", ["avoided the horses completely", "landed more often on striped coats", "carried more diseases to the horses"], 4);
+  EQ(D, r, "Slide 4: Another possible function of stripes is ［］.", "helping zebras recognize each other", ["helping zebras run faster", "attracting lions", "keeping zebras warm at night"], 4);
+  D.ex("Slide1：ライオンは縞の見えにくい夕暮れ・夜に活動。Slide2：支持する研究もあれば差がない実験もある(mixed)。Slide3：近づくが着地は少ない。Slide4：個体の識別。");
+}
+function e7_nap(r, D) {
+  D.part("", "Article and presentation slides", 16);
+  D.p("You are using the following article to prepare a presentation for health class.");
+  D.doc("The Science of Naps", ["Many people feel sleepy in the early afternoon. Research shows that a short nap of 10 to 20 minutes can improve attention and memory. In a study at a university, students who took a 20-minute nap after lunch remembered 15% more words in a test than those who stayed awake.", "However, naps longer than 30 minutes can cause \"sleep inertia,\" a heavy, confused feeling after waking up, because the brain enters deep sleep. Timing is also important: naps taken after 3 p.m. may make it harder to fall asleep at night.", "Some companies now provide nap rooms. One company reported fewer mistakes among workers after introducing 15-minute nap breaks. Experts also suggest a \"coffee nap\": drinking coffee just before a short nap. Because caffeine takes about 20 minutes to start working, people wake up feeling more alert."]);
+  EQ(D, r, "Slide 1: The best length for a nap is ［］.", "about 10 to 20 minutes", ["at least 30 minutes", "about one hour", "as long as possible"], 4);
+  EQ(D, r, "Slide 2: In the university study, students who napped ［］.", "remembered more words than students who stayed awake", ["felt confused after waking up", "slept better at night", "made more mistakes in the test"], 4);
+  EQ(D, r, "Slide 3: Long naps can be a problem because ［］.", "the brain enters deep sleep, causing a heavy feeling", ["caffeine stops working", "workers make fewer mistakes", "the afternoon becomes shorter"], 4);
+  EQ(D, r, "Slide 4: A \"coffee nap\" works because ［］.", "caffeine starts working around the time people wake up", ["coffee helps people fall into deep sleep", "coffee makes naps longer than 30 minutes", "caffeine works immediately"], 4);
+  D.ex("Slide1：10〜20分。Slide2：単語を15％多く覚えた。Slide3：深い眠りに入り sleep inertia が起きる。Slide4：カフェインが効き始めるまで約20分なので起きる頃に効く。");
+}
+// ---------- 第8問 エッセイ作り (17点) ----------
+function e8_phone(r, D) {
+  D.part("", "Essay: Smartphones in class", 17);
+  D.p("You are working on an essay about whether smartphones should be allowed in class. Step 1: Read opinions. Step 2: Take a position. Step 3: Create an outline using additional sources.");
+  D.doc("Step 1: Opinions", ["Aya (teacher): Students can look up information quickly, but I often see them checking social media instead of studying.", "Ben (student): My phone has a dictionary and a calculator. It helps me study more efficiently.", "Chika (parent): I want my child to be able to contact me in an emergency, but phones should stay in bags during lessons.", "Daniel (researcher): Studies show that just having a phone on the desk can lower students' test scores."]);
+  EQ(D, r, "問1 Both Aya and Daniel suggest that phones ［］.", "can distract students from learning", ["are useful for emergencies", "should be used as dictionaries", "improve test scores"], 3);
+  EQ(D, r, "問2 Who supports using phones as a learning tool? ［］", "Ben", ["Aya", "Chika", "Daniel"], 3);
+  D.p("Step 2: Your position — Smartphones should not be used freely during lessons.");
+  D.doc("Step 3: Sources", ["Source A: In a survey of 1,000 students at schools that allow phones in class, 62% said they check messages during lessons at least once a day.", "Source B: Average test scores at five schools before and after they banned phones in class rose from 64 points to 70 points."]);
+  EQ(D, r, "問3 According to Source B, the average score increased by ［］ points.", "6", ["4", "8", "10"], 4);
+  EQ(D, r, "問4 Which is the best supporting point from Source A? ［］", "Many students admit that they check messages during lessons.", ["Most students do not own smartphones.", "Phones are useful for calling parents.", "Students check messages only after school."], 4);
+  EQ(D, r, "問5 Which is the best conclusion for your essay? ［］", "Limiting phone use during lessons can help students focus and achieve more.", ["Students should use phones freely because they are convenient.", "Teachers should buy new phones for every student.", "Parents should never contact their children."], 3);
+  D.ex("問1：Aya(SNS を見ている)と Daniel(机に置くだけで点数が下がる)はどちらも気が散る点。問2：辞書や電卓として役立つと言う Ben。問3：64 → 70 で6点。問4：62％が授業中にメッセージを見る。問5：立場(自由に使わせない)と資料に合う結論。");
+}
+function e8_volunteer(r, D) {
+  D.part("", "Essay: Volunteer work", 17);
+  D.p("You are writing an essay on whether high schools should require students to do volunteer work. Step 1: Read opinions. Step 2: Take a position. Step 3: Create an outline using additional sources.");
+  D.doc("Step 1: Opinions", ["Emi (student): Volunteering taught me how to talk with elderly people. I think everyone should try it.", "Frank (teacher): Students are already busy. If volunteering is required, some will do it only to get credit.", "Grace (NPO staff): We always need more young people, but helpers who don't want to be there can create problems.", "Hiro (university student): My volunteer experience helped me choose my major."]);
+  EQ(D, r, "問1 Frank and Grace are both concerned that ［］.", "students may not be motivated if volunteering is required", ["there are not enough elderly people", "volunteering is too expensive", "students have too much free time"], 3);
+  EQ(D, r, "問2 Emi and Hiro both say that volunteering ［］.", "gave them valuable experiences", ["was a waste of time", "should be done only by adults", "helped them earn money"], 3);
+  D.p("Step 2: Your position — Volunteer work should be encouraged, but not required.");
+  D.doc("Step 3: Sources", ["Source A: In a survey, 78% of students who volunteered by choice said they would volunteer again, compared with only 35% of students who were required to volunteer.", "Source B: High school students have, on average, about 1.5 hours of free time on weekdays."]);
+  EQ(D, r, "問3 In Source A, the difference between the two groups is ［］ percentage points.", "43", ["35", "78", "113"], 4);
+  EQ(D, r, "問4 Which is the best supporting point from Source A? ［］", "Students who choose to volunteer are more likely to continue.", ["Most students do not like volunteering.", "Required volunteering increases free time.", "Students have no free time on weekdays."], 4);
+  EQ(D, r, "問5 Which is the best conclusion for your essay? ［］", "Schools should offer many volunteer opportunities and let students choose.", ["Schools should require 100 hours of volunteer work.", "Students should stop volunteering.", "Only university students should volunteer."], 3);
+  D.ex("問1：二人とも、義務にするとやる気のない参加者が出ることを心配。問2：Emi も Hiro も貴重な経験を得た。問3：78 − 35 ＝ 43。問4：自主的な参加者ほど続ける。問5：「奨励するが義務にしない」立場に合う。");
+}
+
+const ENGR = {
+  name: "英語リーディング", min: 80, full: 100, pua: true, choiceBase: 1, en: true,
+  slots: [
+    { no: 1, pts: 6, parts: [[e1_garden, e1_library]] }, { no: 2, pts: 12, parts: [[e2_app, e2_carfree]] },
+    { no: 3, pts: 9, parts: [[e3_marathon, e3_bakesale]] }, { no: 4, pts: 12, parts: [[e4_cook, e4_books]] },
+    { no: 5, pts: 16, parts: [[e5_camp, e5_museum]] }, { no: 6, pts: 12, parts: [[e6_piano, e6_garden]] },
+    { no: 7, pts: 16, parts: [[e7_zebra, e7_nap]] }, { no: 8, pts: 17, parts: [[e8_phone, e8_volunteer]] }
+  ]
+};
+
+// ===== 英語リスニング =====
+Daimon.prototype.audio = function (lines, times) { const key = "a" + this.blocks.length; this.blocks.push({ t: "au", lines, times, key, part: this.parts.length - 1 }); };
+const L1A = [
+  ["I'd better leave now, or I'll miss the last train.", "The speaker needs to hurry to catch the train.", ["The speaker missed the last train.", "The speaker wants to stay longer.", "The last train has already left."]],
+  ["Could you turn the music down? I'm trying to study.", "The speaker wants the music to be quieter.", ["The speaker wants to listen to music.", "The speaker has finished studying.", "The speaker is playing music."]],
+  ["I thought the movie would be boring, but it was actually great.", "The speaker enjoyed the movie more than expected.", ["The speaker did not watch the movie.", "The movie was boring.", "The speaker wants to see a different movie."]],
+  ["Kate hasn't finished her report yet, so she can't join us tonight.", "Kate will not come tonight.", ["Kate has finished her report.", "Kate will join them after dinner.", "Kate is writing a report about tonight."]],
+  ["There were fewer people at the beach than I expected.", "The beach was not as crowded as the speaker thought.", ["The beach was very crowded.", "The speaker did not go to the beach.", "More people came to the beach later."]],
+  ["If it weren't raining, I'd walk to school today.", "The speaker is not walking to school because of the rain.", ["The speaker walks to school every day.", "It is not raining today.", "The speaker likes walking in the rain."]],
+  ["I've lost my umbrella again. That's the third time this month!", "The speaker has lost an umbrella three times this month.", ["The speaker bought three umbrellas.", "The speaker found the umbrella.", "It rained three times this month."]],
+  ["Tom used to play the guitar, but he plays the piano now.", "Tom has changed the instrument he plays.", ["Tom plays both instruments now.", "Tom has never played the guitar.", "Tom wants to learn the guitar."]]
+];
+const L1B = [
+  ["The cat is sleeping under the table, not on the chair.", "A cat is lying under a table.", ["A cat is lying on a chair.", "A cat is lying on a table.", "A cat is lying under a chair."]],
+  ["I'm almost finished. I only have one more page to read.", "A person is reading near the end of a book.", ["A person is opening a new book.", "A person is putting a finished book away.", "A person is buying a book."]],
+  ["The boy is holding an umbrella, but it isn't raining.", "It is sunny, and a boy has an umbrella.", ["It is raining, and a boy has an umbrella.", "It is raining, and a boy has no umbrella.", "It is sunny, and a boy has no umbrella."]],
+  ["She's wearing glasses and carrying a large bag.", "A woman with glasses is carrying a big bag.", ["A woman with glasses is carrying a small bag.", "A woman without glasses is carrying a big bag.", "A woman without glasses is carrying a small bag."]],
+  ["All the seats are taken except the one by the window.", "Only the seat by the window is empty.", ["All the seats are empty.", "Only the seat by the aisle is empty.", "All the seats are taken."]],
+  ["The clock on the wall shows a quarter past three.", "The clock shows 3:15.", ["The clock shows 2:45.", "The clock shows 3:45.", "The clock shows 3:30."]]
+];
+const L2 = [
+  [["W", "Where should we put the sofa?"], ["M", "Next to the window, so we can enjoy the view."], ["W", "And the TV across from it?"], ["M", "Yes, on the wall by the door."], "Where will the TV be?", "On the wall by the door", ["Next to the window", "Next to the sofa", "In the bedroom"]],
+  [["M", "Excuse me, which bus goes to City Hall?"], ["W", "Number 5 goes there, but it's faster to take Number 12 and get off at Central Park. City Hall is right in front of the park."], ["M", "Thanks!"], null, "Which bus does the woman recommend?", "Number 12", ["Number 5", "Number 15", "Number 21"]],
+  [["W", "I'd like a sandwich and a coffee, please."], ["M", "We have a lunch set: a sandwich, a salad, and a drink for 800 yen."], ["W", "I don't really want a salad, but the set is cheaper. I'll take it."], null, "What will the woman order?", "The lunch set", ["A sandwich and a coffee only", "A salad only", "A coffee only"]],
+  [["M", "I can't find my phone. I had it at lunch."], ["W", "Did you check the library? You were studying there after lunch."], ["M", "Oh, right! I left it on the desk there."], null, "Where is the man's phone?", "In the library", ["In the cafeteria", "In the classroom", "In the gym"]],
+  [["W", "How about meeting at ten on Saturday?"], ["M", "I have a dentist appointment at ten. How about two?"], ["W", "OK, see you in the afternoon then."], null, "When will they meet?", "On Saturday at two", ["On Saturday at ten", "On Sunday at two", "On Sunday at ten"]],
+  [["M", "Which shirt should I buy, the blue one or the white one?"], ["W", "The blue one looks nice, but you already have three blue shirts."], ["M", "Good point. I'll take the other one."], null, "Which shirt will the man buy?", "The white one", ["The blue one", "Both shirts", "Neither shirt"]]
+];
+const L3 = [
+  [[["W", "Let's buy Ken a book for his birthday. He loves mysteries."], ["M", "He reads a lot, but he always borrows books from the library."], ["W", "Then how about a gift card for the cinema?"], ["M", "Good idea. He's been wanting to see the new space movie."]], "What will they probably give Ken?", "A gift card for the cinema", ["A mystery book", "A library card", "A DVD of a space movie"]],
+  [[["M", "Ms. Lee, can I submit my essay on Monday instead of Friday? I have a basketball tournament this weekend."], ["W", "The deadline is Friday for everyone. But you can email it to me by Saturday morning if you need a little more time."], ["M", "Thank you. I'll finish it Friday night."]], "When will the student probably send the essay?", "By Saturday morning", ["On Monday", "On Thursday", "After the tournament"]],
+  [[["W", "The pasta here is famous, but it takes thirty minutes to make."], ["M", "We only have forty minutes before the concert starts."], ["W", "Then let's have the pizza. It's ready in ten minutes."]], "Why will they order pizza?", "They do not have much time.", ["The pasta is too expensive.", "They do not like pasta.", "The pizza is famous."]],
+  [[["M", "Did you finish the slides for tomorrow's meeting?"], ["W", "Almost. I just need to add the sales graph, but the data hasn't arrived yet."], ["M", "I'll ask the sales team to send it right away."]], "What is the problem?", "The woman is waiting for some data.", ["The slides have been lost.", "The meeting was canceled.", "The graph has a mistake."]],
+  [[["W", "Are you going hiking on Sunday?"], ["M", "I was planning to, but the forecast says heavy rain. I'll go to the museum instead."], ["W", "Can I come with you? There's a new dinosaur exhibition."], ["M", "Sure!"]], "What will they probably do on Sunday?", "Visit the museum together", ["Go hiking together", "Stay home because of the rain", "Watch a movie about dinosaurs"]],
+  [[["W", "I bought this jacket yesterday, but it's too small."], ["M", "We don't have a larger size in this color. Would you like a different color or a refund?"], ["W", "I really like this color... I'll take the refund."]], "What does the woman decide to do?", "Get her money back", ["Get a larger size", "Choose a different color", "Keep the jacket"]],
+  [[["M", "Mom asked us to clean the kitchen before she gets home."], ["W", "I'll wash the dishes if you take out the garbage."], ["M", "Deal. The garbage truck comes tomorrow morning, so I'll do it tonight."]], "What will the boy do?", "Take out the garbage", ["Wash the dishes", "Clean his room", "Call his mother"]],
+  [[["W", "How did you do on the math test?"], ["M", "Better than last time. I studied with my brother every night."], ["W", "Maybe I should study with someone, too. I always get sleepy when I study alone."]], "What is the woman thinking about doing?", "Studying with another person", ["Sleeping more at night", "Taking the test again", "Teaching her brother math"]]
+];
+function lq(D, r, stem, correct, wrongs, pts) { const opts = shuffle(r, [correct, ...wrongs]); D.p(stem.replace("［］", D.ch(opts.indexOf(correct), opts, pts))); }
+function l1(r, D) {
+  D.part("A", "短い発話の内容に最も近いもの", 16);
+  D.p("第1問A　英語を聞き，それぞれの内容と最も近い意味のものを選びなさい。音声は2回流れます。");
+  shuffle(r, L1A).slice(0, 4).forEach((it, i) => { D.audio([["N" + (i % 2 ? "M" : "W"), it[0]]], 2); lq(D, r, `問${i + 1} ［］`, it[1], it[2], 4); D.ex(`問${i + 1}：“${it[0]}” → ${it[1]}`); });
+  D.part("B", "発話に合う場面", 12);
+  D.p("第1問B　英語を聞き，その内容に最も近い場面を選びなさい。音声は2回流れます。");
+  shuffle(r, L1B).slice(0, 3).forEach((it, i) => { D.audio([["N" + (i % 2 ? "W" : "M"), it[0]]], 2); lq(D, r, `問${i + 5} ［］`, it[1], it[2], 4); D.ex(`問${i + 5}：“${it[0]}” → ${it[1]}`); });
+}
+function l2(r, D) {
+  D.part("", "短い対話と質問", 12);
+  D.p("第2問　対話を聞き，問いの答えとして最も適切なものを選びなさい。音声は2回流れます。");
+  shuffle(r, L2).slice(0, 4).forEach((it, i) => { const lines = it.slice(0, 4).filter(Boolean); D.audio(lines, 2); lq(D, r, `問${i + 1} ${it[4]} ［］`, it[5], it[6], 3); D.ex(`問${i + 1}：${lines.map(l => l[1]).join(" / ")} → ${it[5]}`); });
+}
+function l3(r, D) {
+  D.part("", "対話の内容(1回のみ)", 18);
+  D.p("第3問　対話を聞き，問いの答えとして最も適切なものを選びなさい。音声は1回だけ流れます。");
+  shuffle(r, L3).slice(0, 6).forEach((it, i) => { D.audio(it[0], 1); lq(D, r, `問${i + 1} ${it[1]} ［］`, it[2], it[3], 3); D.ex(`問${i + 1}：${it[0].map(l => l[1]).join(" / ")} → ${it[2]}`); });
+}
+function l4(r, D) {
+  const A = pick(r, [
+    { s: "Hello everyone. Let me explain the schedule for our class café at the school festival. On Saturday, the café will open at 10 a.m. Group A will work from 10 to 12. Group B will take over from 12 to 2, which is our busiest time, so Group B will have six members instead of four. On Sunday, we'll open an hour later, at 11. Group C will work from 11 to 1, and Group D from 1 to 3. Please remember: everyone must come fifteen minutes before their shift to wash their hands and put on aprons.",
+      q: [["Group B will work on Saturday ［］.", "from 12 to 2", ["from 10 to 12", "from 11 to 1", "from 1 to 3"]], ["Group B will have ［］ members.", "six", ["four", "five", "eight"]], ["On Sunday, the café will open at ［］.", "11 a.m.", ["10 a.m.", "12 noon", "1 p.m."]], ["Everyone must arrive ［］.", "fifteen minutes before their shift", ["at 10 a.m. on both days", "thirty minutes before their shift", "after washing their hands at home"]]] },
+    { s: "Welcome to Maple House. Here's how we separate garbage. Plastic bottles go in the blue box, but please remove the caps and labels first. The caps go in the yellow box. Cans and glass bottles go in the green box. Paper should be tied with string and placed by the front door on Thursdays. Food waste is collected every Monday, Wednesday, and Friday morning, so please put it out before 8 a.m.",
+      q: [["Bottle caps should go in the ［］.", "yellow box", ["blue box", "green box", "red box"]], ["Paper is collected on ［］.", "Thursdays", ["Mondays", "Wednesdays", "Fridays"]], ["Food waste is collected ［］.", "three times a week", ["once a week", "every day", "twice a month"]], ["Food waste must be put out ［］.", "before 8 a.m.", ["after 8 a.m.", "on Thursday nights", "by the front door"]]] }
+  ]);
+  D.part("A", "説明を聞いて情報を整理する", 8);
+  D.p("第4問A　話を聞き，メモの空欄に入れるのに最も適切なものを選びなさい。音声は1回だけ流れます。");
+  D.audio([["NW", A.s]], 1);
+  A.q.forEach((q, i) => lq(D, r, `問${i + 1} ${q[0]}`, q[1], q[2], 2));
+  D.ex(A.s);
+  const B = pick(r, [
+    { c: "あなたは次の条件に合うアルバイトを探しています。A：週末のみ　B：駅から徒歩10分以内　C：時給1,100円以上", sp: [["NW", "The bakery needs help on Saturdays and Sundays. It pays 1,050 yen an hour and is five minutes from the station."], ["NM", "The bookstore is open for part-timers on weekends. The pay is 1,150 yen an hour, but it's a twenty-minute bus ride from the station."], ["NW", "Our café is right next to the station. We need people on Friday evenings and Sundays, and we pay 1,200 yen an hour."], ["NM", "The swimming school needs helpers on Saturday and Sunday mornings. It's an eight-minute walk from the station and pays 1,100 yen an hour."]], o: ["The bakery", "The bookstore", "The café", "The swimming school"], a: 3, e: "パン屋は時給が足りない、書店は駅から遠い、カフェは金曜も勤務。すべて満たすのはスイミングスクール。" },
+    { c: "留学生のあなたは次の条件に合うクラブを選びます。A：活動は週2回以下　B：経験がなくてよい　C：英語を話す部員がいる", sp: [["NW", "The drama club meets three times a week. Beginners are welcome, and several members speak English."], ["NM", "The photography club meets once a week, but you need your own camera and some experience."], ["NW", "The cooking club meets twice a week. No experience is needed, and the members love practicing English with international students."], ["NM", "The brass band practices twice a week, but you need to have played an instrument before."]], o: ["The drama club", "The photography club", "The cooking club", "The brass band"], a: 2, e: "演劇部は週3回、写真部と吹奏楽部は経験が必要。すべて満たすのは料理部。" }
+  ]);
+  D.part("B", "条件に合うものを選ぶ", 4);
+  D.p(`第4問B　4人の話を聞き，条件に最も合うものを選びなさい。音声は1回だけ流れます。${B.c}`);
+  D.audio(B.sp, 1);
+  D.p(`問5 ${D.ch(B.a, B.o, 4)}`);
+  D.ex(B.e);
+}
+function l5(r, D) {
+  const V = pick(r, [
+    { t: "Urban heat islands", s: "Today we'll talk about the urban heat island effect. Cities are often warmer than the surrounding countryside, especially at night. In some large cities, the difference can be as much as five degrees Celsius. There are three main causes. First, buildings and roads made of concrete and asphalt absorb heat during the day and release it at night. Second, cities have fewer trees and less soil, so there is less cooling from water evaporating from plants. Third, cars, air conditioners, and factories produce waste heat. This matters because higher temperatures increase energy use and can cause health problems such as heatstroke. Cities are trying several solutions. Some cover roofs with plants. These green roofs can lower roof surface temperatures by up to thirty degrees. Others use light-colored paint on roads to reflect sunlight. Planting trees along streets is one of the simplest and most effective ways to cool neighborhoods.",
+      w: [["The temperature difference can be up to ［］.", "5°C", ["3°C", "10°C", "30°C"]], ["Cause 1: Concrete and asphalt ［］.", "release stored heat at night", ["reflect most sunlight", "keep cities cool at night", "absorb waste heat from cars"]], ["Cause 2: There is less cooling because ［］.", "there are fewer plants to release water", ["there are more rivers", "the soil is too wet", "people use fewer air conditioners"]], ["Green roofs can lower roof temperatures by up to ［］.", "30 degrees", ["3 degrees", "5 degrees", "50 degrees"]]],
+      q: [["Which is NOT mentioned as a cause of the effect? ［］", "Rivers running through cities", ["Waste heat from cars and factories", "Fewer trees and less soil", "Concrete and asphalt"]], ["What is the speaker's main point? ［］", "Cities are warmer for several reasons, and there are ways to reduce the effect.", ["Cities should stop using air conditioners.", "The countryside is getting warmer than cities.", "Green roofs are the only solution."]]] },
+    { t: "Food loss", s: "Food loss means food that is thrown away even though it could still be eaten. In Japan, about 4.7 million tons of food were lost in one recent year. That's about 100 grams per person every day, roughly the size of one rice ball. About half comes from businesses such as restaurants and supermarkets, and the other half comes from households. At home, common reasons include buying too much, cooking too much, and throwing food away after its best-before date. However, best-before dates show when food tastes best, not when it becomes unsafe. Use-by dates, on the other hand, are about safety. Some supermarkets now sell products near their best-before dates at lower prices, and some apps connect shops with customers who want to buy leftover food. Small actions, like checking the refrigerator before shopping, can make a big difference.",
+      w: [["Food loss per person per day: about ［］.", "100 grams", ["10 grams", "470 grams", "1 kilogram"]], ["Share from households: about ［］.", "half", ["a quarter", "three quarters", "all"]], ["Best-before dates show ［］.", "when food tastes best", ["when food becomes unsafe", "when food was made", "when food must be sold"]], ["Use-by dates are about ［］.", "safety", ["taste", "price", "size"]]],
+      q: [["Which action does the speaker suggest? ［］", "Checking the refrigerator before shopping", ["Buying food only at restaurants", "Throwing food away on its best-before date", "Cooking extra food every day"]], ["What is the speaker's main point? ［］", "Food loss comes from both businesses and homes, and small actions can reduce it.", ["Supermarkets are responsible for all food loss.", "Best-before dates should be removed.", "Japan has solved the problem of food loss."]]] }
+  ]);
+  D.part("", `講義とワークシート(${V.t})`, 16);
+  D.p(`第5問　講義を聞き，ワークシートの空欄を埋め，問いに答えなさい。音声は1回だけ流れます。テーマ：${V.t}`);
+  D.audio([["NM", V.s]], 1);
+  V.w.forEach((q, i) => lq(D, r, `ワークシート(${i + 1}) ${q[0]}`, q[1], q[2], 2));
+  V.q.forEach((q, i) => lq(D, r, `問${i + 1} ${q[0]}`, q[1], q[2], 4));
+  D.ex(V.s);
+}
+function l6(r, D) {
+  const A = pick(r, [
+    { s: [["W", "I want to study abroad in high school. Young people learn languages faster."], ["M", "That's true, but in university you can choose courses related to your major."], ["W", "I don't need to decide my major yet. I just want to experience a different culture while I'm young."], ["M", "Then a short summer program might be good for you. You could try it without missing school here."], ["W", "Hmm, maybe I'll start with that."]],
+      q: [["What is Yuki's main reason for studying abroad? ［］", "To experience a different culture while she is young", ["To choose courses for her major", "To miss school in Japan", "To make the man happy"]], ["What will Yuki probably do? ［］", "Join a short summer program", ["Study abroad for a full year", "Wait until university", "Give up studying abroad"]]] },
+    { s: [["W", "Digital textbooks are lighter. My bag is so heavy every day."], ["M", "But I remember things better when I read on paper."], ["W", "Digital ones have videos and sound, though. That really helps me in science."], ["M", "Maybe it depends on the subject. For math, I'd still like paper so I can write notes."], ["W", "So you think we should use both?"], ["M", "Yes, that makes sense."]],
+      q: [["What is the woman's opinion? ［］", "Digital textbooks have useful features.", ["Paper textbooks help her remember better.", "Textbooks should not be used in science.", "Her bag is lighter than before."]], ["What do they agree on? ［］", "Using both kinds of textbooks depending on the subject", ["Using only paper textbooks", "Using only digital textbooks", "Buying lighter bags"]]] }
+  ]);
+  D.part("A", "対話と意見", 6);
+  D.p("第6問A　二人の対話を聞き，問いに答えなさい。音声は1回だけ流れます。(W：Yuki などの女性，M：男性)");
+  D.audio(A.s, 1);
+  A.q.forEach((q, i) => lq(D, r, `問${i + 1} ${q[0]}`, q[1], q[2], 3));
+  D.ex(A.s.map(x => `${x[0]}: ${x[1]}`).join(" "));
+  const B = pick(r, [
+    { topic: "Should our school have a four-day school week?", s: [["M", "Mr. Davis: I'm against it. The other four days would be much longer, and students would be too tired to learn well."], ["W", "Aiko: I like the idea. We'd have more time for family and club activities."], ["M", "Ben: I'm worried we'd fall behind in our studies, so I don't agree."], ["W", "Chloe: I'm for it. I read that some schools that switched to four days saw attendance improve."]], n: "2", nOpts: ["1", "2", "3", "4"], g: "Attendance rates rose after schools switched to a four-day week.", gW: ["Students sleep more on weekends.", "Test scores fell at schools with longer days.", "Most teachers prefer a five-day week."], who: "Chloe" },
+    { topic: "Should plastic bags be free at supermarkets?", s: [["M", "Tom: Bags shouldn't be free. If people have to pay, they'll bring their own bags and there will be less waste."], ["W", "Mika: I think they should be free. They're convenient, and I reuse them at home as garbage bags."], ["W", "Ms. Green: In my town, charging for bags reduced their use by seventy percent. So I support a fee."], ["M", "Ken: Some older people forget to bring bags, so the price should be low. But I agree they shouldn't be free."]], n: "3", nOpts: ["1", "2", "3", "4"], g: "The number of plastic bags used fell by 70% after a fee was introduced.", gW: ["Most shoppers reuse plastic bags at home.", "Older people buy more bags than young people.", "Plastic bags are cheaper than paper bags."], who: "Ms. Green" }
+  ]);
+  D.part("B", "4人の話し合い", 8);
+  D.p(`第6問B　話し合いを聞き，問いに答えなさい。音声は1回だけ流れます。話題：${B.topic}`);
+  D.audio(B.s, 1);
+  lq(D, r, `問3 ${B.topic.startsWith("Should our") ? "How many people are in favor of a four-day week?" : "How many people think plastic bags should NOT be free?"} ［］`, B.n, B.nOpts.filter(x => x !== B.n), 4);
+  lq(D, r, `問4 Which information best supports ${B.who}'s opinion? ［］`, B.g, B.gW, 4);
+  D.ex(B.s.map(x => x[1]).join(" "));
+}
+const ENGL = {
+  name: "英語リスニング", min: 30, full: 100, pua: true, choiceBase: 1, en: true, listening: true,
+  slots: [
+    { no: 1, pts: 28, parts: [[l1]] }, { no: 2, pts: 12, parts: [[l2]] }, { no: 3, pts: 18, parts: [[l3]] },
+    { no: 4, pts: 12, parts: [[l4]] }, { no: 5, pts: 16, parts: [[l5]] }, { no: 6, pts: 14, parts: [[l6]] }
+  ]
+};
+
+// ===== 国語 =====
+function JQ(D, r, stem, correct, wrongs, pts) { const opts = shuffle(r, [correct, ...wrongs]); D.p(stem.replace("［］", D.ch(opts.indexOf(correct), opts, pts))); }
+
+// ---------- 第1問 論理的な文章 (45点) ----------
+function j1_map(r, D) {
+  D.part("", "評論「地図を読むということ」", 45);
+  D.p("次の文章を読んで，後の問い(問1〜6)に答えよ。");
+  D.doc("", [
+    "　私たちは，スマートフォンの地図アプリに目的地を入力すれば，迷うことなくそこへたどり着くことができる。画面に示された矢印に従って歩けばよいのだから，地図を「読む」必要はもはやない。だが，そのことによって私たちが失ったものはないだろうか。",
+    "　かつて紙の地図を広げた人は，まず自分がどこにいるのかを(ア)__カクニン__し，目的地との位置関係を頭の中に描いた。川や坂，目印となる建物を手がかりに，道筋を自分で組み立てたのである。そこでは，道に迷うことさえ一つの経験であった。迷った末に見知らぬ路地で古い商店を見つけ，その町の歴史を(イ)__ソウゾウ__することもあった。",
+    "　これに対して，ナビゲーションに頼る移動は，出発点と到着点を最短で結ぶ線として経験される。A__途中の風景は，通過すべき点の連なりにすぎなくなる。__ある研究によれば，ナビゲーションを使って移動した人は，地図を見て移動した人に比べて，通った道の様子を思い出せない(ウ)__ケイコウ__があるという。私たちは，目的地に着くことと引き換えに，そこに至る過程を手放しているのかもしれない。",
+    "　もちろん，私はナビゲーションを否定したいわけではない。見知らぬ土地で時間に追われているとき，それは大きな助けとなる。問題は，道具が便利になるほど，B__私たちがその道具の示す世界を唯一の世界だと思い込みやすくなる__ことである。地図アプリの画面に表示されない小道や，検索しても出てこない店は，私たちにとって存在しないも同然になってしまう。",
+    "　地図を読むとは，与えられた情報をそのまま受け取ることではなく，自分の位置を確かめ，周囲との関係の中で世界を(エ)__コウセイ__し直す営みである。それは，情報があふれる現代において，私たちが他人の判断に身を(オ)__ユダ__ねることなく，自分で考えるための訓練でもあるだろう。C__便利さの中でこそ，ときには画面から目を上げ，自分の足で道を確かめることが求められているのではないか。__"]);
+  D.p("問1 傍線部(ア)〜(オ)のカタカナに相当する漢字と同じ漢字を含むものを，それぞれ一つずつ選べ。");
+  [["(ア)", "カクシンをもって答える", ["空気をカクサンさせる", "カクシキを重んじる", "ナイカクを組織する", "シュウカクの秋を迎える"]], ["(イ)", "理ソウを掲げる", ["楽器を演ソウする", "ソウ庫に保管する", "ソウ大な計画を立てる", "ソウ式に参列する"]],
+   ["(ウ)", "ケイシャのきつい坂", ["ケイサツに届ける", "ケイケンを積む", "ケイゾクして取り組む", "ケイヤクを結ぶ"]], ["(エ)", "コウゾウを分析する", ["コウカが現れる", "コウギを申し入れる", "ケンコウに気をつける", "コウカイを楽しむ"]],
+   ["(オ)", "イインカイを開く", ["イダイな業績を残す", "イワカンを覚える", "イサンを相続する", "イドウの準備をする"]]].forEach(([lab, c, w]) => JQ(D, r, `　${lab} ［］`, c, w, 2));
+  JQ(D, r, "問2 傍線部A「途中の風景は，通過すべき点の連なりにすぎなくなる」とはどういうことか。［］", "ナビゲーションに従う移動では目的地に着くことだけが重視され，途中の景色が意味のある経験として感じられなくなるということ。", ["途中の風景が画面上で点として表示されるため，実際の景色を見る必要がなくなるということ。", "最短の道を選ぶので，通る場所の数が以前よりも少なくなるということ。", "途中で道に迷うことが増え，景色を楽しむ余裕がなくなるということ。", "地図アプリが通った場所を点の形で記録し，後から見返せるようになるということ。"], 7);
+  JQ(D, r, "問3 傍線部B「私たちがその道具の示す世界を唯一の世界だと思い込みやすくなる」とはどういうことか。［］", "道具が表示しない場所や物事を，実際には存在するのに，存在しないかのように扱ってしまうということ。", ["道具が示す情報には誤りが多いので，自分の目で確かめる必要があるということ。", "便利な道具を使う人ほど，見知らぬ土地へ出かけなくなるということ。", "道具を使わない人の考え方を，誤ったものとして否定するようになるということ。", "道具の示す世界が広がるほど，現実の世界も広がっていくということ。"], 7);
+  JQ(D, r, "問4 筆者が「道に迷うことさえ一つの経験であった」と述べるのはなぜか。［］", "迷う過程で予定していなかったものに出会い，その土地を自分なりに理解するきっかけになったから。", ["道に迷うことで，紙の地図の不便さを身をもって知ることができたから。", "迷ったときに人に道をたずねることで，多くの友人ができたから。", "迷っても必ず目的地に着けるので，安心して歩くことができたから。", "道に迷うことは，昔の人にとって珍しい出来事だったから。"], 7);
+  JQ(D, r, "問5 傍線部C「便利さの中でこそ，……求められているのではないか」に表れた筆者の考えとして最も適当なものはどれか。［］", "便利な道具に頼る時代だからこそ，自分で状況を確かめて考える姿勢を保つことが大切だ。", ["ナビゲーションは不正確なので，使うのをやめて紙の地図に戻るべきだ。", "画面を見ながら歩くのは危険なので，歩くときはスマートフォンを使うべきではない。", "道具の便利さは今後さらに高まるので，人間が考える必要はなくなる。", "自分の足で歩くことは健康によいので，できるだけ歩いて移動すべきだ。"], 7);
+  JQ(D, r, "問6 この文章の構成と内容の説明として最も適当なものはどれか。［］", "身近な例から問いを立て，紙の地図とナビゲーションの対比を通して，最後に現代において地図を読むことの意義を述べている。", ["最初に結論を述べ，その後は具体的な体験談だけを並べて結論を補強している。", "ナビゲーションの技術の歴史を時代順に説明し，その将来を予測している。", "反対の立場の意見を紹介し，それに一つずつ反論することで議論を深めている。", "調査の結果を中心に据え，数値の比較によって筆者の主張を証明している。"], 7);
+  D.ex("問1：(ア)確認＝確信、(イ)想像＝理想、(ウ)傾向＝傾斜、(エ)構成＝構造、(オ)委ねる＝委員会。");
+  D.ex("問2：「出発点と到着点を最短で結ぶ線」として経験されるため、途中の景色は意味を失う。問3：直後の「画面に表示されない小道…は…存在しないも同然」が説明になっている。問4：迷った末に古い商店を見つけ、町の歴史に思いをめぐらせた例。問5：ナビを否定はしないが、自分で確かめ考える営みの大切さを述べる。問6：問い→対比→意義という構成。");
+}
+// ---------- 第2問 文学的な文章 (45点) ----------
+function j2_shop(r, D) {
+  D.part("", "小説「つばめ堂の最後の一週間」", 45);
+  D.p("次の文章を読んで，後の問い(問1〜5)に答えよ。");
+  D.doc("", [
+    "　商店街の端にある文具店「つばめ堂」は，八月の終わりに店を閉めることになった。店主の祖母は七十八歳で，腰を痛めてから，店に立つのがつらくなっていたのだ。高校二年の美咲は，閉店までの一週間，店番を手伝うことにした。",
+    "　初日，美咲は棚に並んだ古い便箋や，色あせた絵はがきを見て，(a)__途方に暮れた__。こんなもの，今どき誰が買うのだろう。そう思って祖母に言うと，祖母は笑って，「買う人は，ちゃんといるのよ」とだけ答えた。",
+    "　三日目の夕方，小学生くらいの男の子が一人で店に入ってきた。男の子は，棚の前で長い間迷ってから，青い便箋を一冊，レジに置いた。「おばあちゃんに手紙を書くんだ。入院してるから」。ポケットから出した硬貨は，少し足りなかった。美咲が困っていると，奥から祖母が出てきて，「今日はね，ちょうどその値段なの」と言った。男の子は(b)__顔をほころばせて__，何度も頭を下げて出ていった。",
+    "　「いいの？」と美咲がたずねると，祖母は棚の便箋をそっとなでた。「この店で売ってきたのは，紙じゃないのよ。誰かに何かを伝えたいっていう気持ちに，ちょっと手を貸してきただけ」。美咲は，A__初日に自分が思ったことを，急に恥ずかしく感じた__。",
+    "　最終日，店じまいの片づけをしていると，祖母が一冊の古いノートを差し出した。そこには，五十年分の客の名前と，その人が何を書くために何を買っていったのかが，(c)__几帳面な__字で記されていた。「全部は覚えていられないから，書いておいたの」。ページをめくるうちに，美咲の目の前に，会ったこともない人々の顔が浮かぶような気がした。",
+    "　シャッターを下ろしたあと，美咲はそのノートを胸に抱えて言った。「おばあちゃん，これ，わたしが預かってもいい？」祖母は少し驚いた顔をして，それからB__ゆっくりとうなずいた__。夕焼けが，閉じたシャッターの文字をやわらかく照らしていた。"]);
+  D.p("問1 傍線部(a)〜(c)の本文中における意味として最も適当なものを，それぞれ一つずつ選べ。");
+  JQ(D, r, "　(a) 途方に暮れた ［］", "どうしたらよいかわからなくなった", ["長い時間をむだに過ごした", "日が暮れるまで働き続けた", "ひどく腹を立てた", "遠くまで歩いて疲れ果てた"], 3);
+  JQ(D, r, "　(b) 顔をほころばせて ［］", "うれしそうな表情になって", ["顔を赤くして恥ずかしがって", "涙をこらえるような顔で", "不満そうに顔をしかめて", "驚いて目を見開いて"], 3);
+  JQ(D, r, "　(c) 几帳面な ［］", "細かいところまできちんとした", ["大きくて力強い", "急いで書いたような", "古くて読みにくい", "飾りが多くて華やかな"], 3);
+  JQ(D, r, "問2 祖母が「今日はね，ちょうどその値段なの」と言ったのはなぜか。［］", "入院中の祖母に手紙を書きたいという男の子の思いを大切にし，足りない分を気づかれないように補ってやりたかったから。", ["売れ残っていた便箋を早く処分したかったから。", "男の子が硬貨を数え間違えていると思ったから。", "閉店が近いので，すべての商品を値下げしていたから。", "美咲に，客を困らせてはいけないと教えたかったから。"], 9);
+  JQ(D, r, "問3 傍線部A「初日に自分が思ったことを，急に恥ずかしく感じた」のはなぜか。［］", "古い商品を価値のないものと決めつけていたが，祖母の店が人の思いを伝える手助けをしてきたことに気づいたから。", ["祖母に古い商品の値段を聞かずに，勝手に棚を片づけてしまったから。", "男の子の前で困った顔を見せてしまい，店番として未熟だと感じたから。", "祖母の店がもうけを出していないことを知り，申し訳なく思ったから。", "初日から店番を手伝わなかったことを，祖母に責められたから。"], 9);
+  JQ(D, r, "問4 傍線部B「ゆっくりとうなずいた」ときの祖母の心情として最も適当なものはどれか。［］", "美咲が店に込めてきた思いを受け継ごうとしていることに驚きつつ，喜んでノートを託そうとしている。", ["大切なノートを手放すことが惜しく，しぶしぶ美咲の頼みを受け入れている。", "美咲がノートの内容を理解できるか不安で，返事に迷っている。", "閉店の疲れから，美咲の言葉を聞き流している。", "美咲が店を再開してくれると考え，安心している。"], 9);
+  JQ(D, r, "問5 この文章の表現の特徴として最も適当なものはどれか。［］", "最後の夕焼けの描写が，店の終わりと，受け継がれていくものへの温かな思いを印象づけている。", ["登場人物の心情はすべて会話文だけで表され，地の文では説明されていない。", "美咲の視点と祖母の視点が交互に入れ替わり，二人の内面が詳しく描かれている。", "季節の移り変わりを細かく描くことで，長い年月の経過を表している。", "短い文を多用して，緊迫した場面の連続を描いている。"], 9);
+  D.ex("問1：(a)方法がわからず困る、(b)笑顔になる、(c)細かい点まできちんとしている。問2：手紙を書きたい気持ちに「手を貸す」という祖母の考え。問3：「今どき誰が買うのだろう」と思っていたことを反省。問4：少し驚いた顔→ゆっくりうなずく＝驚きと受け入れ。問5：閉じたシャッターをやわらかく照らす夕焼けの余韻。");
+}
+// ---------- 第3問 実用的な文章 (20点) ----------
+function j3_report(r, D) {
+  D.part("", "資料を読んでレポートを作る", 20);
+  D.p("図書委員のKさんは，「学校図書館の利用を増やすには」というテーマでレポートを書いている。次の【資料】と【レポートの下書き】を読んで，後の問い(問1〜4)に答えよ。");
+  D.p("【資料1】月別の貸出冊数");
+  D.table(["月", "4月", "5月", "6月", "7月"], [["貸出冊数", "320", "280", "240", "410"]]);
+  D.p("【資料2】図書館を利用しない理由(全校アンケート，複数回答不可)");
+  D.table(["理由", "時間がない", "読みたい本がない", "場所が遠い", "その他"], [["割合", "42％", "28％", "18％", "12％"]]);
+  D.doc("【レポートの下書き】", ["　本校の図書館の貸出冊数は，4月から6月にかけて減少していたが，7月には大きく増えた。これは夏休み前に本を借りる生徒が多いためだと考えられる。", "　図書館を利用しない理由で最も多いのは「時間がない」であった。そこで私は，図書館の利用を増やすための提案をしたい。(X)", "　以上のことから，図書館の利用を増やすことができると考える。"]);
+  JQ(D, r, "問1 【資料1】から読み取れることとして最も適当なものはどれか。［］", "7月の貸出冊数は，6月の約1.7倍である。", ["4月から7月まで，貸出冊数は毎月減り続けている。", "5月の貸出冊数は，4月の半分以下である。", "6月の貸出冊数は，7月より多い。", "4か月の貸出冊数の合計は1000冊未満である。"], 5);
+  JQ(D, r, "問2 (X)に入れる提案として，【資料2】の結果を最も効果的にふまえたものはどれか。［］", "昼休みの短い時間でも読み切れる本を集めた特設コーナーを，教室に近い廊下に設ける。", ["新しい本を大量に購入し，読みたい本がないという声にこたえる。", "図書館の開館時間を短くして，利用者を集中させる。", "図書館の場所を移転するよう，学校に要望する。", "「その他」と答えた生徒に，詳しい理由を書いてもらう。"], 5);
+  JQ(D, r, "問3 レポートの構成を改善する方法として最も適当なものはどれか。［］", "結論の前に，提案によってどのような効果が期待できるかを，根拠とともに示す。", ["資料の数値をすべて削除し，自分の感想だけを述べる。", "結論を最初の段落に移し，資料の説明は省略する。", "提案を三つ以上に増やし，それぞれを一文ずつ並べる。", "「時間がない」という理由には触れずに，別の話題を加える。"], 5);
+  JQ(D, r, "問4 レポートに資料を引用する際の注意として最も適当なものはどれか。［］", "資料の出典や調査の時期・対象を明記する。", ["自分の主張に合わない数値は書き換えてよい。", "資料はすべて自分で作成したものとして示す。", "割合は四捨五入せず，必ず小数第3位まで示す。", "グラフや表は使わず，文章だけで示す。"], 5);
+  D.ex("問1：410 ÷ 240 ≒ 1.71。問2：最も多い「時間がない」に対応し、短時間で利用できる工夫。問3：提案と結論の間に根拠・効果の説明がない。問4：出典・時期・対象を明らかにするのが引用の基本。");
+}
+// ---------- 第4問 古文 (45点) ----------
+function j4_kinobori(r, D) {
+  D.part("", "古文『徒然草』第百九段", 45);
+  D.p("次の文章は『徒然草』の一節である。これを読んで，後の問い(問1〜5)に答えよ。");
+  D.doc("", ["　高名の木登りといひし男，人を掟てて，高き木に登せて梢を切らせしに，(ア)__いと危ふく見えしほど__は言ふこともなくて，降るる時に，軒長ばかりになりて，「あやまちすな。(イ)__心して降りよ__」と言葉をかけ侍りしを，「かばかりになりては，飛び降るるとも降り(X)__なん__。如何にかく言ふぞ」と申し侍りしかば，「その事に候ふ。目くるめき，枝危ふきほどは，己れが恐れ侍れば，申さず。あやまちは，安き所に成りて，必ず仕る事に候ふ」と言ふ。", "　(ウ)__あやしき下臈__なれども，聖人の戒めにかなへり。鞠も，難き所を蹴出して後，安く思へば必ず落つと侍るやらん。"]);
+  D.p("問1 傍線部(ア)〜(ウ)の解釈として最も適当なものを，それぞれ一つずつ選べ。");
+  JQ(D, r, "　(ア) いと危ふく見えしほど ［］", "たいそう危なく見えた間", ["少しも危なくは見えなかったとき", "危ないことをしたがっていた様子", "危ないと人に言われたあと", "危ないところを見せたかったとき"], 5);
+  JQ(D, r, "　(イ) 心して降りよ ［］", "注意して降りよ", ["思い切って飛び降りよ", "心を落ち着けてから降りるな", "急いで降りてこい", "気がすんだら降りよ"], 5);
+  JQ(D, r, "　(ウ) あやしき下臈 ［］", "身分の低い者", ["不思議な力をもつ者", "怪しい行いをする者", "年老いた僧", "高い位の役人"], 5);
+  JQ(D, r, "問2 波線部(X)「なん」の文法的な説明として最も適当なものはどれか。［］", "強意の助動詞「ぬ」の未然形と，推量の助動詞「む」の終止形", ["断定の助動詞「なり」の連用形と，推量の助動詞「む」の終止形", "願望の終助詞「なむ」", "ナ行変格活用動詞の活用語尾と，推量の助動詞「む」", "打消の助動詞「ず」の連用形と，推量の助動詞「む」"], 6);
+  JQ(D, r, "問3 木登りの名人が，男が軒の高さまで降りてきてから声をかけたのはなぜか。［］", "人は危険な所では自分で用心するが，安全だと思って気をゆるめた所でこそ失敗するものだから。", ["高い所では声が届かず，低い所まで来なければ話ができなかったから。", "男が飛び降りようとしているのに気づき，止めなければならなかったから。", "梢を切る仕事が終わるまでは，話しかけてはいけない決まりだったから。", "低い所では枝が折れやすく，最も危険な場所だったから。"], 8);
+  JQ(D, r, "問4 「聖人の戒めにかなへり」とはどういうことか。［］", "身分の低い者の言葉ではあるが，立派な人の教えと一致しているということ。", ["身分の低い者が，聖人の教えに背いているということ。", "木登りの名人は，聖人の教えを学んだことがあるということ。", "聖人は，木登りの技術を戒めとして用いたということ。", "身分の低い者は，聖人の教えを知るべきではないということ。"], 8);
+  JQ(D, r, "問5 筆者が最後に鞠の例を挙げたのは，どのようなことを示すためか。［］", "難しい所を乗り越えたあとの油断が失敗を招くという点で，木登りの話と共通することを示すため。", ["鞠を蹴るのは木登りよりも難しいことを示すため。", "鞠の名人も木登りの名人も，同じ人物であることを示すため。", "難しい技に挑むことこそが，上達の近道であることを示すため。", "遊びの中にも，身分の上下があることを示すため。"], 8);
+  D.ex("(ア)「いと」＝たいそう、「ほど」＝間。(イ)「心す」＝注意する。(ウ)「あやし」＝身分が低い、「下臈」＝身分の低い者。問2：「な(ぬ・未然)＋ん(む)」で「きっと降りられるだろう」。");
+  D.ex("問3：「あやまちは，安き所に成りて，必ず仕る事に候ふ」。問4：「かなふ」＝一致する。問5：鞠も難しい所の後に安心すると必ず落ちる、という同じ教訓。");
+}
+function j4_ninnaji(r, D) {
+  D.part("", "古文『徒然草』第五十二段", 45);
+  D.p("次の文章は『徒然草』の一節である。これを読んで，後の問い(問1〜5)に答えよ。");
+  D.doc("", ["　仁和寺にある法師，年寄るまで石清水を拝まざりければ，(ア)__心うく覚えて__，ある時思ひ立ちて，ただひとり，徒歩よりまうでけり。極楽寺・高良などを拝みて，(イ)__かばかりと心得て__帰りにけり。", "　さて，かたへの人にあひて，「年ごろ思ひつること，果たし侍りぬ。聞きしにも過ぎて尊く(X)__こそおはしけれ__。そも，参りたる人ごとに山へ登りしは，何事かありけん，(ウ)__ゆかしかりしかど__，神へ参るこそ本意なれと思ひて，山までは見ず」とぞ言ひける。", "　少しのことにも，先達はあらまほしき事なり。"]);
+  D.p("問1 傍線部(ア)〜(ウ)の解釈として最も適当なものを，それぞれ一つずつ選べ。");
+  JQ(D, r, "　(ア) 心うく覚えて ［］", "残念に思って", ["うれしく思って", "心配に思って", "うらやましく思って", "恐ろしく思って"], 5);
+  JQ(D, r, "　(イ) かばかりと心得て ［］", "これだけだと思いこんで", ["これほど尊いとは思わずに", "どれほどかわからずに", "これで終わりではないと考えて", "ここまでは来られないと思って"], 5);
+  JQ(D, r, "　(ウ) ゆかしかりしかど ［］", "知りたかったけれど", ["なつかしかったけれど", "恐ろしかったけれど", "退屈だったけれど", "上品だったけれど"], 5);
+  JQ(D, r, "問2 波線部(X)「こそおはしけれ」についての説明として最も適当なものはどれか。［］", "係助詞「こそ」を受けて，文末が過去の助動詞「けり」の已然形で結ばれている。", ["係助詞「こそ」を受けて，文末が連体形で結ばれている。", "「けれ」は過去の助動詞「けり」の命令形である。", "「おはし」は話し手自身への敬意を表している。", "「こそ」は強調ではなく疑問を表している。"], 6);
+  JQ(D, r, "問3 法師が山へ登らなかったのはなぜか。［］", "神に参ることが本来の目的だと思い，人々が山へ登る理由を確かめなかったから。", ["山へ登る道がわからず，人に聞くのが恥ずかしかったから。", "年を取っていて，山へ登る体力がなかったから。", "山の上には何もないと，前から聞いていたから。", "かたへの人に，山へは登るなと言われていたから。"], 8);
+  JQ(D, r, "問4 法師の失敗とはどのようなことか。［］", "石清水八幡宮の本殿は山の上にあるのに，ふもとの寺社だけを拝んで帰ってしまったこと。", ["一人で出かけたため，帰り道に迷ってしまったこと。", "仁和寺の法師なのに，ほかの寺に参ってしまったこと。", "年を取るまで一度も旅をしたことがなかったこと。", "参拝の様子を，かたへの人に正しく伝えられなかったこと。"], 8);
+  JQ(D, r, "問5 最後の一文「少しのことにも，先達はあらまほしき事なり」の意味として最も適当なものはどれか。［］", "ちょっとしたことでも，その道の案内者や指導者はいてほしいものだ。", ["少しのことなら，人に頼らず自分でするべきだ。", "先に生まれた人は，常に正しいとは限らない。", "大きなことをするときだけ，案内者が必要である。", "少しでも早く，目的地に着くべきである。"], 8);
+  D.ex("(ア)「心うし」＝残念だ・情けない。(イ)「かばかり」＝これほど。(ウ)「ゆかし」＝知りたい・見たい。問2：「こそ」→已然形「けれ」の係り結び。");
+  D.ex("問3：「神へ参るこそ本意なれと思ひて，山までは見ず」。問4：本殿は山上にあることを知らずに帰った。問5：「先達」＝案内者、「あらまほし」＝あってほしい。");
+}
+// ---------- 第5問 漢文 (45点) ----------
+function j5_mujun(r, D) {
+  D.part("", "漢文『韓非子』より", 45);
+  D.p("次の文章を読んで，後の問い(問1〜6)に答えよ。(本文は白文と書き下し文で示す。)");
+  D.doc("【白文】", ["楚人有鬻盾与矛者。誉之曰、吾盾之堅、莫能陥也。又誉其矛曰、吾矛之利、於物無不陥也。或曰、以子之矛、陥子之盾、何如。其人弗能応也。"]);
+  D.doc("【書き下し文(一部空欄)】", ["楚人に盾と矛とを(a)__鬻ぐ__者有り。之を誉めて曰はく，「吾が盾の堅きこと，〔 Ⅰ 〕」と。又其の矛を誉めて曰はく，「吾が矛の(b)__利__なること，物に於いて陥さざる無きなり」と。或ひと曰はく，「子の矛を以て，子の盾を陥さば何如」と。其の人応ふること能はざるなり。"]);
+  JQ(D, r, "問1 (a)「鬻ぐ」の意味として最も適当なものはどれか。［］", "売る", ["作る", "買う", "盗む", "磨く"], 5);
+  JQ(D, r, "　(b)「利」の意味として最も適当なものはどれか。［］", "鋭いこと", ["もうけ", "便利なこと", "かしこいこと", "重いこと"], 5);
+  JQ(D, r, "問2 空欄〔 Ⅰ 〕に入る，「莫能陥也」の書き下し文として最も適当なものはどれか。［］", "能く陥すもの莫きなり", ["能く陥すこと莫かれ", "陥すに能ふ莫きなり", "莫ぞ能く陥さんや", "能はずして陥すなり"], 7);
+  JQ(D, r, "問3 「於物無不陥也」の意味として最も適当なものはどれか。［］", "どんな物でも突き通さないものはない。", ["どんな物も突き通すことはできない。", "物によっては突き通せないものもある。", "物を突き通す必要はない。", "物を突き通してはならない。"], 7);
+  JQ(D, r, "問4 「以子之矛、陥子之盾、何如」の意味として最も適当なものはどれか。［］", "あなたの矛であなたの盾を突いたら，どうなるのか。", ["あなたの矛と盾は，どちらが高いのか。", "あなたの矛で私の盾を突いてみよう。", "あなたの盾はなぜ矛より堅いのか。", "あなたの矛と盾を，どこで手に入れたのか。"], 7);
+  JQ(D, r, "問5 「其人弗能応也」となったのはなぜか。［］", "どちらの答えをしても，自分の言ったことと食い違ってしまうから。", ["客の言葉が難しくて，意味がわからなかったから。", "盾と矛がすでに売り切れていたから。", "答える前に，客が帰ってしまったから。", "楚の国の決まりで，客と話してはいけなかったから。"], 7);
+  JQ(D, r, "問6 この話からできた故事成語の意味として最も適当なものはどれか。［］", "前後のつじつまが合わないこと", ["余計なものを付け加えること", "両者が争う間に第三者が利益を得ること", "古い習慣にとらわれて工夫しないこと", "文章を何度も練り直すこと"], 7);
+  D.ex("問1：「鬻」＝売る、「利」＝鋭い。問2：「莫」は「なシ」と読み、「能く陥すもの莫きなり」(突き通せるものはない)。問3：「無不〜」は二重否定で全部肯定。");
+  D.ex("問4：「何如」＝どうであるか。問5：盾を突き通せば盾の自慢が、通せなければ矛の自慢がうそになる。問6：故事成語「矛盾」。");
+}
+function j5_dasoku(r, D) {
+  D.part("", "漢文『戦国策』より", 45);
+  D.p("次の文章を読んで，後の問い(問1〜6)に答えよ。(本文は白文と書き下し文で示す。)");
+  D.doc("【白文】", ["楚有祠者。賜其舎人卮酒。舎人相謂曰、数人飲之不足、一人飲之有余。請画地為蛇、先成者飲酒。一人蛇先成。引酒且飲之、乃左手持卮、右手画蛇曰、吾能為之足。未成、一人之蛇成。奪其卮曰、蛇固無足。子安能為之足。遂飲其酒。為蛇足者、終亡其酒。"]);
+  D.doc("【書き下し文(一部空欄)】", ["楚に祠る者有り。其の舎人に(a)__卮酒__を賜ふ。舎人相謂ひて曰はく，「〔 Ⅰ 〕，一人之を飲まば余り有り。請ふ地に画きて蛇を為り，先づ成る者酒を飲まん」と。一人の蛇先づ成る。酒を引きて且に之を飲まんとす。乃ち左手もて卮を持ち，右手もて蛇を画きて曰はく，「吾能く之が足を為る」と。未だ成らざるに，一人の蛇成る。其の卮を奪ひて曰はく，「蛇(b)__固より__足無し。子安くんぞ能く之が足を為らん」と。遂に其の酒を飲む。蛇の足を為る者，終に其の酒を亡ふ。"]);
+  JQ(D, r, "問1 (a)「卮酒」の意味として最も適当なものはどれか。［］", "大きな杯に入った酒", ["神に供える米", "少量の水", "高価な薬", "蛇の形をした器"], 5);
+  JQ(D, r, "　(b)「固より」の意味として最も適当なものはどれか。［］", "もともと", ["かたく", "ついに", "たびたび", "わずかに"], 5);
+  JQ(D, r, "問2 空欄〔 Ⅰ 〕に入る，「数人飲之不足」の書き下し文として最も適当なものはどれか。［］", "数人之を飲まば足らず", ["数人の飲む之足らず", "数人に之を飲ましむれば足る", "数人之を飲むも足らざらんや", "数人飲みて之に足らず"], 7);
+  JQ(D, r, "問3 「引酒且飲之」の「且」の読み方と意味として最も適当なものはどれか。［］", "「まさに〜んとす」と読み，今にも〜しようとするという意味", ["「しばらく」と読み，少しの間という意味", "「かつ」と読み，その上という意味", "「なほ」と読み，やはりという意味", "「すべからく」と読み，当然〜すべきだという意味"], 7);
+  JQ(D, r, "問4 「子安能為之足」の意味として最も適当なものはどれか。［］", "あなたはどうしてそれに足を描くことができようか，いや，できはしない。", ["あなたはどこでそれに足を描いたのか。", "あなたは安心してそれに足を描きなさい。", "あなたはきっとそれに足を描くことができる。", "あなたはなぜそれに足を描かなかったのか。"], 7);
+  JQ(D, r, "問5 最初に蛇を描き終えた者が酒を失ったのはなぜか。［］", "必要のない足を描いているうちに，別の者に先に完成させられたから。", ["蛇を描くのが下手で，誰にも認められなかったから。", "左手で杯を持っていたので，酒をこぼしてしまったから。", "楚の王に，酒を飲むことを禁じられたから。", "足のある蛇は本物の蛇だと思われたから。"], 7);
+  JQ(D, r, "問6 この話からできた故事成語「蛇足」の意味として最も適当なものはどれか。［］", "付け加える必要のない余計なもの", ["前後のつじつまが合わないこと", "最後の仕上げとなる大切な部分", "危険をおかして挑戦すること", "わずかな差で勝負が決まること"], 7);
+  D.ex("問1：「卮」は大杯。問2：「〜ば」と仮定に読む。問3：再読文字「且(まさ)に〜んとす」。問4：「安(いづ)くんぞ〜ん」は反語。");
+  D.ex("問5：「吾能く之が足を為る」と余計なことをしている間に先を越された。問6：故事成語「蛇足」。");
+}
+const JPN = {
+  name: "国語", min: 90, full: 200, pua: true, choiceBase: 1,
+  slots: [
+    { no: 1, pts: 45, parts: [[j1_map]] }, { no: 2, pts: 45, parts: [[j2_shop]] }, { no: 3, pts: 20, parts: [[j3_report]] },
+    { no: 4, pts: 45, parts: [[j4_kinobori, j4_ninnaji]] }, { no: 5, pts: 45, parts: [[j5_mujun, j5_dasoku]] }
+  ]
+};
+
+const KEY = "ctmock.v1";
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+const save = d => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} };
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $app = document.getElementById("app");
+const CIRC = "⓪①②③④⑤⑥⑦⑧⑨";
+const SUBJECTS = [
+  { id: "m1a", name: "数学ⅠA", spec: "70分・100点", gifu: "ⅡBCと合わせて100点に換算", ready: true },
+  { id: "m2bc", name: "数学ⅡBC", spec: "70分・100点", gifu: "ⅠAと合わせて100点に換算", ready: true },
+  { id: "joho", name: "情報Ⅰ", spec: "60分・100点", gifu: "50点に換算", ready: true },
+  { id: "engR", name: "英語リーディング", spec: "80分・100点", gifu: "75点に換算", ready: true },
+  { id: "engL", name: "英語リスニング", spec: "30分・100点", gifu: "25点に換算", ready: true },
+  { id: "jpn", name: "国語", spec: "90分・200点", gifu: "100点に換算", ready: true }
+];
+const SETS = 30;
+const GEN = {
+  m1a: { g: () => M1A, conv: 0.5, convNote: "数学ⅡBCと合わせて100点満点", desc: "70分・100点　第1問 数と式・集合と命題／図形と計量（30点）　第2問 2次関数／データの分析（30点）　第3問 図形の性質（20点）　第4問 場合の数と確率（20点）", base: 20280115 },
+  m2bc: { g: () => M2BC, conv: 0.5, convNote: "数学ⅠAと合わせて100点満点", desc: "70分・100点　必答：第1問・第2問（各15点）、第3問 微分・積分（22点）　選択：第4問 数列、第5問 統計的な推測、第6問 ベクトル、第7問 平面上の曲線と複素数平面（各16点）から3問", base: 20280117 },
+  engR: { g: () => ENGR, conv: 0.75, convNote: "75点満点（リスニング25点と合わせて英語100点）", desc: "80分・100点　第1問 お知らせ（6点）　第2問 記事とコメント（12点）　第3問 出来事の順序（9点）　第4問 英作文の推敲（12点）　第5問 チラシとメール（16点）　第6問 物語（12点）　第7問 説明文とスライド（16点）　第8問 エッセイ作り（17点）", base: 20280118 },
+  engL: { g: () => ENGL, conv: 0.25, convNote: "25点満点（リーディング75点と合わせて英語100点）", desc: "30分・100点　第1問 短い発話（28点）　第2問 短い対話（12点）　第3問 対話（18点）　第4問 説明・条件選択（12点）　第5問 講義（16点）　第6問 対話・議論（14点）　※第1・2問は2回、第3問以降は1回再生", base: 20280119 },
+  jpn: { g: () => JPN, conv: 0.5, convNote: "100点満点", desc: "90分・200点　第1問 論理的な文章（45点）　第2問 文学的な文章（45点）　第3問 実用的な文章（20点）　第4問 古文（45点）　第5問 漢文（45点）", base: 20280120 },
+  joho: { g: () => JOHO, conv: 0.5, convNote: "50点満点", desc: "60分・100点　第1問 小問集合（20点）　第2問 A 情報の仕組み／B シミュレーション（30点）　第3問 プログラミング（25点）　第4問 データの活用（25点）", base: 20280116 }
+};
+const G = () => GEN[S.sid || "m1a"], GG = () => G().g();
+const CL = i => CIRC[+i + (GG().choiceBase || 0)];
+function buildAll(gen, r) { let off = 0; return gen.slots.map(sl => { const D = buildDaimon(sl, r, gen.pua ? off : 0, gen.pua ? PUA : undefined); off = D.i; return D; }); }
+let S = { view: "home" }, tick = null;
+const TTS = { voices: [], playing: null, ok: typeof window !== "undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined" };
+function loadVoices() { try { TTS.voices = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang)); } catch (e) {} }
+if (TTS.ok) { loadVoices(); try { speechSynthesis.onvoiceschanged = loadVoices; } catch (e) {} }
+function pickVoice(g) {
+  const vs = TTS.voices; if (!vs.length) return null; const us = vs.filter(v => /en[-_]US/i.test(v.lang)), pool = us.length > 1 ? us : vs;
+  const fem = /(female|samantha|victoria|karen|moira|tessa|zira|aria|jenny|susan|serena|kate|libby|sonia|ava|allison)/i, mal = /(male|daniel|alex|fred|david|guy|ryan|tom|arthur|aaron|mark|james)/i;
+  return g === "W" ? (pool.find(v => fem.test(v.name) && !/\bmale/i.test(v.name)) || pool[0]) : (pool.find(v => mal.test(v.name) && !/female/i.test(v.name)) || pool[Math.min(1, pool.length - 1)]);
+}
+function speak(lines, onend) {
+  if (!TTS.ok) return false; const ss = window.speechSynthesis; ss.cancel(); const vW = pickVoice("W"), vM = pickVoice("M"), same = !vW || vW === vM;
+  lines.forEach((l, i) => { const g = /W$/.test(l[0]) ? "W" : "M", u = new SpeechSynthesisUtterance(l[1]); u.lang = "en-US"; const v = g === "W" ? vW : vM; if (v) u.voice = v; u.pitch = same ? (g === "W" ? 1.3 : 0.75) : 1; u.rate = 0.92; if (i === lines.length - 1) u.onend = onend; ss.speak(u); });
+  return true;
+}
+const stopTTS = () => { try { if (TTS.ok) speechSynthesis.cancel(); } catch (e) {} TTS.playing = null; };
+
+// ---------- 問題文の表示 ----------
+function md(s, ctx) {
+  let h = esc(s);
+  h = h.replace(/［([^］]+)］/g, (_, syms) => [...syms].map(sym => boxHtml(sym, ctx)).join(""));
+  h = h.replace(/√\{([^{}]*?)\}/g, '<span class="rt">√<span class="ov">$1</span></span>');
+  h = h.replace(/\{\{(.+?)\|(.+?)\}\}/g, '<span class="fr"><span class="nu">$1</span><span class="de">$2</span></span>');
+  h = h.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  h = h.replace(/__(.+?)__/g, '<u class="bs">$1</u>');
+  return h;
+}
+function boxHtml(sym, ctx) {
+  const g = ctx.symInfo[sym]; let cls = "bx", val = "";
+  if (ctx.reveal && g) { val = g.ans[g.idx]; cls += g.ok ? " ok" : " ng"; }
+  else if (ctx.a[sym] != null) { val = g && g.kind === "ch" ? CL(ctx.a[sym]) : ctx.a[sym]; cls += " on"; }
+  if (ctx.reveal && g && g.kind === "ch") val = CL(g.ans[0]);
+  return `<span class="${cls}"><i>${SL(sym)}</i>${val ? `<b>${esc(val)}</b>` : ""}</span>`;
+}
+function symInfo(D, a, reveal) {
+  const m = {};
+  D.groups.forEach((g, gi) => { const ok = [...g.syms].every((s, i) => a[s] === g.ans[i]); [...g.syms].forEach((s, i) => m[s] = { ans: g.ans, idx: i, kind: g.kind, ok, gi }); });
+  return m;
+}
+function sheetRows(D, partIdx, a, reveal, act) {
+  const gs = D.groups.filter(g => g.part === partIdx);
+  return `<div class="sheet-strip" role="group" aria-label="解答欄">${gs.map(g => [...g.syms].map((sym, i) => {
+    const marks = g.kind === "num" ? ["−", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] : g.kind === "hex" ? ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"] : g.opts.map((_, k) => String(k));
+    const right = g.ans[i];
+    return `<div class="mrow"><span class="msym">${SL(sym)}</span><span class="marks">${marks.map(c => {
+      let cls = "mk"; if (a[sym] === c) cls += " on"; if (reveal) { if (c === right) cls += " right"; else if (a[sym] === c) cls += " miss"; }
+      const lab = g.kind === "ch" ? CL(c) : c;
+      return `<button class="${cls}" data-act="${act}" data-s="${sym}" data-v="${c}" aria-label="${SL(sym)}に${lab}" aria-pressed="${a[sym] === c}"${reveal ? " disabled" : ""}><span>${lab}</span></button>`;
+    }).join("")}</span></div>`;
+  }).join("")).join("")}</div>`;
+}
+function daimonHtml(D, a, reveal, act, o) {
+  o = o || {}; const ctx = { a, reveal, symInfo: symInfo(D, a, reveal), di: o.di || 0, limit: !!o.limit, plays: o.plays || {} };
+  let h = `<header class="dm-head"><h2>第${D.no}問</h2><span class="dm-pts">配点 ${D.pts}</span></header>`;
+  D.parts.forEach((P, pi) => {
+    h += `<section class="part">`;
+    if (P.label) h += `<h3 class="part-h">${P.label}</h3>`;
+    D.blocks.filter(b => b.part === pi).forEach(b => {
+      if (b.t === "p") h += `<p class="q">${md(b.s, ctx)}</p>`;
+      if (b.t === "tb") h += `<div class="tbl"><table><thead><tr>${b.head.map(x => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${b.rows.map(r => `<tr>${r.map((x, i) => i ? `<td>${esc(x)}</td>` : `<th>${esc(x)}</th>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      if (b.t === "au") { const k = `${ctx.di}:${b.key}`, used = ctx.plays[k] || 0, left = ctx.limit ? b.times - used : Infinity, on = TTS.playing === k;
+        h += `<div class="audio"><button class="btn sm${on ? "" : " primary"}" data-act="play" data-d="${ctx.di}" data-k="${b.key}"${(!TTS.ok || (left <= 0 && !on)) ? " disabled" : ""}>${!TTS.ok ? "この端末では音声を再生できません" : on ? "■ 再生中（停止）" : "▶ 音声を再生"}${ctx.limit && TTS.ok ? `（残り${Math.max(0, left)}回）` : ""}</button>${ctx.reveal || !TTS.ok && !ctx.limit ? `<details class="script"><summary>スクリプト</summary>${b.lines.map(l => `<p>${/^N/.test(l[0]) ? "" : `<b>${l[0]}:</b> `}${esc(l[1])}</p>`).join("")}</details>` : ""}</div>`; }
+      if (b.t === "doc") h += `<div class="doc">${b.title ? `<h4>${esc(b.title)}</h4>` : ""}${b.paras.map(x => `<p>${md(x, ctx)}</p>`).join("")}</div>`;
+      if (b.t === "code") h += `<pre class="code">${b.lines.map(l => md(l, ctx)).join("\n")}</pre>`;
+      if (b.t === "svg") h += `<figure class="figw">${b.svg}</figure>`;
+      if (b.t === "ch") h += `<div class="choices"><p class="ch-h"><span class="bx plain"><i>${SL(b.sym)}</i></span> ${GG().en ? "の選択肢" : "の解答群"}</p><ol>${b.opts.map((o, i) => `<li><span class="cn">${CL(i)}</span>${md(o, ctx)}</li>`).join("")}</ol></div>`;
+    });
+    h += sheetRows(D, pi, a, reveal, act);
+    if (reveal) {
+      const gs = D.groups.filter(g => g.part === pi), got = gs.filter(g => [...g.syms].every((s, i) => a[s] === g.ans[i])).reduce((t, g) => t + g.pts, 0);
+      h += `<div class="expl"><p class="ex-score">${P.label || ""} ${got}／${P.pts}点</p><table class="ans"><thead><tr><th>記号</th><th>正解</th><th>あなた</th><th>配点</th></tr></thead><tbody>${gs.map(g => { const ok = [...g.syms].every((s, i) => a[s] === g.ans[i]); const fmt = (arr) => g.kind === "ch" ? arr.map(c => c == null ? "−" : CL(c)).join("") : arr.map(c => c == null ? "・" : c).join(""); return `<tr class="${ok ? "ok" : "ng"}"><td>${[...g.syms].map(SL).join(",")}</td><td>${fmt(g.ans)}</td><td>${fmt([...g.syms].map(s => a[s]))}</td><td>${ok ? g.pts : 0}／${g.pts}</td></tr>`; }).join("")}</tbody></table>${P.ex.map(x => `<p>${md(x, ctx)}</p>`).join("")}</div>`;
+    }
+    h += `</section>`;
+  });
+  return h;
+}
+const scoreD = (D, a) => D.groups.reduce((t, g) => t + ([...g.syms].every((s, i) => a[s] === g.ans[i]) ? g.pts : 0), 0);
+const doneCount = (D, a) => { const all = D.groups.map(g => g.syms).join(""); return [[...all].filter(s => a[s] != null).length, all.length]; };
+const mmss = ms => { ms = Math.max(0, ms); const s = Math.ceil(ms / 1000); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+const setName = k => k === "r" ? "ランダム" : `第${k}回`;
+const seedFor = n => G().base + n * 7919;
+
+// ---------- 画面 ----------
+function home() {
+  return `<div class="home">
+  <header class="mast">
+    <p class="mast-sub">大学入学共通テスト　必須科目</p>
+    <h1>共通テスト模試</h1>
+    <p class="lead">岐阜大学 教育学部（令和10年度入試）で全員が受ける科目の模試です。令和7・8年度の本試験と追・再試験、計4回分の出題パターンをもとにした予想問題で、数値は回ごとに変わります。答えは本番と同じく、マークシートの丸を塗る形で入力します。</p>
+  </header>
+  <div class="subjects">${SUBJECTS.map(s => { const recs = Object.values(load()[s.id] || {}); const best = recs.length ? Math.max(...recs.map(x => x.best)) : null;
+    return `<button class="scard${s.ready ? "" : " soon"}" data-act="${s.ready ? "subj" : "none"}" data-s="${s.id}"${s.ready ? "" : ' aria-disabled="true"'}><span class="sc-name">${s.name}</span><span class="sc-spec">${s.spec}　岐阜大では${s.gifu}</span><span class="sc-stat">${s.ready ? (best == null ? "まだ受験していません" : `最高 ${best}点　受験 ${recs.reduce((t, x) => t + x.n, 0)}回`) : "準備中"}</span></button>`; }).join("")}</div>
+  <footer class="note"><p>問題はオリジナルの予想問題で、実際の試験問題ではありません。受験記録はこの端末のブラウザに保存されます。</p></footer>
+</div>`;
+}
+function subj() {
+  const h = load()[S.sid] || {}, gen = GG();
+  const cells = Array.from({ length: SETS }, (_, i) => { const k = String(i + 1), rec = h[k]; return `<button class="set${rec ? " tried" : ""}" data-act="start" data-set="${k}" aria-label="第${k}回${rec ? `、最高${rec.best}点` : ""}"><span class="n">${k}</span><span class="b">${rec ? rec.best + "点" : ""}</span></button>`; }).join("");
+  return `<div class="page">
+  <button class="btn sm" data-act="home">科目一覧へ</button>
+  <header class="shead"><h1>${gen.name}</h1><p>${G().desc}</p></header>
+  <section class="panel"><p class="ph">本番と同じ形式の模試</p><div class="sets">${cells}</div>
+    <div class="row"><button class="btn primary" data-act="start" data-set="r">ランダムな組み合わせで受験</button></div>
+    ${h.r ? `<p class="small">ランダム受験：最高 ${h.r.best}点（${h.r.n}回）</p>` : ""}</section>
+  <section class="panel"><p class="ph">大問ごとの練習（時間制限なし）</p><div class="row">${gen.slots.map(s => `<button class="btn" data-act="drill" data-no="${s.no}">第${s.no}問</button>`).join("")}</div></section>
+</div>`;
+}
+function startExam(set) {
+  const seed = set === "r" ? Date.now() % 2147483647 : seedFor(+set), now = Date.now();
+  const gen = GG(), r = rngFrom(seed), ds = buildAll(gen, r);
+  S = { view: "exam", sid: S.sid, ex: { set, ds, sel: [], plays: {}, a: ds.map(() => ({})), cur: 0, t0: now, end: now + gen.min * 60000, sheet: null } };
+  clearInterval(tick); tick = setInterval(() => { if (S.view !== "exam") return clearInterval(tick); const left = S.ex.end - Date.now(), el = document.getElementById("timer"); if (el) { el.textContent = mmss(left); el.classList.toggle("low", left < 600000); } if (left <= 0) finish(true); }, 1000);
+  render(true);
+}
+function exam() {
+  const ex = S.ex, D = ex.ds[ex.cur], left = ex.end - Date.now(), gen = GG(), slot = gen.slots[ex.cur];
+  const pickBar = slot.opt ? `<div class="pickbar${ex.sel.includes(ex.cur) ? " on" : ""}"><p>第${gen.slots.find(s => s.opt).no}問〜第${gen.slots[gen.slots.length - 1].no}問は選択問題です。${gen.pickN}問を選んで解答してください（選択中 ${ex.sel.length}問）。</p><button class="btn sm${ex.sel.includes(ex.cur) ? " primary" : ""}" data-act="pick" aria-pressed="${ex.sel.includes(ex.cur)}">${ex.sel.includes(ex.cur) ? "この問題を選択中（解除する）" : "この問題を選択して解答する"}</button>${ex.warn ? `<p class="warn">${ex.warn}</p>` : ""}</div>` : "";
+  return `<div class="exam">
+  <div class="bar"><span class="chip">${GG().name}　${setName(ex.set)}</span><span class="timer${left < 600000 ? " low" : ""}" id="timer" role="timer" aria-label="残り時間">${mmss(left)}</span><button class="btn sm" data-act="sheet">解答を終了</button>
+    <nav class="tabs" aria-label="大問">${ex.ds.map((d, i) => { const [x, n] = doneCount(d, ex.a[i]); const opt = gen.slots[i].opt, on = ex.sel.includes(i); return `<button class="tab${i === ex.cur ? " cur" : ""}${opt ? (on ? " picked" : " opt") : ""}" data-act="go" data-i="${i}" aria-current="${i === ex.cur}">第${d.no}問<small>${opt ? (on ? "選択" : "未選択") : `${x}/${n}`}</small></button>`; }).join("")}</nav></div>
+  <main class="booklet${gen.en ? " en" : ""}">${pickBar}${daimonHtml(D, ex.a[ex.cur], false, "mark", { di: ex.cur, limit: true, plays: ex.plays })}
+    <div class="row nav">${ex.cur > 0 ? `<button class="btn" data-act="go" data-i="${ex.cur - 1}">第${ex.cur}問へ戻る</button>` : ""}${ex.cur < ex.ds.length - 1 ? `<button class="btn primary" data-act="go" data-i="${ex.cur + 1}">第${ex.cur + 2}問へ進む</button>` : `<button class="btn primary" data-act="sheet">解答を終了</button>`}</div></main>
+  ${ex.sheet ? `<div class="overlay" data-act="close"><div class="dialog" role="dialog" aria-modal="true"><h2>解答を終了して採点しますか</h2><p>${(() => { const [x, n] = ex.ds.reduce((t, d, i) => { if (GG().slots[i].opt && !ex.sel.includes(i)) return t; const [a, b] = doneCount(d, ex.a[i]); return [t[0] + a, t[1] + b]; }, [0, 0]); const pk = GG().pickN; return (pk && ex.sel.length < pk ? `選択問題がまだ ${ex.sel.length} 問しか選ばれていません（${pk}問選んでください）。選ばれていない問題は採点されません。` : "") + (x < n ? `まだ塗っていない記号が ${n - x} 個あります。` : "すべての記号を塗りました。"); })()}</p><div class="row"><button class="btn" data-act="close">試験に戻る</button><button class="btn primary" data-act="finish">採点する</button></div><button class="btn ghost sm" data-act="quit">中断して戻る（記録されません）</button></div></div>` : ""}
+</div>`;
+}
+function finish(timeout) {
+  const ex = S.ex; clearInterval(tick); stopTTS();
+  const sc = ex.ds.map((D, i) => (GG().slots[i].opt && !ex.sel.includes(i)) ? null : scoreD(D, ex.a[i])), total = sc.reduce((t, x) => t + (x || 0), 0);
+  const d = load(); d[S.sid] = d[S.sid] || {}; const rec = d[S.sid][ex.set] || { best: 0, n: 0 }; rec.best = Math.max(rec.best, total); rec.last = total; rec.n++; d[S.sid][ex.set] = rec; save(d);
+  S = { view: "result", sid: S.sid, rs: { ...ex, sc, total, used: Math.min(Date.now(), ex.end) - ex.t0, timeout } };
+  render(true);
+}
+function result() {
+  const R = S.rs;
+  return `<div class="result">
+  <section class="score-card"><p class="rs-t">${GG().name}　${setName(R.set)}の結果</p><p class="score"><b>${R.total}</b><span>／${GG().full}点</span></p>
+    <p class="gifu">岐阜大の配点に換算すると <b>${Math.round(R.total * G().conv * 10) / 10}</b>／${GG().full * G().conv}点（${G().convNote}）</p>
+    <p class="meta">所要時間 ${Math.max(1, Math.round(R.used / 60000))}分${R.timeout ? "（時間切れで自動採点）" : ""}</p>
+    <div class="bd">${R.ds.map((D, i) => R.sc[i] == null ? `<div class="bd-r skip"><span>第${D.no}問</span><span class="bar-o"></span><span>選択せず</span></div>` : `<div class="bd-r"><span>第${D.no}問</span><span class="bar-o"><i style="width:${R.sc[i] / D.pts * 100}%"></i></span><span>${R.sc[i]}／${D.pts}</span></div>`).join("")}</div>
+    <div class="row"><button class="btn primary" data-act="start" data-set="${R.set}">${R.set === "r" ? "新しい組み合わせで受験" : "この回をもう一度"}</button><button class="btn" data-act="subj">回の一覧へ</button></div></section>
+  <section class="review"><h2>問題と解説</h2>${R.ds.map((D, i) => `<details class="rv"${i === 0 ? " open" : ""}><summary>第${D.no}問　${D.parts.map(p => p.title).join("／")}<span>${R.sc[i] == null ? "選択せず" : `${R.sc[i]}／${D.pts}点`}</span></summary><div class="booklet in${GG().en ? " en" : ""}">${daimonHtml(D, R.a[i], true, "none", { di: i })}</div></details>`).join("")}</section>
+</div>`;
+}
+function drillNew(no) { const gen = GG(), slot = gen.slots[no - 1]; S = { view: "drill", sid: S.sid, dr: { no, D: buildDaimon(slot, rngFrom(Date.now() % 2147483647), 0, gen.pua ? PUA : undefined), a: {}, done: false } }; render(true); }
+function drill() {
+  const d = S.dr, sc = d.done ? scoreD(d.D, d.a) : 0;
+  return `<div class="exam drill"><div class="bar"><button class="btn sm" data-act="subj">戻る</button><span class="chip">${GG().name}　第${d.no}問の練習</span>${d.done ? `<span class="timer">${sc}／${d.D.pts}点</span>` : ""}</div>
+  <main class="booklet${GG().en ? " en" : ""}">${daimonHtml(d.D, d.a, d.done, "dmark", { di: 0 })}
+  <div class="row nav">${d.done ? `<button class="btn primary" data-act="drill" data-no="${d.no}">次の問題</button>` : `<button class="btn primary" data-act="check">答え合わせ</button>`}</div></main></div>`;
+}
+
+function render(top) {
+  if (TTS.playing && !["exam", "drill", "result"].includes(S.view)) stopTTS();
+  const open = top ? [] : [...document.querySelectorAll("details[open]")].map((x, i) => i);
+  $app.innerHTML = S.view === "exam" ? exam() : S.view === "result" ? result() : S.view === "drill" ? drill() : S.view === "subj" ? subj() : home();
+  if (top) window.scrollTo(0, 0);
+}
+$app.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  const act = b.dataset.act; if (act === "close" && e.target !== b) return;
+  const y = window.scrollY;
+  switch (act) {
+    case "home": clearInterval(tick); stopTTS(); S = { view: "home" }; render(true); break;
+    case "play": { const di = +b.dataset.d, key = b.dataset.k, k = `${di}:${key}`; const D = S.view === "exam" ? S.ex.ds[di] : S.view === "result" ? S.rs.ds[di] : S.dr.D; const blk = D.blocks.find(x => x.key === key);
+      if (TTS.playing === k) { stopTTS(); render(); window.scrollTo(0, y); break; }
+      if (S.view === "exam") { const used = S.ex.plays[k] || 0; if (used >= blk.times) break; S.ex.plays[k] = used + 1; }
+      TTS.playing = k; speak(blk.lines, () => { if (TTS.playing === k) { TTS.playing = null; const yy = window.scrollY; render(); window.scrollTo(0, yy); } }); render(); window.scrollTo(0, y); break; }
+    case "subj": clearInterval(tick); stopTTS(); S = { view: "subj", sid: b.dataset.s || S.sid }; render(true); break;
+    case "start": startExam(b.dataset.set); break;
+    case "drill": drillNew(+b.dataset.no); break;
+    case "go": stopTTS(); S.ex.cur = +b.dataset.i; render(true); break;
+    case "mark": { const ex = S.ex, A = ex.a[ex.cur], s = b.dataset.s, v = b.dataset.v; if (A[s] === v) delete A[s]; else A[s] = v;
+      const gen = GG(); ex.warn = null; if (gen.slots[ex.cur].opt && !ex.sel.includes(ex.cur)) { if (ex.sel.length < gen.pickN) ex.sel.push(ex.cur); else ex.warn = `すでに${gen.pickN}問を選択しています。この問題を採点してほしい場合は，ほかの問題の選択を解除してください。`; }
+      render(); window.scrollTo(0, y); break; }
+    case "pick": { const ex = S.ex, gen = GG(), k = ex.sel.indexOf(ex.cur); ex.warn = null; if (k >= 0) ex.sel.splice(k, 1); else if (ex.sel.length < gen.pickN) ex.sel.push(ex.cur); else ex.warn = `選択できるのは${gen.pickN}問までです。ほかの問題の選択を解除してから選んでください。`; render(); window.scrollTo(0, y); break; }
+    case "dmark": { const A = S.dr.a, s = b.dataset.s, v = b.dataset.v; if (A[s] === v) delete A[s]; else A[s] = v; render(); window.scrollTo(0, y); break; }
+    case "check": S.dr.done = true; render(); window.scrollTo(0, y); break;
+    case "sheet": S.ex.sheet = true; render(); window.scrollTo(0, y); break;
+    case "close": S.ex.sheet = null; render(); window.scrollTo(0, y); break;
+    case "finish": finish(false); break;
+    case "quit": clearInterval(tick); S = { view: "subj", sid: S.sid }; render(true); break;
+  }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && S.view === "exam" && S.ex.sheet) { S.ex.sheet = null; render(); } });
+render();
+
+</script>
+</body>
+</html>
